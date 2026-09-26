@@ -14,11 +14,11 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
-    <div className="container-constrained max-w-[860px] py-20 md:py-28">
-      <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+    <div className="max-w-[42rem] py-10">
+      <h1 id="projects" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-6">
         Projects
       </h1>
-      <p className="text-foreground/65 max-w-[60ch] leading-relaxed mb-16">
+      <p className="text-foreground/70 max-w-[60ch] leading-relaxed mb-10">
         A short list of production-minded systems — retrieval that cites its
         sources and knows when to abstain, and event-driven backends built to
         stay correct under retries and redelivery.
@@ -32,7 +32,7 @@ export default function ProjectsPage() {
               className="group flex flex-col gap-2"
             >
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="font-serif text-2xl font-semibold text-foreground group-hover:text-accent transition-colors flex items-center gap-2">
+                <h2 className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
                   {project.frontmatter.title}
                   <ArrowUpRight
                     className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"

@@ -1,27 +1,24 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, DM_Mono } from "next/font/google";
+import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Navbar } from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteShell } from "@/components/layout/site-shell";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { JsonLd } from "@/components/json-ld";
 import { PERSON, SITE_URL, personId } from "@/lib/site";
 import { DOMAINS } from "@/data/technical-expertise";
+import { buildSearchIndex } from "@/lib/search-index";
 
-const inter = Inter({
-  variable: "--font-inter",
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const robotoMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
   subsets: ["latin"],
-});
-
-const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -95,25 +92,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const searchIndex = buildSearchIndex();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <JsonLd data={personJsonLd} />
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} ${dmMono.variable} antialiased font-sans flex flex-col min-h-screen`}
+        className={`${roboto.variable} ${robotoMono.variable} antialiased font-sans flex flex-col min-h-screen`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-        >
-          <Navbar />
-          <main className="flex-1 ">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+        <SiteHeader searchIndex={searchIndex} />
+        <main className="flex-1">
+          <SiteShell>{children}</SiteShell>
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

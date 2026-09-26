@@ -77,7 +77,7 @@ export default async function ProjectDetailPage({
   const otherProjects = getAllProjects().filter((p) => p.slug !== slug);
 
   return (
-    <article className="container-constrained max-w-[720px] py-20 md:py-28">
+    <article className="max-w-[42rem] py-10">
       <JsonLd data={jsonLd} />
       <JsonLd data={creativeWorkJsonLd} />
       <JsonLd
@@ -89,7 +89,7 @@ export default async function ProjectDetailPage({
       />
 
       <nav aria-label="Breadcrumb" className="mb-8 font-mono text-xs text-muted-foreground">
-        <Link href="/projects" className="hover:text-accent underline underline-offset-4">
+        <Link href="/projects" className="hover:text-primary underline underline-offset-4">
           Projects
         </Link>
         <span className="mx-2">/</span>
@@ -97,7 +97,7 @@ export default async function ProjectDetailPage({
       </nav>
 
       <header className="mb-10">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+        <h1 className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-4">
           {frontmatter.title}
         </h1>
         <p className="text-lg text-foreground/70 leading-relaxed max-w-[60ch]">
@@ -137,7 +137,7 @@ export default async function ProjectDetailPage({
               href={frontmatter.repo}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent underline underline-offset-4"
+              className="text-primary underline underline-offset-4"
             >
               Repository
             </a>
@@ -147,7 +147,7 @@ export default async function ProjectDetailPage({
               href={frontmatter.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent underline underline-offset-4"
+              className="text-primary underline underline-offset-4"
             >
               Live demo
             </a>
@@ -166,7 +166,7 @@ export default async function ProjectDetailPage({
             <Link
               key={p.slug}
               href={`/projects/${p.slug}`}
-              className="block font-serif text-lg text-foreground hover:text-accent transition-colors"
+              className="block text-lg text-foreground hover:text-primary transition-colors"
             >
               {p.frontmatter.title} →
             </Link>

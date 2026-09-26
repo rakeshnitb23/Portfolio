@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="container-constrained max-w-[860px] py-20 md:py-28">
-      <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-8">
+    <div className="max-w-[42rem] py-10">
+      <h1 id="about" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-6">
         About
       </h1>
 
-      <div className="prose-content mb-16">
+      <div className="prose-content mb-4">
         <p>
           I&apos;m Rakesh Singh, an AI Backend Engineer at Genpact based in{" "}
           {PERSON.location}. I architect backend systems and performance-driven
@@ -38,7 +38,7 @@ export default function AboutPage() {
       <section aria-labelledby="experience-heading" className="mb-16">
         <h2
           id="experience-heading"
-          className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-8"
+          className="text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-8"
         >
           Experience
         </h2>
@@ -46,14 +46,14 @@ export default function AboutPage() {
           {EXPERIENCES.map((exp) => (
             <article key={exp.id}>
               <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
-                <h3 className="font-serif text-xl font-semibold text-foreground">
+                <h3 className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground">
                   {exp.role} · {exp.companyFull}
                 </h3>
                 <time className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
                   {exp.period}
                 </time>
               </div>
-              <p className="font-mono text-xs uppercase tracking-wider text-accent mb-4">
+              <p className="font-mono text-xs uppercase tracking-wider text-primary mb-4">
                 {exp.location}
               </p>
               <ul className="list-disc ml-5 space-y-2 text-foreground/75 leading-relaxed">
@@ -72,15 +72,15 @@ export default function AboutPage() {
       <section aria-labelledby="education-heading" className="mb-16">
         <h2
           id="education-heading"
-          className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-6"
+          className="text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-6"
         >
           Education
         </h2>
         <article>
-          <h3 className="font-serif text-xl font-semibold text-foreground">
+          <h3 className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground">
             Bachelor of Technology, Computer Science and Engineering
           </h3>
-          <p className="font-mono text-xs uppercase tracking-wider text-accent mt-1 mb-1">
+          <p className="font-mono text-xs uppercase tracking-wider text-primary mt-1 mb-1">
             National Institute of Technology (NIT) Bhopal
           </p>
           <time className="font-mono text-xs text-muted-foreground">
@@ -99,14 +99,14 @@ export default function AboutPage() {
       <section aria-labelledby="skills-heading">
         <h2
           id="skills-heading"
-          className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-8"
+          className="text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-8"
         >
           Skills
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {DOMAINS.map((domain) => (
             <div key={domain.index}>
-              <h3 className="font-serif text-lg font-semibold text-foreground mb-1">
+              <h3 className="text-lg font-normal text-foreground mb-1">
                 {domain.title}
               </h3>
               <p className="text-sm text-foreground/60 mb-3">{domain.depth}</p>

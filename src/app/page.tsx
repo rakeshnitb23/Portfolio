@@ -14,15 +14,15 @@ export default function Home() {
   const projects = getAllProjects();
 
   return (
-    <div className="container-constrained max-w-[900px] py-20 md:py-28">
-      <header className="mb-16">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent mb-4">
+    <div className="max-w-[42rem] py-10">
+      <header className="mb-12">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-4">
           {PERSON.location}
         </p>
-        <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6">
+        <h1 id="rakesh-singh" className="text-[2.2em] font-normal leading-[1.3] text-foreground/70 mb-6">
           Rakesh Singh
         </h1>
-        <p className="text-lg md:text-xl text-foreground/70 max-w-[60ch] leading-relaxed">
+        <p className="text-lg text-foreground/70 max-w-[60ch] leading-relaxed">
           I&apos;m an AI Backend Engineer at Genpact, building grounded
           retrieval systems that cite their sources and know when to say
           &quot;I don&apos;t know&quot; — after four years building Java and
@@ -63,16 +63,16 @@ export default function Home() {
       </header>
 
       <section aria-labelledby="featured-work-heading">
-        <div className="flex items-baseline justify-between mb-8">
+        <div className="flex items-baseline justify-between mb-6">
           <h2
             id="featured-work-heading"
-            className="font-serif text-2xl md:text-3xl font-semibold text-foreground"
+            className="text-[1.5625em] font-light tracking-[-0.01em] text-foreground"
           >
             Selected work
           </h2>
           <Link
             href="/projects"
-            className="font-mono text-xs uppercase tracking-wider text-accent hover:underline"
+            className="font-mono text-xs uppercase tracking-wider text-primary hover:underline"
           >
             All projects
           </Link>
@@ -86,7 +86,7 @@ export default function Home() {
                 className="group flex flex-col md:flex-row md:items-baseline md:justify-between gap-2"
               >
                 <div className="max-w-[56ch]">
-                  <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground group-hover:text-accent transition-colors flex items-center gap-2">
+                  <h3 className="text-xl font-normal tracking-[-0.01em] text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
                     {project.frontmatter.title}
                     <ArrowUpRight
                       className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"

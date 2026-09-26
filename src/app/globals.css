@@ -2,14 +2,12 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
-  --font-mono: var(--font-dm-mono);
+  --font-sans: var(--font-roboto);
+  --font-serif: var(--font-roboto);
+  --font-mono: var(--font-roboto-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -57,88 +55,53 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: #F5EFE6;
-  --foreground: #1C1C1C;
-  --card: #F5EFE6;
-  --card-foreground: #1C1C1C;
-  --popover: #F5EFE6;
-  --popover-foreground: #1C1C1C;
-  --primary: #1C1C1C;
-  --primary-foreground: #F5EFE6;
-  --secondary: #F5EAE0;
-  --secondary-foreground: #1C1C1C;
-  --muted: #E8E2D9;
-  --muted-foreground: #555555;
-  --accent: #A38340;
-  --accent-foreground: #FDF6EC;
+  --radius: 0.25rem;
+  --background: #ffffff;
+  --foreground: #212121;
+  --card: #ffffff;
+  --card-foreground: #212121;
+  --popover: #ffffff;
+  --popover-foreground: #212121;
+  --primary: #103dc2;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #212121;
+  --muted: #f5f5f5;
+  --muted-foreground: #767676;
+  --accent: #103dc2;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #E8E2D9;
-  --input: #E8E2D9;
-  --ring: #A38340;
+  --border: #ececec;
+  --input: #ececec;
+  --ring: #103dc2;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: #FDF6EC;
-  --sidebar-foreground: #1C1C1C;
-  --sidebar-primary: #1C1C1C;
-  --sidebar-primary-foreground: #FDF6EC;
-  --sidebar-accent: #E8E2D9;
-  --sidebar-accent-foreground: #1C1C1C;
-  --sidebar-border: #E8E2D9;
-  --sidebar-ring: #C6A969;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #212121;
+  --sidebar-primary: #103dc2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #212121;
+  --sidebar-border: #ececec;
+  --sidebar-ring: #103dc2;
 
   --section-py-sm: 4rem;
   --section-py-md: 6rem;
   --section-py-lg: 8rem;
   --container-max-width: 1400px;
-  
-  --glass-surface: rgba(255, 255, 255, 0.5);
-  --glass-border: rgba(220, 210, 195, 0.65);
-}
 
-.dark {
-  --background: #111111;
-  --foreground: #F3F3F3;
-  --card: #111111;
-  --card-foreground: #F3F3F3;
-  --popover: #111111;
-  --popover-foreground: #F3F3F3;
-  --primary: #F3F3F3;
-  --primary-foreground: #111111;
-  --secondary: #222222;
-  --secondary-foreground: #F5F5F5;
-  --muted: #2A2A2A;
-  --muted-foreground: #AAAAAA;
-  --accent: #D4AF37;
-  --accent-foreground: #111111;
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: #2A2A2A;
-  --input: #2A2A2A;
-  --ring: #D4AF37;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: #111111;
-  --sidebar-foreground: #F5F5F5;
-  --sidebar-primary: #F5F5F5;
-  --sidebar-primary-foreground: #111111;
-  --sidebar-accent: #2A2A2A;
-  --sidebar-accent-foreground: #F5F5F5;
-  --sidebar-border: #2A2A2A;
-  --sidebar-ring: #D4AF37;
-
-  --section-py-sm: 2rem;
-  --section-py-md: 6rem;
-  --section-py-lg: 8rem;
-  --container-max-width: 1400px;
-
-  --glass-surface: rgba(26, 26, 26, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  /* Site chrome, named after the mkdocs-material tokens this palette mirrors */
+  --md-primary: #103dc2;
+  --md-accent: #526cfe;
+  --md-fg: rgba(0, 0, 0, 0.87);
+  --md-fg-light: rgba(0, 0, 0, 0.54);
+  --md-fg-lighter: rgba(0, 0, 0, 0.32);
+  --md-fg-lightest: rgba(0, 0, 0, 0.07);
+  --md-code-bg: #f5f5f5;
+  --md-footer-bg: #000000de;
 }
 
 @layer base {
@@ -146,7 +109,8 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground transition-colors duration-500 ease-in-out;
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
   }
 
   .section-padding {
@@ -157,44 +121,55 @@
     @apply mx-auto w-full max-w-[var(--container-max-width)] px-6 md:px-10 lg:px-14;
   }
 
+  /* Typeset content — mirrors mkdocs-material's .md-typeset article styling */
   .prose-content {
-    @apply max-w-[68ch] text-foreground/85 leading-[1.75];
+    @apply max-w-[42rem] text-foreground leading-[1.6];
   }
 
   .prose-content h1 {
-    @apply font-serif text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight;
+    @apply text-[2em] font-normal text-foreground/70 mb-6 leading-[1.3];
   }
 
   .prose-content h2 {
-    @apply font-serif text-2xl md:text-3xl font-semibold text-foreground mt-12 mb-4 leading-snug;
+    @apply text-[1.5625em] font-light tracking-[-0.01em] text-foreground mt-10 mb-3 leading-[1.4];
   }
 
   .prose-content h3 {
-    @apply font-serif text-xl md:text-2xl font-semibold text-foreground mt-8 mb-3;
+    @apply text-[1.25em] font-normal tracking-[-0.01em] text-foreground mt-8 mb-3 leading-[1.5];
   }
 
-  .prose-content p {
+  .prose-content p,
+  .prose-content > ul,
+  .prose-content > ol {
     @apply mb-5;
   }
 
   .prose-content ul,
   .prose-content ol {
-    @apply mb-5 ml-5 list-disc space-y-2;
+    @apply ml-5 list-disc space-y-2;
   }
 
   .prose-content a {
-    @apply text-accent underline underline-offset-4 hover:no-underline;
+    @apply text-accent underline-offset-4 hover:underline;
   }
 
   .prose-content code {
-    @apply font-mono text-[0.9em] bg-muted px-1.5 py-0.5 rounded;
+    @apply font-mono text-[0.85em] bg-muted px-[0.29412em] py-[0.07353em] rounded-[0.1rem];
   }
 
   .prose-content pre {
-    @apply font-mono text-sm bg-muted p-4 rounded-lg overflow-x-auto mb-5;
+    @apply font-mono text-[0.85em] bg-muted p-4 rounded-[0.1rem] overflow-x-auto mb-5;
+  }
+
+  .prose-content pre code {
+    @apply bg-transparent p-0;
   }
 
   .prose-content blockquote {
-    @apply border-l-2 border-accent/50 pl-4 italic text-foreground/70 my-6;
+    @apply border-l-[0.2rem] border-foreground/15 pl-4 text-foreground/60 my-6;
+  }
+
+  .prose-content hr {
+    @apply my-10 border-t border-border;
   }
 }

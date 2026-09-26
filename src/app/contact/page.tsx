@@ -10,19 +10,17 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="flex flex-col min-h-screen">
-      <div className="container-constrained pt-20 md:pt-28 pb-4">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
-          Let&apos;s talk
-        </h1>
-        <p className="text-foreground/65 max-w-[60ch] leading-relaxed">
-          Rakesh Singh is an AI Backend Engineer at Genpact, currently open to
-          selective remote opportunities. Reach out about hiring,
-          collaboration, or a project inquiry — response time is usually
-          under 24 hours.
-        </p>
-      </div>
+    <div className="max-w-[42rem] py-10">
+      <h1 id="lets-talk" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-6">
+        Let&apos;s talk
+      </h1>
+      <p className="text-foreground/70 leading-relaxed mb-10">
+        Rakesh Singh is an AI Backend Engineer at Genpact, currently open to
+        selective remote opportunities. Reach out about hiring,
+        collaboration, or a project inquiry — response time is usually
+        under 24 hours.
+      </p>
       <Contact />
-    </main>
+    </div>
   );
 }

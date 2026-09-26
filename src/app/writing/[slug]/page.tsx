@@ -66,7 +66,7 @@ export default async function WritingDetailPage({
   const otherPosts = getAllWritingPosts().filter((p) => p.slug !== slug);
 
   return (
-    <article className="container-constrained max-w-[720px] py-20 md:py-28">
+    <article className="max-w-[42rem] py-10">
       <JsonLd data={jsonLd} />
       <JsonLd
         data={breadcrumbList([
@@ -77,7 +77,7 @@ export default async function WritingDetailPage({
       />
 
       <nav aria-label="Breadcrumb" className="mb-8 font-mono text-xs text-muted-foreground">
-        <Link href="/writing" className="hover:text-accent underline underline-offset-4">
+        <Link href="/writing" className="hover:text-primary underline underline-offset-4">
           Writing
         </Link>
         <span className="mx-2">/</span>
@@ -85,7 +85,7 @@ export default async function WritingDetailPage({
       </nav>
 
       <header className="mb-10">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+        <h1 className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-4">
           {frontmatter.title}
         </h1>
         <p className="text-lg text-foreground/70 leading-relaxed max-w-[60ch] mb-4">
@@ -114,7 +114,7 @@ export default async function WritingDetailPage({
             <Link
               key={p.slug}
               href={`/writing/${p.slug}`}
-              className="block font-serif text-lg text-foreground hover:text-accent transition-colors"
+              className="block text-lg text-foreground hover:text-primary transition-colors"
             >
               {p.frontmatter.title} →
             </Link>
