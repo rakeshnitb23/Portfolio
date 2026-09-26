@@ -1,0 +1,137 @@
+# Rakesh Singh
+
+Rakesh Singh is an AI Backend Engineer at Genpact (Bangalore, India), building grounded retrieval systems with citation validation and calibrated abstention. He previously spent four years as a Backend Java Developer on Genpact's Shutterfly (USA) account, working on high-throughput Spring Boot microservices. He holds a B.Tech in Computer Science and Engineering from NIT Bhopal.
+
+---
+
+# About
+
+Rakesh Singh is an AI Backend Engineer at Genpact (Bangalore, India), building grounded retrieval systems with citation validation and calibrated abstention. He previously spent four years as a Backend Java Developer on Genpact's Shutterfly (USA) account, working on high-throughput Spring Boot microservices. He holds a B.Tech in Computer Science and Engineering from NIT Bhopal.
+
+---
+
+# Project: GroundedDocs
+
+GroundedDocs is a private document question-answering system built to solve a specific failure mode of retrieval-augmented generation: answers that sound confident but aren't backed by anything in the source material. It only answers with a citation that resolves against a retrieved chunk, and it abstains — explicitly and by default — when the evidence isn't there.
+
+## Idempotent ingest
+
+PDF ingest is built around content hashing and stable chunk IDs. When a document changes, it re-indexes cleanly without producing duplicate vectors or leaving stale citations behind from the previous version. Idempotency here isn't a check bolted onto the ingest pipeline — it's a property of how chunk IDs are derived, so re-running ingest on the same or updated content can never double-index.
+
+## Authorization-aware hybrid retrieval
+
+Retrieval combines pgvector similarity search with BM25 keyword search, merged with Reciprocal Rank Fusion, then narrowed with a cross-encoder rerank pass. Every stage is scoped by user and workspace from day one — unscoped search across users is treated as a defect, not an edge case to patch in later.
+
+## Citations get checked, not trusted
+
+The model returns structured JSON with citation IDs bound to specific retrieved chunks. Before an answer is allowed to ship, a validation pass checks that every citation ID actually resolves against the chunk set that was retrieved for that query. An answer with a citation that doesn't resolve is rejected outright — a broken citation is a defect, not a display detail to smooth over in the UI.
+
+## Abstention as the default path
+
+Calibrated abstention — knowing when the retrieved evidence is insufficient to answer, and saying so plainly — is treated as a first-class output rather than a fallback for when retrieval comes up empty. The system is held against a frozen 40-question set: 18 answerable, 11 partial, 11 unanswerable. Abstention precision and recall are tracked as eval-gate metrics with the same rigor as retrieval quality and citation faithfulness, so answering correctly and abstaining correctly are both scored, not just the former.
+
+## Threat modeling and adversarial evals
+
+The system was threat-modeled with a data-flow diagram and STRIDE, and a separate adversarial eval suite runs against it covering planted instructions inside documents, prompt extraction attempts, cross-user access attempts, and deliberately hostile PDFs. Security pass rate is one of the tracked eval-gate metrics, versioned alongside retrieval quality and cost.
+
+## A bounded agent path, used sparingly
+
+For the narrow class of question types where hybrid retrieval alone still fails, there's a bounded LangGraph path with hard loop limits and access to exactly one tool: a read-only MCP document-lookup tool. It's not the default path — hybrid RAG is — it's an escape hatch scoped tightly enough that it can't become a new source of unbounded, unpredictable behavior.
+
+## Eval gates
+
+Every change is measured against separated eval gates: retrieval quality, citation faithfulness, abstention precision/recall, security pass rate, and cost per successful task — each tracked with version tags so a prompt or corpus change can't quietly regress one metric while improving another without anyone noticing.
+
+---
+
+# Project: Kafka Order System
+
+The Kafka Order System is a pair of event-driven microservices — order processing and notification — built to demonstrate the messaging patterns that keep a distributed system correct under redelivery, schema change, and partial failure.
+
+## Idempotency at the schema, not the application
+
+The core design principle is that idempotency should live as close to the messaging layer as possible, not solely in application logic that's easy to bypass by accident. Writes are idempotent, retries are bounded, and a dead-letter queue catches events that can't be applied after retries are exhausted — so a redelivered message can never double-apply an order or double-send a notification. The guarantee is structural rather than something a developer has to remember to check for on every code path.
+
+## Schema evolution with Avro and Schema Registry
+
+Messages are serialized with Avro and versioned through a Schema Registry, so producers and consumers can evolve independently without breaking each other on a deploy. Schema compatibility is enforced at the registry level rather than discovered at runtime when a consumer chokes on an unexpected field.
+
+## Migrations and local infrastructure
+
+Database schema changes are managed with Flyway so every environment — local, CI, or otherwise — arrives at the same schema state through the same migration path. The whole stack, including Kafka, PostgreSQL, and both services, runs locally through Docker Compose, so the event-driven behavior can be exercised end to end without a shared staging environment.
+
+## Observability
+
+Both services expose Spring Boot Actuator endpoints and Prometheus metrics, giving visibility into consumer lag, retry counts, and dead-letter volume — the signals that actually indicate whether the messaging layer is healthy, rather than just whether the process is up.
+
+## Why this project exists
+
+Idempotency, retries, and dead-letter handling are easy to describe and easy to get subtly wrong. This project exists as a concrete, runnable reference for the pattern: two real services, a real broker, and the failure-handling plumbing that a production order pipeline actually needs, without hiding any of it behind a managed queueing service.
+
+---
+
+# Abstention Is the Default Path
+
+A system that always answers is a system that sometimes lies with confidence. The failure mode isn't limited to hallucinated facts — it includes answering a question the retrieved evidence simply doesn't support, just because the model is willing to generate *something*. Calibrated abstention — recognizing when the evidence is insufficient and saying so — has to be a first-class output, not a fallback bolted on after the fact.
+
+## Scoping retrieval before scoping the answer
+
+Hybrid retrieval — pgvector similarity search plus BM25 keyword search, merged with Reciprocal Rank Fusion, then narrowed with a cross-encoder rerank — is scoped by user and workspace from day one. Unscoped search across users isn't treated as an edge case to patch later; it's a defect on the same level as returning the wrong answer. Getting the scoping right at the retrieval layer is what makes abstention decisions downstream trustworthy in the first place — there's no point being confident about "insufficient evidence" if the evidence pool itself is contaminated with the wrong user's documents.
+
+## Abstention as a scored metric, not a vibe
+
+On top of scoped retrieval, abstention precision and recall are tracked as eval-gate metrics alongside retrieval quality and citation faithfulness. Abstaining correctly — declining to answer when the evidence really is insufficient — is scored with the same rigor as answering correctly. That symmetry matters: a system that abstains too often is nearly as useless as one that never abstains at all, and without measuring both failure directions separately, it's easy to over-correct into one of them without noticing.
+
+---
+
+# Citations Get Checked, Not Trusted
+
+A citation is only as good as the validation behind it. It's easy to have a model emit something that *looks* like a citation — a bracketed number, a document name — without any guarantee that it actually points at retrieved content. GroundedDocs treats that gap as the primary failure mode to design against.
+
+## Structured answer-with-citations as the default, not an add-on
+
+The model returns structured JSON with citation IDs bound to specific retrieved chunks. This isn't a post-processing step layered on top of a free-text answer — it's the shape of the output from the start. Every citation ID has to resolve against the chunk set that was actually retrieved for that query.
+
+## Validation before an answer ships
+
+A validation pass runs before any answer is allowed to reach the user: it checks that every citation ID in the response resolves to a real, retrieved chunk. If a citation doesn't resolve, the answer is rejected. An unvalidated or broken citation is treated as a defect in the system, not a cosmetic detail to smooth over in the rendering layer.
+
+## Holding the line with a frozen eval set
+
+To make sure this behavior doesn't quietly drift as prompts or the underlying corpus change, the system is held against a frozen 40-question set: 18 answerable, 11 partial, 11 unanswerable. Because the set doesn't change, a regression in citation faithfulness shows up immediately in the eval gate rather than surfacing weeks later as a user complaint. Citation faithfulness is tracked as its own metric, separate from retrieval quality — a system can retrieve the right chunk and still fail to cite it correctly, and that distinction matters for debugging.
+
+---
+
+# Uptime Is a Personality
+
+Resilience4j across 15+ microservices took system uptime to 99.9% while processing 2 million daily transactions. Reliability at that scale isn't a single fix you ship once — it's circuit breakers, bulkheads, and retry policies applied consistently until failure becomes the exception instead of the norm.
+
+## Every downstream call gets a circuit breaker
+
+The pattern that made the difference wasn't a single clever piece of infrastructure — it was discipline applied uniformly. Every downstream call across the microservice fleet got a circuit breaker and a bounded retry policy, so a single degraded dependency couldn't cascade into a system-wide outage. Bulkheads isolated failure domains so one overloaded service couldn't starve the thread pools of everything calling into it.
+
+## Tuning the data layer in tandem
+
+Reliability work didn't stop at the network boundary. PostgreSQL, MongoDB, and Redis were tuned together, which pushed retrieval speed up 70% and cut infrastructure cost by 30% at the same time — proof that reliability and efficiency aren't usually a trade-off when the underlying inefficiency was the actual source of the fragility.
+
+## Uptime as something you keep re-earning
+
+The lesson from running this at 2 million daily transactions: uptime is not a target you hit once and move on from. It's a property you keep re-earning every time a dependency degrades, every time traffic spikes past what was tested, every time someone ships a change to a service three hops away from the one you own. Consistency in applying the same reliability patterns everywhere — not a single heroic fix — is what got the fleet to 99.9%.
+
+---
+
+# Idempotency at the Schema
+
+Idempotency that lives only in application logic breaks the moment someone bypasses it — a new code path, a manual script, a retry from an unexpected place, and suddenly the guarantee everyone assumed was there quietly stops holding. Pushing the guarantee down to the schema and the messaging layer makes it much harder to accidentally violate.
+
+## Content-hash based ingest
+
+PDF ingest uses content hashing and stable chunk IDs, so a changed document re-indexes cleanly without producing duplicate vectors or leaving stale citations pointing at content that no longer exists. The chunk ID is derived from the content itself, so re-running ingest on the same document — deliberately or by accident — can't produce a second copy sitting alongside the first.
+
+## The same principle, applied to messaging
+
+The Kafka order system applies the same principle at the messaging layer: idempotent writes, bounded retries, and a dead-letter queue mean a redelivered event can never double-apply. If a consumer crashes mid-processing and Kafka redelivers the message, the write path is built so that reprocessing the same event produces the same end state rather than a duplicate order or a duplicate notification.
+
+## Structural, not remembered
+
+The common thread across both systems: the guarantee is structural rather than something a developer has to remember to check for on every new code path. A content hash either matches or it doesn't. A write either has an idempotency key or it doesn't. That's a much smaller thing to get right, and get right consistently, than reviewing every future code change for whether it accidentally reintroduces a duplicate-processing bug.

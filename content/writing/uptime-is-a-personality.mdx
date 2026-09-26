@@ -1,0 +1,20 @@
+---
+title: "Uptime Is a Personality"
+summary: "Resilience4j across 15+ microservices took system uptime to 99.9% while processing 2 million daily transactions. Reliability at that scale isn't a single fix — it's consistency applied everywhere."
+date: "2025-11-01"
+tags: ["Operations", "Java", "Spring Boot"]
+---
+
+Resilience4j across 15+ microservices took system uptime to 99.9% while processing 2 million daily transactions. Reliability at that scale isn't a single fix you ship once — it's circuit breakers, bulkheads, and retry policies applied consistently until failure becomes the exception instead of the norm.
+
+## Every downstream call gets a circuit breaker
+
+The pattern that made the difference wasn't a single clever piece of infrastructure — it was discipline applied uniformly. Every downstream call across the microservice fleet got a circuit breaker and a bounded retry policy, so a single degraded dependency couldn't cascade into a system-wide outage. Bulkheads isolated failure domains so one overloaded service couldn't starve the thread pools of everything calling into it.
+
+## Tuning the data layer in tandem
+
+Reliability work didn't stop at the network boundary. PostgreSQL, MongoDB, and Redis were tuned together, which pushed retrieval speed up 70% and cut infrastructure cost by 30% at the same time — proof that reliability and efficiency aren't usually a trade-off when the underlying inefficiency was the actual source of the fragility.
+
+## Uptime as something you keep re-earning
+
+The lesson from running this at 2 million daily transactions: uptime is not a target you hit once and move on from. It's a property you keep re-earning every time a dependency degrades, every time traffic spikes past what was tested, every time someone ships a change to a service three hops away from the one you own. Consistency in applying the same reliability patterns everywhere — not a single heroic fix — is what got the fleet to 99.9%.

@@ -1,0 +1,19 @@
+# Rakesh Singh
+
+Rakesh Singh is an AI Backend Engineer at Genpact (Bangalore, India), building grounded retrieval systems with citation validation and calibrated abstention. He previously spent four years as a Backend Java Developer on Genpact's Shutterfly (USA) account, working on high-throughput Spring Boot microservices. He holds a B.Tech in Computer Science and Engineering from NIT Bhopal.
+
+## Projects
+
+- [GroundedDocs](https://rakeshsingh.dev/projects/groundeddocs): Private document Q&A that answers only with a faithful citation from the user's files — and abstains when it can't.
+- [Kafka Order System](https://rakeshsingh.dev/projects/kafka-order-system): Order and notification microservices on Kafka — Avro + Schema Registry, idempotent writes, retries, a dead-letter queue, and Prometheus-backed observability.
+
+## Writing
+
+- [Abstention Is the Default Path](https://rakeshsingh.dev/writing/abstention-is-the-default-path): A system that always answers is a system that sometimes lies with confidence. Calibrated abstention is treated as a first-class output, not a fallback for when retrieval fails.
+- [Citations Get Checked, Not Trusted](https://rakeshsingh.dev/writing/citations-get-checked-not-trusted): A citation is only as good as the validation behind it. GroundedDocs returns structured JSON with citation IDs, and every ID is checked against the retrieved chunk set before an answer is allowed to ship.
+- [Uptime Is a Personality](https://rakeshsingh.dev/writing/uptime-is-a-personality): Resilience4j across 15+ microservices took system uptime to 99.9% while processing 2 million daily transactions. Reliability at that scale isn't a single fix — it's consistency applied everywhere.
+- [Idempotency at the Schema](https://rakeshsingh.dev/writing/idempotency-at-the-schema): Idempotency that lives only in application logic breaks the moment someone bypasses it. Content-hash based ingest and Kafka dead-letter queues push the guarantee down to the schema and the messaging layer.
+
+## About
+
+- [About](https://rakeshsingh.dev/about): Full bio, experience, and skills.

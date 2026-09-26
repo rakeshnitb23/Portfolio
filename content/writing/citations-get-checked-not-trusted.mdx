@@ -1,0 +1,20 @@
+---
+title: "Citations Get Checked, Not Trusted"
+summary: "A citation is only as good as the validation behind it. GroundedDocs returns structured JSON with citation IDs, and every ID is checked against the retrieved chunk set before an answer is allowed to ship."
+date: "2026-02-01"
+tags: ["Retrieval", "Citations", "Eval Gates"]
+---
+
+A citation is only as good as the validation behind it. It's easy to have a model emit something that *looks* like a citation — a bracketed number, a document name — without any guarantee that it actually points at retrieved content. GroundedDocs treats that gap as the primary failure mode to design against.
+
+## Structured answer-with-citations as the default, not an add-on
+
+The model returns structured JSON with citation IDs bound to specific retrieved chunks. This isn't a post-processing step layered on top of a free-text answer — it's the shape of the output from the start. Every citation ID has to resolve against the chunk set that was actually retrieved for that query.
+
+## Validation before an answer ships
+
+A validation pass runs before any answer is allowed to reach the user: it checks that every citation ID in the response resolves to a real, retrieved chunk. If a citation doesn't resolve, the answer is rejected. An unvalidated or broken citation is treated as a defect in the system, not a cosmetic detail to smooth over in the rendering layer.
+
+## Holding the line with a frozen eval set
+
+To make sure this behavior doesn't quietly drift as prompts or the underlying corpus change, the system is held against a frozen 40-question set: 18 answerable, 11 partial, 11 unanswerable. Because the set doesn't change, a regression in citation faithfulness shows up immediately in the eval gate rather than surfacing weeks later as a user complaint. Citation faithfulness is tracked as its own metric, separate from retrieval quality — a system can retrieve the right chunk and still fail to cite it correctly, and that distinction matters for debugging.

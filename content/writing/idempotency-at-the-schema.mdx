@@ -1,0 +1,20 @@
+---
+title: "Idempotency at the Schema"
+summary: "Idempotency that lives only in application logic breaks the moment someone bypasses it. Content-hash based ingest and Kafka dead-letter queues push the guarantee down to the schema and the messaging layer."
+date: "2025-08-15"
+tags: ["Systems", "Kafka", "Idempotency"]
+---
+
+Idempotency that lives only in application logic breaks the moment someone bypasses it — a new code path, a manual script, a retry from an unexpected place, and suddenly the guarantee everyone assumed was there quietly stops holding. Pushing the guarantee down to the schema and the messaging layer makes it much harder to accidentally violate.
+
+## Content-hash based ingest
+
+PDF ingest uses content hashing and stable chunk IDs, so a changed document re-indexes cleanly without producing duplicate vectors or leaving stale citations pointing at content that no longer exists. The chunk ID is derived from the content itself, so re-running ingest on the same document — deliberately or by accident — can't produce a second copy sitting alongside the first.
+
+## The same principle, applied to messaging
+
+The Kafka order system applies the same principle at the messaging layer: idempotent writes, bounded retries, and a dead-letter queue mean a redelivered event can never double-apply. If a consumer crashes mid-processing and Kafka redelivers the message, the write path is built so that reprocessing the same event produces the same end state rather than a duplicate order or a duplicate notification.
+
+## Structural, not remembered
+
+The common thread across both systems: the guarantee is structural rather than something a developer has to remember to check for on every new code path. A content hash either matches or it doesn't. A write either has an idempotency key or it doesn't. That's a much smaller thing to get right, and get right consistently, than reviewing every future code change for whether it accidentally reintroduces a duplicate-processing bug.

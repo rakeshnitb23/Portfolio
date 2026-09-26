@@ -1,0 +1,16 @@
+---
+title: "Abstention Is the Default Path"
+summary: "A system that always answers is a system that sometimes lies with confidence. Calibrated abstention is treated as a first-class output, not a fallback for when retrieval fails."
+date: "2026-02-08"
+tags: ["Reliability", "Retrieval", "Security"]
+---
+
+A system that always answers is a system that sometimes lies with confidence. The failure mode isn't limited to hallucinated facts — it includes answering a question the retrieved evidence simply doesn't support, just because the model is willing to generate *something*. Calibrated abstention — recognizing when the evidence is insufficient and saying so — has to be a first-class output, not a fallback bolted on after the fact.
+
+## Scoping retrieval before scoping the answer
+
+Hybrid retrieval — pgvector similarity search plus BM25 keyword search, merged with Reciprocal Rank Fusion, then narrowed with a cross-encoder rerank — is scoped by user and workspace from day one. Unscoped search across users isn't treated as an edge case to patch later; it's a defect on the same level as returning the wrong answer. Getting the scoping right at the retrieval layer is what makes abstention decisions downstream trustworthy in the first place — there's no point being confident about "insufficient evidence" if the evidence pool itself is contaminated with the wrong user's documents.
+
+## Abstention as a scored metric, not a vibe
+
+On top of scoped retrieval, abstention precision and recall are tracked as eval-gate metrics alongside retrieval quality and citation faithfulness. Abstaining correctly — declining to answer when the evidence really is insufficient — is scored with the same rigor as answering correctly. That symmetry matters: a system that abstains too often is nearly as useless as one that never abstains at all, and without measuring both failure directions separately, it's easy to over-correct into one of them without noticing.

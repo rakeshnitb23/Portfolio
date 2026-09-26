@@ -1,0 +1,39 @@
+---
+title: "GroundedDocs"
+summary: "Private document Q&A that answers only with a faithful citation from the user's files — and abstains when it can't."
+date: "2026-01-15"
+stack: ["FastAPI", "PostgreSQL", "pgvector", "LangGraph", "OpenAI"]
+role: "Designer & Engineer"
+outcome: "Held to a frozen 40-question eval set (18 answerable / 11 partial / 11 unanswerable) with citation validation and calibrated abstention as the default path."
+repo: "https://github.com/rakeshnitb23/groundeddocs"
+---
+
+GroundedDocs is a private document question-answering system built to solve a specific failure mode of retrieval-augmented generation: answers that sound confident but aren't backed by anything in the source material. It only answers with a citation that resolves against a retrieved chunk, and it abstains — explicitly and by default — when the evidence isn't there.
+
+## Idempotent ingest
+
+PDF ingest is built around content hashing and stable chunk IDs. When a document changes, it re-indexes cleanly without producing duplicate vectors or leaving stale citations behind from the previous version. Idempotency here isn't a check bolted onto the ingest pipeline — it's a property of how chunk IDs are derived, so re-running ingest on the same or updated content can never double-index.
+
+## Authorization-aware hybrid retrieval
+
+Retrieval combines pgvector similarity search with BM25 keyword search, merged with Reciprocal Rank Fusion, then narrowed with a cross-encoder rerank pass. Every stage is scoped by user and workspace from day one — unscoped search across users is treated as a defect, not an edge case to patch in later.
+
+## Citations get checked, not trusted
+
+The model returns structured JSON with citation IDs bound to specific retrieved chunks. Before an answer is allowed to ship, a validation pass checks that every citation ID actually resolves against the chunk set that was retrieved for that query. An answer with a citation that doesn't resolve is rejected outright — a broken citation is a defect, not a display detail to smooth over in the UI.
+
+## Abstention as the default path
+
+Calibrated abstention — knowing when the retrieved evidence is insufficient to answer, and saying so plainly — is treated as a first-class output rather than a fallback for when retrieval comes up empty. The system is held against a frozen 40-question set: 18 answerable, 11 partial, 11 unanswerable. Abstention precision and recall are tracked as eval-gate metrics with the same rigor as retrieval quality and citation faithfulness, so answering correctly and abstaining correctly are both scored, not just the former.
+
+## Threat modeling and adversarial evals
+
+The system was threat-modeled with a data-flow diagram and STRIDE, and a separate adversarial eval suite runs against it covering planted instructions inside documents, prompt extraction attempts, cross-user access attempts, and deliberately hostile PDFs. Security pass rate is one of the tracked eval-gate metrics, versioned alongside retrieval quality and cost.
+
+## A bounded agent path, used sparingly
+
+For the narrow class of question types where hybrid retrieval alone still fails, there's a bounded LangGraph path with hard loop limits and access to exactly one tool: a read-only MCP document-lookup tool. It's not the default path — hybrid RAG is — it's an escape hatch scoped tightly enough that it can't become a new source of unbounded, unpredictable behavior.
+
+## Eval gates
+
+Every change is measured against separated eval gates: retrieval quality, citation faithfulness, abstention precision/recall, security pass rate, and cost per successful task — each tracked with version tags so a prompt or corpus change can't quietly regress one metric while improving another without anyone noticing.

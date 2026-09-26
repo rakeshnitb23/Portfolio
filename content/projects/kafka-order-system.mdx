@@ -1,0 +1,31 @@
+---
+title: "Kafka Order System"
+summary: "Order and notification microservices on Kafka — Avro + Schema Registry, idempotent writes, retries, a dead-letter queue, and Prometheus-backed observability."
+date: "2025-06-01"
+stack: ["Java 17", "Spring Boot", "Kafka", "Avro", "PostgreSQL"]
+role: "Designer & Engineer"
+outcome: "Two event-driven microservices with idempotent writes, a dead-letter queue, and versioned schema evolution end to end."
+repo: "https://github.com/rakeshnitb23/kafka-order-system"
+---
+
+The Kafka Order System is a pair of event-driven microservices — order processing and notification — built to demonstrate the messaging patterns that keep a distributed system correct under redelivery, schema change, and partial failure.
+
+## Idempotency at the schema, not the application
+
+The core design principle is that idempotency should live as close to the messaging layer as possible, not solely in application logic that's easy to bypass by accident. Writes are idempotent, retries are bounded, and a dead-letter queue catches events that can't be applied after retries are exhausted — so a redelivered message can never double-apply an order or double-send a notification. The guarantee is structural rather than something a developer has to remember to check for on every code path.
+
+## Schema evolution with Avro and Schema Registry
+
+Messages are serialized with Avro and versioned through a Schema Registry, so producers and consumers can evolve independently without breaking each other on a deploy. Schema compatibility is enforced at the registry level rather than discovered at runtime when a consumer chokes on an unexpected field.
+
+## Migrations and local infrastructure
+
+Database schema changes are managed with Flyway so every environment — local, CI, or otherwise — arrives at the same schema state through the same migration path. The whole stack, including Kafka, PostgreSQL, and both services, runs locally through Docker Compose, so the event-driven behavior can be exercised end to end without a shared staging environment.
+
+## Observability
+
+Both services expose Spring Boot Actuator endpoints and Prometheus metrics, giving visibility into consumer lag, retry counts, and dead-letter volume — the signals that actually indicate whether the messaging layer is healthy, rather than just whether the process is up.
+
+## Why this project exists
+
+Idempotency, retries, and dead-letter handling are easy to describe and easy to get subtly wrong. This project exists as a concrete, runnable reference for the pattern: two real services, a real broker, and the failure-handling plumbing that a production order pipeline actually needs, without hiding any of it behind a managed queueing service.
