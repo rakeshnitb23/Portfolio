@@ -14,15 +14,15 @@ export default function Home() {
   const projects = getAllProjects();
 
   return (
-    <div className="max-w-[42rem] py-10">
-      <header className="mb-12">
+    <div className="max-w-none py-10">
+      <header className="mb-10">
         <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-4">
           {PERSON.location}
         </p>
-        <h1 id="rakesh-singh" className="text-[2.2em] font-normal leading-[1.3] text-foreground/70 mb-6">
+        <h1 id="rakesh-singh" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-10">
           Rakesh Singh
         </h1>
-        <p className="text-lg text-foreground/70 max-w-[60ch] leading-relaxed">
+        <p className="text-lg text-foreground/70 leading-relaxed">
           I&apos;m an AI Backend Engineer at Genpact, building grounded
           retrieval systems that cite their sources and know when to say
           &quot;I don&apos;t know&quot; — after four years building Java and
@@ -54,7 +54,7 @@ export default function Home() {
             {PERSON.email}
           </a>
           <Link
-            href="/about"
+            href="/resume"
             className="text-foreground/60 hover:text-accent underline underline-offset-4"
           >
             Full bio →
@@ -85,7 +85,7 @@ export default function Home() {
                 href={`/projects/${project.slug}`}
                 className="group flex flex-col md:flex-row md:items-baseline md:justify-between gap-2"
               >
-                <div className="max-w-[56ch]">
+                <div className="max-w-none">
                   <h3 className="text-xl font-normal tracking-[-0.01em] text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
                     {project.frontmatter.title}
                     <ArrowUpRight
@@ -107,7 +107,7 @@ export default function Home() {
       </section>
 
       <section className="mt-20">
-        <p className="font-serif text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-[52ch]">
+        <p className="font-serif text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-none">
           I write about retrieval, reliability, and the systems that keep
           large-scale backends honest. Read the{" "}
           <Link href="/writing" className="text-accent underline underline-offset-4">

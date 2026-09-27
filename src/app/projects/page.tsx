@@ -14,11 +14,11 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
-    <div className="max-w-[42rem] py-10">
+    <div className="max-w-none py-10">
       <h1 id="projects" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-6">
         Projects
       </h1>
-      <p className="text-foreground/70 max-w-[60ch] leading-relaxed mb-10">
+      <p className="text-foreground/70 leading-relaxed mb-10">
         A short list of production-minded systems — retrieval that cites its
         sources and knows when to abstain, and event-driven backends built to
         stay correct under retries and redelivery.
@@ -46,7 +46,7 @@ export default function ProjectsPage() {
                   {new Date(project.frontmatter.date).getFullYear()}
                 </time>
               </div>
-              <p className="text-foreground/65 leading-relaxed max-w-[64ch]">
+              <p className="text-foreground/65 leading-relaxed">
                 {project.frontmatter.summary}
               </p>
               <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground mt-1">

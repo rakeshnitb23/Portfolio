@@ -123,7 +123,7 @@
 
   /* Typeset content — mirrors mkdocs-material's .md-typeset article styling */
   .prose-content {
-    @apply max-w-[42rem] text-foreground leading-[1.6];
+    @apply max-w-none text-foreground leading-[1.6];
   }
 
   .prose-content h1 {

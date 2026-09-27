@@ -3,9 +3,10 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, Github } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import { cn } from "@/lib/utils";
-import { NAV_LINKS, isNavLinkActive } from "@/lib/nav";
+import { NAV_LINKS, TOP_NAV_LINKS, isNavLinkActive } from "@/lib/nav";
 import type { SearchItem } from "@/lib/search-index";
 import { PERSON } from "@/lib/site";
 
@@ -107,16 +108,11 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const currentSection =
-    NAV_LINKS.slice()
-      .reverse()
-      .find((link) => isNavLinkActive(pathname, link.href))?.name ?? "Home";
-
   return (
     <div className="sticky top-0 z-50">
       {/* Header bar */}
       <header className="bg-[var(--md-primary)] text-white shadow-[0_0_0.2rem_rgba(0,0,0,0),0_0.2rem_0.4rem_rgba(0,0,0,0.1)]">
-        <div className="mx-auto flex h-12 w-full max-w-[61rem] items-center gap-4 px-4">
+        <div className="mx-auto flex h-12 w-full max-w-[78.25rem] items-center gap-4 px-4">
           <button
             type="button"
             className="lg:hidden shrink-0"
@@ -126,32 +122,32 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          <Link href="/" className="flex shrink-0 items-center gap-2">
+          <Link href="/" className="flex h-10 w-10 shrink-0 items-center justify-center">
             <SiteLogo />
           </Link>
 
-          <div className="min-w-0 flex-1 leading-tight">
-            <p className="truncate text-[0.75rem] font-medium">{PERSON.name}</p>
-            <p className="truncate text-[0.95rem] font-normal">{currentSection}</p>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-lg font-bold">{PERSON.name}</p>
           </div>
 
           <button
             type="button"
             aria-label="Search"
             onClick={() => setSearchOpen(true)}
-            className="shrink-0 opacity-90 hover:opacity-100"
+            className="flex h-9 w-9 shrink-0 items-center justify-center gap-3 rounded-[0.125rem] bg-black/25 text-white/90 transition-colors hover:bg-black/35 sm:w-[14.625rem] sm:justify-start sm:px-3"
           >
-            <Search className="h-5 w-5" />
+            <Search className="h-6 w-6 shrink-0 text-white/70" aria-hidden="true" />
+            <span className="hidden truncate text-white/70 sm:inline">Search</span>
           </button>
 
           <a
             href={PERSON.github + "/Portfolio"}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden shrink-0 items-center gap-2 opacity-90 hover:opacity-100 sm:flex"
+            className="hidden shrink-0 items-center gap-4 pr-1 text-white/90 hover:text-white sm:flex"
           >
-            <Github className="h-5 w-5" />
-            <span className="text-sm">Portfolio</span>
+            <FaGithub className="h-6 w-6" />
+            <span className="text-[0.8125rem]">Portfolio</span>
           </a>
         </div>
       </header>
@@ -161,15 +157,15 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
         aria-label="Tabs"
         className="hidden overflow-x-auto bg-[var(--md-primary)] text-white lg:block"
       >
-        <div className="mx-auto flex w-full max-w-[61rem] gap-8 px-4">
-          {NAV_LINKS.map((link) => {
+        <div className="mx-auto flex h-12 w-full max-w-[78.25rem] items-center gap-8 px-4">
+          {TOP_NAV_LINKS.map((link) => {
             const active = isNavLinkActive(pathname, link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "border-b-2 py-3 text-[0.7rem] font-medium uppercase tracking-wide transition-opacity",
+                  "border-b-2 py-1 text-sm font-normal uppercase transition-opacity",
                   active
                     ? "border-white opacity-100"
                     : "border-transparent opacity-70 hover:opacity-100"
@@ -184,8 +180,8 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
 
       {/* Mobile nav drawer */}
       {mobileOpen && (
-        <nav className="border-b border-border bg-background shadow-md lg:hidden">
-          <ul className="mx-auto w-full max-w-[61rem] px-4 py-2">
+        <nav className="absolute inset-x-0 top-12 max-h-[calc(100vh-3rem)] overflow-y-auto border-b border-border bg-background shadow-md lg:hidden">
+          <ul className="mx-auto w-full max-w-[78.25rem] px-4 py-2">
             {NAV_LINKS.map((link) => {
               const active = isNavLinkActive(pathname, link.href);
               return (

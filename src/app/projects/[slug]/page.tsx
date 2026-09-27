@@ -77,7 +77,7 @@ export default async function ProjectDetailPage({
   const otherProjects = getAllProjects().filter((p) => p.slug !== slug);
 
   return (
-    <article className="max-w-[42rem] py-10">
+    <article className="max-w-none py-10">
       <JsonLd data={jsonLd} />
       <JsonLd data={creativeWorkJsonLd} />
       <JsonLd
@@ -100,7 +100,7 @@ export default async function ProjectDetailPage({
         <h1 className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-4">
           {frontmatter.title}
         </h1>
-        <p className="text-lg text-foreground/70 leading-relaxed max-w-[60ch]">
+        <p className="text-lg text-foreground/70 leading-relaxed">
           {frontmatter.summary}
         </p>
 
@@ -126,7 +126,7 @@ export default async function ProjectDetailPage({
           </div>
         </dl>
 
-        <p className="mt-4 text-sm text-foreground/70 max-w-[60ch]">
+        <p className="mt-4 text-sm text-foreground/70">
           <strong className="font-semibold text-foreground">Outcome:</strong>{" "}
           {frontmatter.outcome}
         </p>

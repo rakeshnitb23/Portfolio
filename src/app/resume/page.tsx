@@ -4,17 +4,17 @@ import { DOMAINS } from "@/data/technical-expertise";
 import { PERSON } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Resume",
   description:
     "Rakesh Singh is an AI Backend Engineer at Genpact, building grounded retrieval systems and hybrid search after four years of Java/Spring Boot backend work for Shutterfly USA.",
-  alternates: { canonical: "/about" },
+  alternates: { canonical: "/resume" },
 };
 
-export default function AboutPage() {
+export default function ResumePage() {
   return (
-    <div className="max-w-[42rem] py-10">
-      <h1 id="about" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-6">
-        About
+    <div className="max-w-none py-10">
+      <h1 id="resume" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-6">
+        Resume
       </h1>
 
       <div className="prose-content mb-4">

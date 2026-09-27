@@ -21,7 +21,6 @@ function slugify(text: string): string {
 export function TableOfContents() {
   const pathname = usePathname();
   const [entries, setEntries] = React.useState<TocEntry[]>([]);
-  const [activeId, setActiveId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const root = document.getElementById("page-content");
@@ -53,41 +52,23 @@ export function TableOfContents() {
     });
 
     setEntries(next);
-    setActiveId(next[0]?.id ?? null);
-
-    const observer = new IntersectionObserver(
-      (observerEntries) => {
-        for (const entry of observerEntries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-            break;
-          }
-        }
-      },
-      { rootMargin: "-10% 0px -70% 0px", threshold: 0 }
-    );
-
-    headings.forEach((h) => observer.observe(h));
-    return () => observer.disconnect();
   }, [pathname]);
 
   if (entries.length === 0) return null;
 
   return (
     <nav aria-label="Table of contents" className="text-sm">
-      <p className="mb-2 text-[0.7rem] font-medium uppercase tracking-wide text-muted-foreground">
-        Table of contents
-      </p>
-      <ul className="space-y-1.5 border-l border-border">
+      <p className="mb-2 text-foreground/70">Table of contents</p>
+      <ul className="space-y-1">
         {entries.map((entry) => (
-          <li key={entry.id} style={{ paddingLeft: entry.level === 3 ? "1.5rem" : "0.75rem" }}>
+          <li key={entry.id} style={{ paddingLeft: entry.level === 3 ? "2rem" : "0" }}>
             <a
               href={`#${entry.id}`}
               className={cn(
-                "block -ml-px border-l-2 pl-3 leading-snug transition-colors",
-                activeId === entry.id
-                  ? "border-primary font-medium text-primary"
-                  : "border-transparent text-foreground/60 hover:text-foreground"
+                "block leading-snug transition-colors hover:text-foreground",
+                entry.level === 2
+                  ? "font-bold text-foreground/70"
+                  : "font-normal text-foreground/60"
               )}
             >
               {entry.text}

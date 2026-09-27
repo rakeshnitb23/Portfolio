@@ -10,9 +10,12 @@ export interface SearchItem {
 export function buildSearchIndex(): SearchItem[] {
   const pages: SearchItem[] = [
     { title: "Home", summary: "Introduction and selected work", href: "/", group: "Pages" },
+    { title: "Investments", summary: "Notes on investments and angel positions", href: "/investments", group: "Pages" },
+    { title: "User Manual", summary: "How to work with me", href: "/user-manual", group: "Pages" },
+    { title: "Books", summary: "Books I've read and recommend", href: "/books", group: "Pages" },
+    { title: "Resume", summary: "Experience, education, and skills", href: "/resume", group: "Pages" },
     { title: "Projects", summary: "Backend and AI systems, end to end", href: "/projects", group: "Pages" },
     { title: "Writing", summary: "Notes on retrieval, reliability, and backend systems", href: "/writing", group: "Pages" },
-    { title: "About", summary: "Experience, education, and skills", href: "/about", group: "Pages" },
     { title: "Contact", summary: "Get in touch", href: "/contact", group: "Pages" },
   ];
 

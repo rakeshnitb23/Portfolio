@@ -66,7 +66,7 @@ export default async function WritingDetailPage({
   const otherPosts = getAllWritingPosts().filter((p) => p.slug !== slug);
 
   return (
-    <article className="max-w-[42rem] py-10">
+    <article className="max-w-none py-10">
       <JsonLd data={jsonLd} />
       <JsonLd
         data={breadcrumbList([
@@ -88,7 +88,7 @@ export default async function WritingDetailPage({
         <h1 className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-4">
           {frontmatter.title}
         </h1>
-        <p className="text-lg text-foreground/70 leading-relaxed max-w-[60ch] mb-4">
+        <p className="text-lg text-foreground/70 leading-relaxed mb-4">
           {frontmatter.summary}
         </p>
         <div className="flex flex-wrap items-center gap-4 font-mono text-xs text-muted-foreground">
