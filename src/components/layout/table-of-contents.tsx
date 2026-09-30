@@ -21,6 +21,7 @@ function slugify(text: string): string {
 export function TableOfContents() {
   const pathname = usePathname();
   const [entries, setEntries] = React.useState<TocEntry[]>([]);
+  const [activeId, setActiveId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const root = document.getElementById("page-content");
@@ -31,7 +32,9 @@ export function TableOfContents() {
 
     const headings = Array.from(
       root.querySelectorAll<HTMLElement>("h2, h3")
-    ).filter((h) => h.closest("footer") === null);
+    ).filter(
+      (h) => h.closest("footer") === null && h.dataset.tocSkip !== "true"
+    );
 
     const used = new Set<string>();
     const next: TocEntry[] = headings.map((h) => {
@@ -52,23 +55,42 @@ export function TableOfContents() {
     });
 
     setEntries(next);
+    setActiveId(next[0]?.id ?? null);
+
+    if (headings.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (observerEntries) => {
+        for (const entry of observerEntries) {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+            break;
+          }
+        }
+      },
+      { rootMargin: "-10% 0px -70% 0px", threshold: 0 }
+    );
+
+    headings.forEach((h) => observer.observe(h));
+    return () => observer.disconnect();
   }, [pathname]);
 
   if (entries.length === 0) return null;
 
   return (
     <nav aria-label="Table of contents" className="text-sm">
-      <p className="mb-2 text-foreground/70">Table of contents</p>
+      <p className="mb-2 font-bold text-foreground/70">Table of contents</p>
       <ul className="space-y-1">
         {entries.map((entry) => (
-          <li key={entry.id} style={{ paddingLeft: entry.level === 3 ? "2rem" : "0" }}>
+          <li key={entry.id} className={entry.level === 3 ? "pl-4" : undefined}>
             <a
               href={`#${entry.id}`}
               className={cn(
-                "block leading-snug transition-colors hover:text-foreground",
-                entry.level === 2
-                  ? "font-bold text-foreground/70"
-                  : "font-normal text-foreground/60"
+                "block py-1 pl-3 leading-snug transition-colors",
+                entry.level === 2 ? "font-bold" : "font-normal",
+                activeId === entry.id
+                  ? "text-primary"
+                  : "text-foreground/70 hover:text-foreground"
               )}
             >
               {entry.text}

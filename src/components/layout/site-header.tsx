@@ -112,7 +112,7 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
     <div className="sticky top-0 z-50">
       {/* Header bar */}
       <header className="bg-[var(--md-primary)] text-white shadow-[0_0_0.2rem_rgba(0,0,0,0),0_0.2rem_0.4rem_rgba(0,0,0,0.1)]">
-        <div className="mx-auto flex h-12 w-full max-w-[78.25rem] items-center gap-4 px-4">
+        <div className="mx-auto flex h-12 w-full max-w-[96rem] items-center gap-4 px-4 sm:px-6 lg:px-8 xl:px-12">
           <button
             type="button"
             className="lg:hidden shrink-0"
@@ -157,7 +157,7 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
         aria-label="Tabs"
         className="hidden overflow-x-auto bg-[var(--md-primary)] text-white lg:block"
       >
-        <div className="mx-auto flex h-12 w-full max-w-[78.25rem] items-center gap-8 px-4">
+        <div className="mx-auto flex h-12 w-full max-w-[96rem] items-center gap-8 px-4 sm:px-6 lg:px-8 xl:px-12">
           {TOP_NAV_LINKS.map((link) => {
             const active = isNavLinkActive(pathname, link.href);
             return (
@@ -181,7 +181,7 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
       {/* Mobile nav drawer */}
       {mobileOpen && (
         <nav className="absolute inset-x-0 top-12 max-h-[calc(100vh-3rem)] overflow-y-auto border-b border-border bg-background shadow-md lg:hidden">
-          <ul className="mx-auto w-full max-w-[78.25rem] px-4 py-2">
+          <ul className="mx-auto w-full max-w-[96rem] px-4 py-2">
             {NAV_LINKS.map((link) => {
               const active = isNavLinkActive(pathname, link.href);
               return (

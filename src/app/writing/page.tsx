@@ -191,6 +191,7 @@ export default function WritingPage() {
 
                 <h2
                   id={post.slug}
+                  data-toc-skip="true"
                   className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground mb-2"
                 >
                   <Link href={`/writing/${post.slug}`} className="hover:text-primary transition-colors">
