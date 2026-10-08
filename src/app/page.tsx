@@ -1,8 +1,18 @@
+import fs from "node:fs";
+import path from "node:path";
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
-import { getAllProjects } from "@/lib/content";
-import { PERSON } from "@/lib/site";
+import { Inter, Lora } from "next/font/google";
+import { Mail } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { HomeNav } from "@/components/home/home-nav";
+import { CopyEmailButton } from "@/components/sections/copy-email-button";
+import { BLOGS } from "@/data/blogs";
+import { home, type SocialType } from "@/data/home";
+import { buildSearchIndex } from "@/lib/search-index";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Rakesh Singh — AI Backend Engineer",
@@ -10,116 +20,269 @@ export const metadata: Metadata = {
     "AI Backend Engineer at Genpact building grounded retrieval systems, and previously a Java/Spring Boot backend developer for Shutterfly USA.",
 };
 
+const lora = Lora({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-lora" });
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter" });
+
+// Lora for reading text, Inter for UI text (nav, buttons, dates, labels).
+const serif = "font-[family-name:var(--font-lora),Georgia,serif]";
+const sans = "font-[family-name:var(--font-inter),system-ui,sans-serif]";
+
+const container = "mx-auto w-full max-w-[800px] px-6 phone:px-4";
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+const newTab = { target: "_blank", rel: "noopener noreferrer" } as const;
+// The header's GitHub link reuses the socials entry, so the URL lives in one place.
+const githubUrl = home.socials.find((social) => social.type === "github")!.href;
+
+const SOCIAL_ICONS: Record<SocialType, React.ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" }>> = {
+  email: Mail,
+  linkedin: FaLinkedin,
+  x: FaXTwitter,
+  github: FaGithub,
+};
+
+interface HomePost {
+  title: string;
+  href: string;
+  /** YYYY-MM-DD */
+  date: string;
+}
+
+// The 4 newest published posts, newest first. Build guides are left out: each
+// one is a companion to an essay on the same topic, so they would show twice.
+function getLatestPosts(limit = 4): HomePost[] {
+  return BLOGS.flatMap(({ title, href, date, kind }) => (href && kind !== "guide" ? [{ title, href, date }] : []))
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, limit);
+}
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** "2026-10-02" → "02 Oct 2026" */
+function formatDate(iso: string) {
+  const [year, month, day] = iso.split("-");
+  return `${day} ${MONTHS[Number(month) - 1]} ${year}`;
+}
+
+const inlineLink = "text-[var(--link)] no-underline hover:text-[var(--link-hover)] hover:underline";
+
+/** Renders [text](href) links inside a bio paragraph; everything else is plain text. */
+function BioParagraph({ text }: { text: string }) {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  return (
+    <p>
+      {parts.map((part, i) => {
+        const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (!match) return part;
+        const [, label, href] = match;
+        return isExternal(href) ? (
+          <a key={i} href={href} {...newTab} className={inlineLink}>
+            {label}
+          </a>
+        ) : (
+          <Link key={i} href={href} className={inlineLink}>
+            {label}
+          </Link>
+        );
+      })}
+    </p>
+  );
+}
+
+const photoBox =
+  "float-right mt-1 mb-4 ml-8 size-[240px] rounded-full [shape-outside:circle(50%)] " +
+  "phone:float-none phone:mx-auto phone:mt-0 phone:mb-6 phone:size-[160px] phone:[shape-outside:none]";
+
+function Portrait() {
+  // Until the photo is added under /public, show a neutral placeholder circle.
+  const hasPhoto = fs.existsSync(path.join(process.cwd(), "public", home.photo));
+  if (!hasPhoto) {
+    return (
+      <div
+        role="img"
+        aria-label="Portrait of Rakesh Singh (placeholder)"
+        className={cn(photoBox, sans, "flex items-center justify-center bg-[#EFEFEF] text-[40px] font-medium text-[var(--muted)]")}
+      >
+        RS
+      </div>
+    );
+  }
+  return (
+    <Image
+      src={home.photo}
+      alt="Portrait of Rakesh Singh"
+      width={480}
+      height={480}
+      priority
+      sizes="(max-width: 640px) 160px, 240px"
+      className={cn(photoBox, "block object-cover")}
+    />
+  );
+}
+
+const sectionHeading = "text-[22px] font-semibold leading-tight";
+
+const buttonBase =
+  `${sans} inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-[15px] font-medium transition-colors ` +
+  "phone:flex-1 phone:px-3 tiny:w-full tiny:flex-none";
+const outlineButton = `${buttonBase} border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[#BDBDBD]`;
+const primaryButton = `${buttonBase} cursor-pointer border border-[var(--text)] bg-[var(--text)] text-white hover:border-black hover:bg-black`;
+
 export default function Home() {
-  const projects = getAllProjects();
+  const posts = getLatestPosts();
+  const searchIndex = buildSearchIndex();
 
   return (
-    <div className="max-w-none py-10">
-      <header className="mb-10">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-4">
-          {PERSON.location}
-        </p>
-        <h1 id="rakesh-singh" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-10">
-          Rakesh Singh
-        </h1>
-        <p className="text-lg text-foreground/70 leading-relaxed">
-          I&apos;m an AI Backend Engineer at Genpact, building grounded
-          retrieval systems that cite their sources and know when to say
-          &quot;I don&apos;t know&quot; — after four years building Java and
-          Spring Boot backends for Shutterfly&apos;s production systems in the
-          US market.
-        </p>
-
-        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-sm">
-          <a
-            href={PERSON.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground/60 hover:text-accent underline underline-offset-4"
-          >
-            GitHub
-          </a>
-          <a
-            href={PERSON.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground/60 hover:text-accent underline underline-offset-4"
-          >
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${PERSON.email}`}
-            className="text-foreground/60 hover:text-accent underline underline-offset-4"
-          >
-            {PERSON.email}
-          </a>
-          <Link
-            href="/resume"
-            className="text-foreground/60 hover:text-accent underline underline-offset-4"
-          >
-            Full bio →
-          </Link>
+    <div
+      className={cn(
+        lora.variable,
+        inter.variable,
+        serif,
+        "home-page flex min-h-screen flex-col bg-[var(--bg)] text-[18px] leading-[1.65] text-[var(--text)] phone:text-[17px]"
+      )}
+    >
+      {/* Header */}
+      <header className="border-t-[3px] border-b border-t-[var(--topbar)] border-b-[var(--border)]">
+        <div className={cn(container, "flex h-16 items-center gap-6 phone:h-auto phone:flex-wrap")}>
+          <h1 className="text-[26px] font-medium leading-none phone:flex phone:h-16 phone:items-center">
+            <Link href="/" className="text-[var(--text)] no-underline">
+              {home.name}
+            </Link>
+          </h1>
+          <HomeNav githubUrl={githubUrl} searchIndex={searchIndex} />
         </div>
       </header>
 
-      <section aria-labelledby="featured-work-heading">
-        <div className="flex items-baseline justify-between mb-6">
-          <h2
-            id="featured-work-heading"
-            className="text-[1.5625em] font-light tracking-[-0.01em] text-foreground"
-          >
-            Selected work
+      <main className={cn(container, "flex-1")}>
+        {/* About: the bio wraps around the circular photo, then runs full width under it. */}
+        <section aria-label="About" className="flow-root pt-14">
+          <Portrait />
+          <div className="space-y-4">
+            {home.bio.map((paragraph, i) => (
+              <BioParagraph key={i} text={paragraph} />
+            ))}
+          </div>
+        </section>
+
+        {/* Projects */}
+        <section id="projects" aria-labelledby="projects-heading" className="mt-14">
+          <h2 id="projects-heading" className={cn(sectionHeading, "mb-4")}>
+            Projects
           </h2>
-          <Link
-            href="/projects"
-            className="font-mono text-xs uppercase tracking-wider text-primary hover:underline"
-          >
-            All projects
-          </Link>
-        </div>
-
-        <div className="flex flex-col divide-y divide-border">
-          {projects.map((project) => (
-            <article key={project.slug} className="py-8 first:pt-0">
-              <Link
-                href={`/projects/${project.slug}`}
-                className="group flex flex-col md:flex-row md:items-baseline md:justify-between gap-2"
+          <div className="grid grid-cols-2 gap-5 phone:grid-cols-1 phone:gap-4">
+            {home.projects.map((project) => (
+              <article
+                key={project.title}
+                className="relative flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 transition duration-150 ease-in-out hover:-translate-y-0.5 hover:border-[#BDBDBD] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                <div className="max-w-none">
-                  <h3 className="text-xl font-normal tracking-[-0.01em] text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
-                    {project.frontmatter.title}
-                    <ArrowUpRight
-                      className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                      aria-hidden="true"
-                    />
-                  </h3>
-                  <p className="mt-2 text-foreground/65 leading-relaxed">
-                    {project.frontmatter.summary}
-                  </p>
-                  <p className="mt-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                    {project.frontmatter.stack.join(" · ")}
-                  </p>
+                <h3 className="text-[19px] font-semibold leading-snug">
+                  {/* Stretched link: its ::after covers the card, so the whole card opens the project. */}
+                  <a
+                    href={project.href}
+                    {...(isExternal(project.href) ? newTab : {})}
+                    className="text-[var(--text)] no-underline after:absolute after:inset-0 after:rounded-xl after:content-['']"
+                  >
+                    {project.title}
+                  </a>
+                </h3>
+                <p className="mt-2 line-clamp-2 text-[16px] leading-normal">{project.summary}</p>
+                <div className={cn(sans, "mt-auto flex items-center justify-between pt-4 text-[15px]")}>
+                  {/* Visual cue only: the stretched title link above handles the click. */}
+                  <span aria-hidden="true" className="font-medium text-[var(--link)]">
+                    View project →
+                  </span>
+                  <a
+                    href={project.github}
+                    {...newTab}
+                    className="relative z-10 inline-flex items-center gap-1.5 text-[var(--muted)] hover:text-[var(--text)] hover:underline"
+                  >
+                    <FaGithub className="size-4" aria-hidden="true" />
+                    GitHub
+                  </a>
                 </div>
-              </Link>
-            </article>
-          ))}
-        </div>
-      </section>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <section className="mt-20">
-        <p className="font-serif text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-none">
-          I write about retrieval, reliability, and the systems that keep
-          large-scale backends honest. Read the{" "}
-          <Link href="/writing" className="text-accent underline underline-offset-4">
-            notes
-          </Link>
-          , or{" "}
-          <Link href="/contact" className="text-accent underline underline-offset-4">
-            get in touch
-          </Link>
-          .
-        </p>
-      </section>
+        {/* Technical Blogs (hidden when there are no posts) */}
+        {posts.length > 0 && (
+          <section id="blog" aria-labelledby="blog-heading" className="mt-14">
+            <div className="mb-4 flex items-baseline justify-between gap-4">
+              <h2 id="blog-heading" className={sectionHeading}>
+                Technical Blogs
+              </h2>
+              <Link
+                href="/blogs"
+                className={cn(sans, "text-[15px] font-medium text-[var(--link)] hover:text-[var(--link-hover)] hover:underline")}
+              >
+                All posts →
+              </Link>
+            </div>
+            <ul>
+              {posts.map((post) => (
+                <li key={post.href} className="border-t border-[var(--border)]">
+                  <a
+                    href={post.href}
+                    {...(isExternal(post.href) ? newTab : {})}
+                    className="group flex min-h-12 items-baseline justify-between gap-6 py-3.5 phone:flex-col phone:gap-1"
+                  >
+                    <span className="line-clamp-2 text-[var(--link)] group-hover:text-[var(--link-hover)] group-hover:underline">
+                      {post.title}
+                    </span>
+                    <time
+                      dateTime={post.date}
+                      className={cn(sans, "shrink-0 whitespace-nowrap text-[15px] text-[var(--muted)] tabular-nums")}
+                    >
+                      {formatDate(post.date)}
+                    </time>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-14 border-t border-[var(--border)]">
+        <div className={cn(container, "grid grid-cols-[2fr_3fr] items-start gap-8 pt-10 pb-14 phone:grid-cols-1")}>
+          <div>
+            <h2 className={cn(sans, "mb-3 text-[15px] font-semibold text-[var(--muted)]")}>Socials</h2>
+            <ul className="space-y-2 text-[16px]">
+              {home.socials.map(({ type, label, href }) => {
+                const Icon = SOCIAL_ICONS[type];
+                return (
+                  <li key={type} className="flex items-center gap-2">
+                    <Icon className="size-4 shrink-0 text-[var(--muted)]" aria-hidden="true" />
+                    <a
+                      href={href}
+                      {...(isExternal(href) ? newTab : {})}
+                      className="break-all text-[var(--link)] hover:text-[var(--link-hover)] hover:underline"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className={cn(sans, "text-[15px] font-semibold text-[var(--muted)]")}>Directly DM</h2>
+            <p className={cn(sans, "mb-3 text-[15px] text-[var(--muted)]")}>Fastest way to reach me.</p>
+            <div className="flex gap-3 tiny:flex-col">
+              <CopyEmailButton email={home.email} className={primaryButton} />
+              <a href={home.linkedinDm} {...newTab} className={outlineButton}>
+                <FaLinkedin className="size-4" aria-hidden="true" />
+                LinkedIn
+              </a>
+              <a href={home.xDm} {...newTab} className={outlineButton}>
+                <FaXTwitter className="size-4" aria-hidden="true" />X
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

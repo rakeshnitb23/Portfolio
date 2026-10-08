@@ -25,7 +25,7 @@ export function CopyEmailButton({ email, className }: { email: string; className
       ) : (
         <Copy className="h-4 w-4" aria-hidden="true" />
       )}
-      {state === "copied" ? "Copied!" : state === "manual" ? email : "Copy email"}
+      {state === "copied" ? "Copied" : state === "manual" ? email : "Copy email"}
     </button>
   );
 }
