@@ -1,0 +1,31 @@
+# Checks every pull request (and every push to main) before it can be merged.
+# Deploying is not done here: Vercel's GitHub integration builds a preview for
+# each PR and deploys production when a PR is merged into main.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A newer push to the same PR cancels the older, now-stale run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # matches the Vercel project's Node.js version
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      # Also type-checks the project.
+      - run: npm run build
