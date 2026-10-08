@@ -9,7 +9,14 @@ import * as React from "react";
 const BUTTONDOWN_ACTION = "https://buttondown.com/api/emails/embed-subscribe/rakeshnitb23";
 const FORM_ID = "newsletter-subscribe";
 
-export function NewsletterSubscribe({ className }: { className: string }) {
+export function NewsletterSubscribe({
+  className,
+  submitClassName,
+}: {
+  className: string;
+  /** Overrides the Subscribe button's colors, for pages with their own palette. */
+  submitClassName?: string;
+}) {
   const [open, setOpen] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -32,7 +39,7 @@ export function NewsletterSubscribe({ className }: { className: string }) {
       {/* order-last + basis-full: drops below the whole button row. */}
       {open && (
         <div id={FORM_ID} className="order-last basis-full">
-          <NewsletterForm inputId="newsletter-email" inputRef={inputRef} />
+          <NewsletterForm inputId="newsletter-email" inputRef={inputRef} submitClassName={submitClassName} />
         </div>
       )}
     </>
@@ -63,10 +70,12 @@ function NewsletterForm({
   inputId,
   inputRef,
   showLabel = true,
+  submitClassName = "border-primary bg-primary text-primary-foreground hover:opacity-90",
 }: {
   inputId: string;
   inputRef?: React.Ref<HTMLInputElement>;
   showLabel?: boolean;
+  submitClassName?: string;
 }) {
   const [submitted, setSubmitted] = React.useState(false);
 
@@ -107,7 +116,7 @@ function NewsletterForm({
         <input type="hidden" name="embed" value="1" />
         <button
           type="submit"
-          className="h-9 shrink-0 rounded-sm border border-primary bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          className={`h-9 shrink-0 rounded-sm border px-4 text-sm font-medium transition-colors ${submitClassName}`}
         >
           Subscribe
         </button>

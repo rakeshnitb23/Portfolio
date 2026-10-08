@@ -9,6 +9,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { HomeNav } from "@/components/home/home-nav";
 import { CopyEmailButton } from "@/components/sections/copy-email-button";
+import { NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
 import { BLOGS } from "@/data/blogs";
 import { home, type SocialType } from "@/data/home";
 import { buildSearchIndex } from "@/lib/search-index";
@@ -126,6 +127,8 @@ const buttonBase =
   "phone:flex-1 phone:px-3 tiny:w-full tiny:flex-none";
 const outlineButton = `${buttonBase} border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[#BDBDBD]`;
 const primaryButton = `${buttonBase} cursor-pointer border border-[var(--text)] bg-[var(--text)] text-white hover:border-black hover:bg-black`;
+// A smaller primary button that sits beside a section heading.
+const headingButton = `${sans} inline-flex h-8 cursor-pointer items-center whitespace-nowrap rounded-lg border border-[var(--text)] bg-[var(--text)] px-3 text-[14px] font-medium text-white transition-colors hover:border-black hover:bg-black`;
 
 export default function Home() {
   const posts = getLatestPosts();
@@ -207,10 +210,15 @@ export default function Home() {
         {/* Technical Blogs (hidden when there are no posts) */}
         {posts.length > 0 && (
           <section id="blog" aria-labelledby="blog-heading" className="mt-14">
-            <div className="mb-4 flex items-baseline justify-between gap-4">
-              <h2 id="blog-heading" className={sectionHeading}>
+            {/* The newsletter form opens on its own line under this row (see NewsletterSubscribe). */}
+            <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <h2 id="blog-heading" className={cn(sectionHeading, "mr-auto")}>
                 Technical Blogs
               </h2>
+              <NewsletterSubscribe
+                className={headingButton}
+                submitClassName="border-[var(--text)] bg-[var(--text)] text-white hover:border-black hover:bg-black"
+              />
               <Link
                 href="/blogs"
                 className={cn(sans, "text-[15px] font-medium text-[var(--link)] hover:text-[var(--link-hover)] hover:underline")}
