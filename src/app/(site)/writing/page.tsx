@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { getAllPersonalPosts } from "@/lib/content";
 import { PERSON } from "@/lib/site";
-import { NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
+import { NewsletterCard, NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
 import { BLOGS } from "@/data/blogs";
 
 export const metadata: Metadata = {
@@ -125,6 +125,7 @@ export default function WritingPage() {
       {/* scroll-mt clears the sticky header when jumping here from "Popular posts". */}
       <section id="technical-popular-blogs" className="mb-8 scroll-mt-28">
         <TechnicalBlogs />
+        <NewsletterCard />
       </section>
 
       {/* Personal writing: each entry opens its own page at /writing/personal/<slug>.
