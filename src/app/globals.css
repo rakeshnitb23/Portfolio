@@ -239,6 +239,13 @@
   --link-hover: #173a8a;
   --border: #e6e6e6;
   --topbar: #2b2b2b;
+  /* Theme tokens read by shared components placed here (the newsletter form),
+     pinned to light so a visitor's dark-mode choice can't wash them out. */
+  --foreground: #1a1a1a;
+  --background: #ffffff;
+  --muted-foreground: #6b6b6b;
+  --input: #e6e6e6;
+  --ring: #2456c7;
   color-scheme: light;
 }
 
