@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getAllWritingPosts, type ContentEntry, type WritingFrontmatter } from "@/lib/content";
+import { ArrowUpRight } from "lucide-react";
+import { getAllPersonalPosts } from "@/lib/content";
 import { PERSON } from "@/lib/site";
+import { NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
+import { BLOGS } from "@/data/blogs";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -10,61 +13,71 @@ export const metadata: Metadata = {
   alternates: { canonical: "/writing" },
 };
 
-type Post = ContentEntry<WritingFrontmatter>;
-
-interface Category {
-  id: string;
-  title: string;
-  description?: string;
-  match: (post: Post) => boolean;
-}
-
-// Fixed category index, matching the reference site's structure. Categories
-// with no matching post yet are shown empty rather than filled with
-// unrelated or fabricated articles.
-const CATEGORIES: Category[] = [
+const SELECTED_NOTES = [
   {
-    id: "personal",
-    title: "Personal",
-    match: () => false,
+    title: "My RAG API Never Signs Tokens or Sees Passwords",
+    summary: "auth on a RAG API, and the two attackers most designs forget.",
   },
   {
-    id: "rag-and-retrieval-systems",
-    title: "RAG and Retrieval Systems",
-    description:
-      "Notes on keeping retrieval-augmented systems honest — what they cite, and when they should say nothing at all.",
-    match: (post) =>
-      post.frontmatter.tags.includes("Retrieval") ||
-      post.frontmatter.tags.includes("Citations"),
+    title: "Multi-Tenant RAG Leaks Through the Search, Not the Login",
+    summary: "four checkpoints that keep an answer inside the asker’s own documents.",
   },
   {
-    id: "context-engineering",
-    title: "Context Engineering",
-    match: () => false,
+    title: "When a Redis Cache Hit Is the Wrong Answer",
+    summary: "three caches in front of an agent, and the cases where a saved answer must not be returned.",
   },
   {
-    id: "coding-agents",
-    title: "Coding Agents",
-    match: () => false,
-  },
-  {
-    id: "ai-engineering-and-process",
-    title: "AI Engineering and Process",
-    description:
-      "Backend guarantees that hold up under scale — idempotency, uptime, and the discipline behind both.",
-    match: (post) =>
-      post.frontmatter.tags.includes("Systems") ||
-      post.frontmatter.tags.includes("Operations"),
-  },
-  {
-    id: "business-and-product",
-    title: "Business and Product",
-    match: () => false,
+    title: "Rate Limit an LLM Agent by Tokens, Not Requests",
+    summary: "what to count, when to count it, and what an agent loop changes.",
   },
 ];
 
-function categoryFor(post: Post): Category | undefined {
-  return CATEGORIES.find((c) => c.match(post));
+/** A note's "Read on …" links, taken from the same post on the Blogs page so both stay in sync. */
+function sourcesFor(title: string) {
+  return BLOGS.find((post) => post.title === title && post.kind !== "guide")?.sources ?? [];
+}
+
+function TechnicalBlogs() {
+  return (
+    <>
+      <p className="font-medium text-foreground mb-2">Technical popular blogs</p>
+      <ul className="list-disc ml-5 space-y-1.5 text-foreground/80 leading-relaxed">
+        {SELECTED_NOTES.map((note) => {
+          const sources = sourcesFor(note.title);
+          return (
+            <li key={note.title}>
+              <span className="font-medium text-foreground">{note.title}</span> — {note.summary}
+              {sources.length > 0 && (
+                <div
+                  data-search-ignore
+                  className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"
+                >
+                  {sources.map((source, i) => (
+                    <span key={source.name} className="inline-flex items-center gap-2">
+                      <a
+                        href={source.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-0.5 font-medium text-primary hover:underline"
+                      >
+                        Read on {source.name}
+                        <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      </a>
+                      {i < sources.length - 1 && (
+                        <span aria-hidden="true" className="text-muted-foreground">
+                          ·
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
 }
 
 function readingTime(body: string): number {
@@ -80,21 +93,13 @@ function formatFeedDate(date: string): string {
   return `${yyyy}/${mm}/${dd}`;
 }
 
-function initials(name: string): string {
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .toUpperCase();
-}
-
 const buttonBase =
   "inline-flex items-center rounded-sm border px-4 py-1 text-sm font-medium transition-colors";
 const buttonOutline = `${buttonBase} border-primary text-primary hover:bg-primary hover:text-primary-foreground`;
 const buttonFilled = `${buttonBase} border-primary bg-primary text-primary-foreground hover:opacity-90`;
 
 export default function WritingPage() {
-  const posts = getAllWritingPosts();
+  const personalPosts = getAllPersonalPosts();
 
   return (
     <div className="max-w-none py-10">
@@ -103,12 +108,10 @@ export default function WritingPage() {
       </h1>
 
       <div className="flex flex-wrap items-center gap-3 mb-10">
-        <a href="#feed" className={buttonOutline}>
+        <a href="#technical-popular-blogs" className={buttonOutline}>
           Popular posts
         </a>
-        <a href={`mailto:${PERSON.email}?subject=Subscribe`} className={buttonFilled}>
-          Subscribe to my newsletter
-        </a>
+        <NewsletterSubscribe className={buttonFilled} />
         <a
           href={PERSON.linkedin}
           target="_blank"
@@ -119,104 +122,53 @@ export default function WritingPage() {
         </a>
       </div>
 
-      {/* Category index */}
-      {CATEGORIES.map((category) => {
-        const categoryPosts = posts.filter(category.match);
-        return (
-          <section key={category.id} className="mb-8">
-            <h2
-              id={category.id}
-              className="text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-2"
-            >
-              {category.title}
-            </h2>
-            {category.description && (
-              <p className="text-foreground/65 leading-relaxed mb-3">
-                {category.description}
-              </p>
-            )}
-            {categoryPosts.length > 0 ? (
-              <ul className="list-disc ml-5 space-y-1.5 text-foreground/80 leading-relaxed">
-                {categoryPosts.map((post) => (
-                  <li key={post.slug}>
-                    <a href={`#${post.slug}`} className="text-primary hover:underline">
-                      {post.frontmatter.title}
-                    </a>{" "}
-                    — {post.frontmatter.summary}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-foreground/50 italic">Coming soon.</p>
-            )}
-          </section>
-        );
-      })}
+      {/* scroll-mt clears the sticky header when jumping here from "Popular posts". */}
+      <section id="technical-popular-blogs" className="mb-8 scroll-mt-28">
+        <TechnicalBlogs />
+      </section>
 
-      <hr className="border-border my-10" />
-
-      {/* Chronological article feed */}
-      <section id="feed" aria-label="All posts, chronological">
+      {/* Personal writing: each entry opens its own page at /writing/personal/<slug>.
+          Posts live in content/personal/*.mdx; "placeholder: true" marks one not yet written. */}
+      <section aria-labelledby="personal-writing" className="mt-12">
+        <h2
+          id="personal-writing"
+          className="scroll-mt-28 text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-4"
+        >
+          Personal writing
+        </h2>
         <div className="flex flex-col divide-y divide-border">
-          {posts.map((post) => {
-            const category = categoryFor(post);
+          {personalPosts.map((post) => {
+            const { title, summary, date, placeholder } = post.frontmatter;
             return (
-              <article key={post.slug} className="py-8 first:pt-0">
-                <header className="flex items-center gap-3 mb-3">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground"
-                  >
-                    {initials(PERSON.name)}
-                  </span>
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                    <time dateTime={post.frontmatter.date}>
-                      {formatFeedDate(post.frontmatter.date)}
-                    </time>
-                    {category && (
-                      <>
-                        <span>·</span>
-                        <span>
-                          in{" "}
-                          <a href={`#${category.id}`} className="text-primary normal-case hover:underline">
-                            {category.title}
-                          </a>
-                        </span>
-                      </>
-                    )}
-                    <span>·</span>
-                    <span>{readingTime(post.body)} min read</span>
-                  </div>
-                </header>
-
-                <h2
-                  id={post.slug}
-                  data-toc-skip="true"
-                  className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground mb-2"
-                >
-                  <Link href={`/writing/${post.slug}`} className="hover:text-primary transition-colors">
-                    {post.frontmatter.title}
-                  </Link>
-                </h2>
-                <p className="text-foreground/65 leading-relaxed mb-3">
-                  {post.frontmatter.summary}
+              <Link
+                key={post.slug}
+                href={`/writing/personal/${post.slug}`}
+                className="group block py-6 first:pt-2"
+              >
+                <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  {placeholder || !date ? (
+                    "Placeholder"
+                  ) : (
+                    <>
+                      <time dateTime={date}>{formatFeedDate(date)}</time> · {readingTime(post.body)}{" "}
+                      min read
+                    </>
+                  )}
                 </p>
-                <Link
-                  href={`/writing/${post.slug}`}
-                  className="text-primary text-sm font-medium hover:underline"
+                <h3
+                  data-toc-skip="true"
+                  className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground mb-2 transition-colors group-hover:text-primary"
                 >
+                  {title}
+                </h3>
+                <p className="text-foreground/65 leading-relaxed mb-3">{summary}</p>
+                <span className="text-primary text-sm font-medium group-hover:underline">
                   Continue reading →
-                </Link>
-              </article>
+                </span>
+              </Link>
             );
           })}
         </div>
-
-        <nav aria-label="Pagination" className="mt-10 flex items-center gap-2 font-mono text-sm">
-          <span className="flex h-7 w-7 items-center justify-center rounded-sm border border-primary bg-primary text-primary-foreground">
-            1
-          </span>
-        </nav>
       </section>
     </div>
   );

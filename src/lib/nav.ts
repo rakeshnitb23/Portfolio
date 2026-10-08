@@ -7,7 +7,8 @@ export interface NavLink {
 // for footer "Next" pagination.
 export const NAV_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
-  { name: "Investments", href: "/investments" },
+  { name: "Projects", href: "/side-projects" },
+  { name: "Blogs", href: "/blogs" },
   { name: "User Manual", href: "/user-manual" },
   { name: "Books", href: "/books" },
   { name: "Resume", href: "/resume" },
@@ -23,7 +24,8 @@ export const TOP_NAV_LINKS: NavLink[] = [
 // Home section's sub-pages, shown in the left sidebar.
 export const SIDEBAR_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
-  { name: "Investments", href: "/investments" },
+  { name: "Projects", href: "/side-projects" },
+  { name: "Blogs", href: "/blogs" },
   { name: "User Manual", href: "/user-manual" },
   { name: "Books", href: "/books" },
   { name: "Resume", href: "/resume" },

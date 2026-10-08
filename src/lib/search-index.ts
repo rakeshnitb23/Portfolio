@@ -1,15 +1,21 @@
-import { getAllProjects, getAllWritingPosts } from "@/lib/content";
+import { getAllPersonalPosts, getAllProjects, getAllWritingPosts } from "@/lib/content";
 
 export interface SearchItem {
   title: string;
   summary: string;
   href: string;
   group: string;
+  /** Shown as chips on the page's search result (post tags, project stack). */
+  tags?: string[];
 }
 
+// Every page the site search reads. Its full text is indexed in the browser
+// (see lib/site-search.ts), so a new page only needs an entry here.
 export function buildSearchIndex(): SearchItem[] {
   const pages: SearchItem[] = [
     { title: "Home", summary: "Introduction and selected work", href: "/", group: "Pages" },
+    { title: "Projects", summary: "Open-source and side projects", href: "/side-projects", group: "Pages" },
+    { title: "Blogs", summary: "Long-form essays", href: "/blogs", group: "Pages" },
     { title: "Investments", summary: "Notes on investments and angel positions", href: "/investments", group: "Pages" },
     { title: "User Manual", summary: "How to work with me", href: "/user-manual", group: "Pages" },
     { title: "Books", summary: "Books I've read and recommend", href: "/books", group: "Pages" },
@@ -24,6 +30,7 @@ export function buildSearchIndex(): SearchItem[] {
     summary: p.frontmatter.summary,
     href: `/projects/${p.slug}`,
     group: "Projects",
+    tags: p.frontmatter.stack,
   }));
 
   const writing: SearchItem[] = getAllWritingPosts().map((p) => ({
@@ -31,7 +38,18 @@ export function buildSearchIndex(): SearchItem[] {
     summary: p.frontmatter.summary,
     href: `/writing/${p.slug}`,
     group: "Writing",
+    tags: p.frontmatter.tags,
   }));
 
-  return [...pages, ...projects, ...writing];
+  // Written personal posts only; placeholders stay out of search.
+  const personal: SearchItem[] = getAllPersonalPosts()
+    .filter((p) => !p.frontmatter.placeholder)
+    .map((p) => ({
+      title: p.frontmatter.title,
+      summary: p.frontmatter.summary,
+      href: `/writing/personal/${p.slug}`,
+      group: "Personal writing",
+    }));
+
+  return [...pages, ...projects, ...writing, ...personal];
 }

@@ -1,0 +1,35 @@
+---
+title: "Learning to Say “I Don’t Know”"
+summary: "For years my job was making systems always respond. Building one that is allowed to refuse changed how I think about correctness — in software, and in how I work."
+date: "2026-10-08"
+---
+
+{/* Example personal post. Edit or replace this file: the frontmatter above drives the listing on /writing, and everything below is the page. */}
+
+For four years I built Java and Spring Boot backends for Shutterfly’s production systems. In that world the goal was simple to state: every request gets a response, and it should be the right one. An empty result was usually a bug. A timeout was an incident. Silence was a failure.
+
+Then I started building GroundedDocs, a document question-answering system that is designed to refuse.
+
+## The habit I brought with me
+
+Backend engineering trains a reflex: if the system can’t produce an answer, something upstream is broken. You add a retry, a fallback, a sensible default. You make sure the caller always gets *something*.
+
+That reflex is right when the answer exists and the system failed to fetch it. It is dangerous when the answer does not exist at all. A language model will happily fill that gap with a fluent, confident paragraph, whether or not the documents support it — and the fluency is exactly what makes it convincing.
+
+## A system that is allowed to refuse
+
+The rule in GroundedDocs is that every answer must cite the user’s own files, and every citation must point at something that was actually retrieved. When the evidence isn’t there, the system says so. Abstaining isn’t a fallback; it is one of the expected outputs, measured as carefully as the answers.
+
+Writing that rule down was easy. Living with it is harder, because an abstention looks like a miss at first glance. Sometimes it is one, and the retrieval needs fixing. Often the system is simply right: the question has no grounded answer in the documents it was given.
+
+## The same rule, applied to people
+
+I’ve come to think the rule isn’t only about software. “I don’t know yet, but here is how we can find out” is more useful than an answer that only sounds sure. The confident answer feels better in the moment. The honest one holds up later.
+
+That is an uncomfortable habit for an engineer, because so much of the job rewards being the person with the answer. But the systems I trust most are the ones that know their limits, and I want to be the kind of engineer people can trust in the same way.
+
+## Where this leaves me
+
+I still care about the old backend virtues: uptime, idempotency, systems that stay correct under retries. I now care just as much about a quieter one — knowing when the right response is “I don’t know.”
+
+That question, when a system should answer and when it should refuse, is the one I keep returning to: in the code I write, and in how I work.

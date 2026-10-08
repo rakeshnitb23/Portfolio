@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteShell } from "@/components/layout/site-shell";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { SearchHighlighter } from "@/components/layout/search-highlighter";
+import { ThemeProvider } from "@/components/theme-provider";
 import { JsonLd } from "@/components/json-ld";
 import { PERSON, SITE_URL, personId } from "@/lib/site";
 import { DOMAINS } from "@/data/technical-expertise";
@@ -95,18 +98,25 @@ export default function RootLayout({
   const searchIndex = buildSearchIndex();
 
   return (
-    <html lang="en">
+    // next-themes sets the theme class on <html> before React hydrates.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <JsonLd data={personJsonLd} />
       </head>
       <body
         className={`${roboto.variable} ${robotoMono.variable} antialiased font-sans flex flex-col min-h-screen`}
       >
-        <SiteHeader searchIndex={searchIndex} />
-        <main className="flex-1">
-          <SiteShell>{children}</SiteShell>
-        </main>
-        <SiteFooter />
+        <ThemeProvider>
+          <SiteHeader searchIndex={searchIndex} />
+          <main className="flex-1">
+            <SiteShell>{children}</SiteShell>
+          </main>
+          <SiteFooter />
+          {/* Reads ?h= from the URL, so it renders client-side only. */}
+          <Suspense fallback={null}>
+            <SearchHighlighter />
+          </Suspense>
+        </ThemeProvider>
       </body>
     </html>
   );

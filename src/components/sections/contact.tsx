@@ -67,21 +67,25 @@ export default function Contact() {
       setStatus("submitting");
 
       try {
-        const apiBase = process.env.NEXT_PUBLIC_API_URL;
+        // The site's own /api/contact route, unless an external API is configured.
+        const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "";
         const res = await fetch(`${apiBase}/api/contact`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
 
-        const data = await res.json();
+        // An error page (e.g. a 404) isn't JSON; don't let parsing hide the real failure.
+        const data = await res.json().catch(() => ({}));
 
         if (!res.ok) {
           if (data.errors) {
             setErrors(data.errors);
             setStatus("idle");
           } else {
-            setServerError(data.message || "Something went wrong. Please retry.");
+            setServerError(
+              `${data.message || "Something went wrong."} Please try again, or use the options below.`
+            );
             setStatus("error");
           }
           return;
@@ -98,7 +102,7 @@ export default function Contact() {
           _hp: "",
         });
       } catch {
-        setServerError("Network error. Please check your connection.");
+        setServerError("Network error. Please check your connection and try again.");
         setStatus("error");
       }
     },

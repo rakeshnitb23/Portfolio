@@ -13,6 +13,8 @@ export const PERSON = {
   location: "Bangalore, India",
   github: "https://github.com/rakeshnitb23",
   linkedin: "https://linkedin.com/in/rakesh-singh-58926a116",
+  /** X (Twitter) profile URL. */
+  x: "https://x.com/rakeshK77998015",
   alumniOf: "National Institute of Technology (NIT) Bhopal",
 };
 

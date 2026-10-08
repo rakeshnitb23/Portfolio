@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import Contact from "@/components/sections/contact";
+import { CopyEmailButton } from "@/components/sections/copy-email-button";
+import { PERSON } from "@/lib/site";
+
+const dmButton =
+  "inline-flex items-center gap-2 rounded-[0.1rem] border border-border px-4 py-2 text-sm font-medium text-foreground";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -21,6 +28,47 @@ export default function ContactPage() {
         under 24 hours.
       </p>
       <Contact />
+
+      <section className="mt-12 max-w-[42rem] border-t border-border pt-8">
+        <h2 data-toc-skip="true" className="text-[1.25em] font-normal text-foreground mb-2">
+          Prefer to DM?
+        </h2>
+        <p className="text-foreground/65 leading-relaxed mb-4">
+          Copy my email, or message me directly on LinkedIn or X.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <CopyEmailButton
+            email={PERSON.email}
+            className={`${dmButton} transition-colors hover:border-primary hover:text-primary`}
+          />
+          <a
+            href={PERSON.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${dmButton} transition-colors hover:border-primary hover:text-primary`}
+          >
+            <FaLinkedin className="h-4 w-4" aria-hidden="true" />
+            Message on LinkedIn
+          </a>
+          {PERSON.x ? (
+            <a
+              href={PERSON.x}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${dmButton} transition-colors hover:border-primary hover:text-primary`}
+            >
+              <FaXTwitter className="h-4 w-4" aria-hidden="true" />
+              Message on X
+            </a>
+          ) : (
+            // Shown greyed out until PERSON.x is set in lib/site.ts.
+            <span title="Coming soon" className={`${dmButton} cursor-default opacity-50`}>
+              <FaXTwitter className="h-4 w-4" aria-hidden="true" />
+              Message on X
+            </span>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

@@ -22,6 +22,16 @@ export interface WritingFrontmatter {
   tags: string[];
 }
 
+export interface PersonalFrontmatter {
+  title: string;
+  /** Two or three lines shown under the title on /writing. */
+  summary: string;
+  /** Publish date (YYYY-MM-DD). Placeholders leave it out. */
+  date?: string;
+  /** A post not yet written: listed and linked, shown with a "Placeholder" label. */
+  placeholder?: boolean;
+}
+
 export interface ContentEntry<T> {
   slug: string;
   frontmatter: T;
@@ -70,4 +80,25 @@ export function getAllWritingPosts(): ContentEntry<WritingFrontmatter>[] {
   return getWritingSlugs()
     .map((slug) => getWritingPost(slug))
     .sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1));
+}
+
+export function getPersonalSlugs(): string[] {
+  return readDir("personal");
+}
+
+export function getPersonalPost(slug: string): ContentEntry<PersonalFrontmatter> {
+  return readEntry<PersonalFrontmatter>("personal", slug);
+}
+
+/** Written posts first (newest first), then placeholders in file-name order. */
+export function getAllPersonalPosts(): ContentEntry<PersonalFrontmatter>[] {
+  return getPersonalSlugs()
+    .map((slug) => getPersonalPost(slug))
+    .sort((a, b) => {
+      const pa = a.frontmatter.placeholder ? 1 : 0;
+      const pb = b.frontmatter.placeholder ? 1 : 0;
+      if (pa !== pb) return pa - pb;
+      if (pa) return a.slug.localeCompare(b.slug);
+      return (b.frontmatter.date ?? "").localeCompare(a.frontmatter.date ?? "");
+    });
 }
