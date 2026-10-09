@@ -5,8 +5,11 @@ import Contact from "@/components/sections/contact";
 import { CopyEmailButton } from "@/components/sections/copy-email-button";
 import { PERSON } from "@/lib/site";
 
-const dmButton =
-  "inline-flex items-center gap-2 rounded-[0.1rem] border border-border px-4 py-2 text-sm font-medium text-foreground";
+// The homepage's "Directly DM" buttons: a near-black primary and neutral outlines.
+const dmBase =
+  "ui-font inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-sm font-medium transition-colors";
+const dmPrimary = `${dmBase} cursor-pointer border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90`;
+const dmButton = `${dmBase} border-border bg-card text-foreground`;
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -37,15 +40,12 @@ export default function ContactPage() {
           Copy my email, or message me directly on LinkedIn or X.
         </p>
         <div className="flex flex-wrap gap-3">
-          <CopyEmailButton
-            email={PERSON.email}
-            className={`${dmButton} transition-colors hover:border-primary hover:text-primary`}
-          />
+          <CopyEmailButton email={PERSON.email} className={dmPrimary} />
           <a
             href={PERSON.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${dmButton} transition-colors hover:border-primary hover:text-primary`}
+            className={`${dmButton} hover:border-foreground/30`}
           >
             <FaLinkedin className="h-4 w-4" aria-hidden="true" />
             Message on LinkedIn
@@ -55,7 +55,7 @@ export default function ContactPage() {
               href={PERSON.x}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${dmButton} transition-colors hover:border-primary hover:text-primary`}
+              className={`${dmButton} hover:border-foreground/30`}
             >
               <FaXTwitter className="h-4 w-4" aria-hidden="true" />
               Message on X

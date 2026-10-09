@@ -45,7 +45,7 @@ function FilterPill({
       className={cn(
         "inline-flex items-center gap-2 rounded-sm border px-3 py-1 text-sm transition-colors",
         active
-          ? "border-primary bg-primary text-primary-foreground"
+          ? "border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)]"
           : "border-border text-foreground/80 hover:border-primary hover:text-primary"
       )}
     >
@@ -199,7 +199,7 @@ export function BlogArchive({ posts }: { posts: BlogPost[] }) {
                     {post.sources && post.sources.length > 0 && (
                       <p
                         data-search-ignore
-                        className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"
+                        className="ui-font mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"
                       >
                         {/* Each separator stays with the link before it, so a wrapped line never starts with "·". */}
                         {post.sources.map((source, i, all) => (

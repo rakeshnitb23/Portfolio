@@ -61,7 +61,7 @@ export default function SideProjectsPage() {
             <article
               key={project.title}
               id={`project-${slugify(project.title)}`}
-              className="flex flex-col rounded-sm border border-border p-5"
+              className="flex flex-col rounded-lg border border-border bg-card p-5"
               // Site search: each real project is its own result; placeholders are skipped.
               {...(project.href || project.code
                 ? {
@@ -81,7 +81,7 @@ export default function SideProjectsPage() {
                 </p>
               )}
               {(project.code || project.website) && (
-                <p data-search-ignore className="mt-auto flex gap-3 text-sm">
+                <p data-search-ignore className="ui-font mt-auto flex gap-3 text-sm">
                   {project.code && <ExternalLink href={project.code} label="code" />}
                   {project.website && <ExternalLink href={project.website} label="website" />}
                 </p>

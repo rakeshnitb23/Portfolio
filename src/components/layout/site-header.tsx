@@ -142,7 +142,7 @@ function HeaderLabel({ label }: { label: HeaderLabelText }) {
     }
   }, [shown.id]);
 
-  const base = "absolute inset-x-0 top-0 truncate text-lg leading-[3rem]";
+  const base = "absolute inset-x-0 top-0 truncate text-[22px] leading-[3rem]";
   return (
     <>
       {shown.previous && (
@@ -150,12 +150,12 @@ function HeaderLabel({ label }: { label: HeaderLabelText }) {
           key={shown.id - 1}
           ref={previousRef}
           aria-hidden="true"
-          className={cn(base, shown.previous.bold && "font-bold", "motion-reduce:hidden")}
+          className={cn(base, shown.previous.bold && "font-medium", "motion-reduce:hidden")}
         >
           {shown.previous.text}
         </p>
       )}
-      <p key={shown.id} ref={currentRef} className={cn(base, shown.current.bold && "font-bold")}>
+      <p key={shown.id} ref={currentRef} className={cn(base, shown.current.bold && "font-medium")}>
         {shown.current.text}
       </p>
     </>
@@ -348,7 +348,8 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
   return (
     <div ref={headerRef} className="sticky top-0 z-50">
       {/* Header bar */}
-      <header className="bg-[var(--md-primary)] text-white shadow-[0_0_0.2rem_rgba(0,0,0,0),0_0.2rem_0.4rem_rgba(0,0,0,0.1)]">
+      {/* The homepage's header look: light bar, thin dark line on top, hairline below. */}
+      <header className="border-t-[3px] border-b border-t-[var(--topbar)] border-b-border bg-background text-foreground lg:border-b-0">
         <div className="mx-auto flex h-12 w-full max-w-[96rem] items-center gap-4 px-4 sm:px-6 lg:px-8 xl:px-12">
           <button
             type="button"
@@ -363,7 +364,7 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
             <SiteLogo />
           </Link>
 
-          <div className="relative h-12 min-w-0 flex-1 overflow-hidden">
+          <div className="relative h-12 min-w-0 flex-1 overflow-hidden font-[family-name:var(--font-lora),Georgia,serif]">
             <HeaderLabel
               label={
                 pageTitle.show
@@ -383,7 +384,7 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
             // Start building the index as soon as the visitor reaches for search.
             onPointerEnter={() => loadSearchIndex(searchIndex)}
             onFocus={() => loadSearchIndex(searchIndex)}
-            className="relative flex h-9 w-9 shrink-0 items-center justify-center gap-3 rounded-[0.125rem] bg-black/25 text-white/90 transition-colors hover:bg-black/35 sm:w-[14.625rem] sm:justify-start sm:px-3"
+            className="relative flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-sm border border-border bg-card text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground sm:w-[14.625rem] sm:justify-start sm:px-3"
           >
             {/* Shadow for the "pop"; only its opacity animates. */}
             <span
@@ -391,9 +392,12 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
             />
-            <Search className="h-6 w-6 shrink-0 text-white/70" aria-hidden="true" />
+            <Search className="h-4 w-4 shrink-0" aria-hidden="true" />
             <span
-              className={cn("hidden truncate sm:inline", highlightQuery ? "text-white" : "text-white/70")}
+              className={cn(
+                "hidden truncate text-[15px] font-medium sm:inline",
+                highlightQuery && "text-foreground"
+              )}
             >
               {highlightQuery || "Search"}
             </span>
@@ -403,10 +407,10 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
             href={PERSON.github + "/Portfolio"}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden shrink-0 items-center gap-4 pr-1 text-white/90 hover:text-white sm:flex"
+            className="hidden shrink-0 items-center gap-2 pr-1 text-foreground/80 hover:text-foreground hover:underline sm:flex"
           >
-            <FaGithub className="h-6 w-6" />
-            <span className="text-[0.8125rem]">Portfolio</span>
+            <FaGithub className="h-5 w-5" />
+            <span className="text-[15px] font-medium">Portfolio</span>
           </a>
         </div>
       </header>
@@ -414,7 +418,7 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
       {/* Tabs row */}
       <nav
         aria-label="Tabs"
-        className="hidden overflow-x-auto bg-[var(--md-primary)] text-white lg:block"
+        className="hidden overflow-x-auto border-b border-border bg-background text-foreground lg:block"
       >
         <div className="mx-auto flex h-12 w-full max-w-[96rem] items-center gap-8 px-4 sm:px-6 lg:px-8 xl:px-12">
           {TOP_NAV_LINKS.map((link) => {
@@ -423,11 +427,12 @@ export function SiteHeader({ searchIndex }: { searchIndex: SearchItem[] }) {
               <Link
                 key={link.href}
                 href={link.href}
+                // Same treatment as the homepage nav: active link underlined.
                 className={cn(
-                  "border-b-2 py-1 text-sm font-normal uppercase transition-opacity",
+                  "py-1 text-[15px] font-medium transition-colors",
                   active
-                    ? "border-white opacity-100"
-                    : "border-transparent opacity-70 hover:opacity-100"
+                    ? "text-foreground underline decoration-foreground decoration-2 underline-offset-4"
+                    : "text-foreground/70 hover:text-foreground hover:underline"
                 )}
               >
                 {link.name}

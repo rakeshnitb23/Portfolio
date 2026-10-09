@@ -89,13 +89,13 @@ export function SiteFooter() {
         </div>
       )}
 
-      <div className="border-t border-border bg-muted/60">
+      <div className="border-t border-border">
         <div className="mx-auto w-full max-w-[61rem] px-4 pt-12 pb-8">
           {/* Navigation columns */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
             {FOOTER_COLUMNS.map((column) => (
               <div key={column.title}>
-                <h4 className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                <h4 className="mb-3 text-[15px] font-semibold text-muted-foreground">
                   {column.title}
                 </h4>
                 <ul className="space-y-2.5 text-sm">
@@ -122,7 +122,7 @@ export function SiteFooter() {
             <div className="flex flex-wrap gap-2">
               {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => {
                 const className =
-                  "inline-flex items-center gap-1.5 rounded-[0.25rem] border border-foreground/25 bg-background px-3 py-1.5 text-xs font-semibold text-foreground/80";
+                  "inline-flex items-center gap-1.5 rounded-sm border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground";
                 const content = (
                   <>
                     <Icon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -148,7 +148,7 @@ export function SiteFooter() {
                     href={href}
                     target={isExternal(href) ? "_blank" : undefined}
                     rel={isExternal(href) ? "noopener noreferrer" : undefined}
-                    className={cn(className, "transition-colors hover:border-primary hover:text-primary")}
+                    className={cn(className, "transition-colors hover:border-foreground/30")}
                   >
                     {content}
                   </a>

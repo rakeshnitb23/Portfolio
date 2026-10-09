@@ -52,7 +52,7 @@ export function NewsletterCard() {
     <aside
       aria-labelledby="newsletter-card-title"
       data-search-ignore
-      className="mt-8 rounded-sm border border-border bg-muted/40 p-5"
+      className="mt-8 rounded-lg border border-border bg-card p-5"
     >
       <p id="newsletter-card-title" className="font-medium text-foreground">
         Subscribe to my newsletter
@@ -70,7 +70,7 @@ function NewsletterForm({
   inputId,
   inputRef,
   showLabel = true,
-  submitClassName = "border-primary bg-primary text-primary-foreground hover:opacity-90",
+  submitClassName = "border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90",
 }: {
   inputId: string;
   inputRef?: React.Ref<HTMLInputElement>;
