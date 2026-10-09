@@ -99,7 +99,7 @@ function Portrait() {
       <div
         role="img"
         aria-label="Portrait of Rakesh Singh (placeholder)"
-        className={cn(photoBox, sans, "flex items-center justify-center bg-[#EFEFEF] text-[40px] font-medium text-[var(--muted)]")}
+        className={cn(photoBox, sans, "flex items-center justify-center bg-[var(--placeholder-bg)] text-[40px] font-medium text-[var(--muted)]")}
       >
         RS
       </div>
@@ -123,10 +123,11 @@ const sectionHeading = "text-[22px] font-semibold leading-tight";
 const buttonBase =
   `${sans} inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-[15px] font-medium transition-colors ` +
   "phone:flex-1 phone:px-3 tiny:w-full tiny:flex-none";
-const outlineButton = `${buttonBase} border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[#BDBDBD]`;
-const primaryButton = `${buttonBase} cursor-pointer border border-[var(--text)] bg-[var(--text)] text-white hover:border-black hover:bg-black`;
+// Colours come from the .home-page tokens in globals.css, so buttons follow the reading theme.
+const outlineButton = `${buttonBase} border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--border-hover)]`;
+const primaryButton = `${buttonBase} cursor-pointer border border-[var(--text)] bg-[var(--text)] text-[var(--on-text)] hover:border-[var(--text-hover)] hover:bg-[var(--text-hover)]`;
 // A smaller primary button that sits beside a section heading.
-const headingButton = `${sans} inline-flex h-8 cursor-pointer items-center whitespace-nowrap rounded-lg border border-[var(--text)] bg-[var(--text)] px-3 text-[14px] font-medium text-white transition-colors hover:border-black hover:bg-black`;
+const headingButton = `${sans} inline-flex h-8 cursor-pointer items-center whitespace-nowrap rounded-lg border border-[var(--text)] bg-[var(--text)] px-3 text-[14px] font-medium text-[var(--on-text)] transition-colors hover:border-[var(--text-hover)] hover:bg-[var(--text-hover)]`;
 
 export default function Home() {
   const posts = getLatestPosts();
@@ -164,7 +165,7 @@ export default function Home() {
             {home.projects.map((project) => (
               <article
                 key={project.title}
-                className="relative flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 transition duration-150 ease-in-out hover:-translate-y-0.5 hover:border-[#BDBDBD] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                className="relative flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 transition duration-150 ease-in-out hover:-translate-y-0.5 hover:border-[var(--border-hover)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <h3 className="text-[19px] font-semibold leading-snug">
                   {/* Stretched link: its ::after covers the card, so the whole card opens the project. */}
@@ -206,7 +207,7 @@ export default function Home() {
               </h2>
               <NewsletterSubscribe
                 className={headingButton}
-                submitClassName="border-[var(--text)] bg-[var(--text)] text-white hover:border-black hover:bg-black"
+                submitClassName="border-[var(--text)] bg-[var(--text)] text-[var(--on-text)] hover:border-[var(--text-hover)] hover:bg-[var(--text-hover)]"
               />
               <Link
                 href="/blogs"
