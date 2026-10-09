@@ -29,7 +29,7 @@ function Field({
 }
 
 const inputClass =
-  "w-full rounded-[0.1rem] border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors focus:border-primary";
+  "w-full rounded-sm border border-border bg-card px-3 py-2 text-sm text-foreground outline-none transition-colors focus:border-primary";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -111,7 +111,7 @@ export default function Contact() {
 
   if (status === "success") {
     return (
-      <div className="max-w-[42rem] rounded-[0.1rem] border border-border bg-muted/40 px-6 py-8">
+      <div className="max-w-[42rem] rounded-lg border border-border bg-card px-6 py-8">
         <p className="font-medium text-foreground">Message sent.</p>
         <p className="mt-1 text-sm text-muted-foreground">
           Thanks for reaching out — expect a response within 24 hours.
@@ -196,7 +196,7 @@ export default function Contact() {
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="rounded-[0.1rem] bg-[var(--md-primary)] px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="rounded-sm bg-[var(--md-primary)] px-5 py-2.5 text-sm font-medium text-[var(--md-primary-fg)] transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {status === "submitting" ? "Sending…" : "Send message"}
         </button>

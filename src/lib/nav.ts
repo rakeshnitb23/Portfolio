@@ -3,8 +3,7 @@ export interface NavLink {
   href: string;
 }
 
-// Full navigation order, as shown in the sidebar (Home's sub-pages) and used
-// for footer "Next" pagination.
+// Full navigation order: the phone menu on inner pages, and footer "Next" pagination.
 export const NAV_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
   { name: "Projects", href: "/side-projects" },
@@ -12,13 +11,13 @@ export const NAV_LINKS: NavLink[] = [
   { name: "User Manual", href: "/user-manual" },
   { name: "Books", href: "/books" },
   { name: "Resume", href: "/resume" },
-  { name: "Writing", href: "/writing" },
+  { name: "Personal Writings", href: "/writing" },
 ];
 
 // Top-level tabs shown in the header bar.
 export const TOP_NAV_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
-  { name: "Writing", href: "/writing" },
+  { name: "Personal Writings", href: "/writing" },
 ];
 
 // Home section's sub-pages, shown in the left sidebar.

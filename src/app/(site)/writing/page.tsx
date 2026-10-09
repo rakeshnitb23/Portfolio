@@ -50,7 +50,7 @@ function TechnicalBlogs() {
               {sources.length > 0 && (
                 <div
                   data-search-ignore
-                  className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"
+                  className="ui-font mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"
                 >
                   {sources.map((source, i) => (
                     <span key={source.name} className="inline-flex items-center gap-2">
@@ -94,9 +94,10 @@ function formatFeedDate(date: string): string {
 }
 
 const buttonBase =
-  "inline-flex items-center rounded-sm border px-4 py-1 text-sm font-medium transition-colors";
-const buttonOutline = `${buttonBase} border-primary text-primary hover:bg-primary hover:text-primary-foreground`;
-const buttonFilled = `${buttonBase} border-primary bg-primary text-primary-foreground hover:opacity-90`;
+  "ui-font inline-flex items-center rounded-sm border px-4 py-1 text-sm font-medium transition-colors";
+// The homepage's button styles: neutral outline, and a near-black primary.
+const buttonOutline = `${buttonBase} border-border bg-card text-foreground hover:border-foreground/30`;
+const buttonFilled = `${buttonBase} border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90`;
 
 export default function WritingPage() {
   const personalPosts = getAllPersonalPosts();
@@ -163,7 +164,7 @@ export default function WritingPage() {
                   {title}
                 </h3>
                 <p className="text-foreground/65 leading-relaxed mb-3">{summary}</p>
-                <span className="text-primary text-sm font-medium group-hover:underline">
+                <span className="ui-font text-primary text-sm font-medium group-hover:underline">
                   Continue reading →
                 </span>
               </Link>

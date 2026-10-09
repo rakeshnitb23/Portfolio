@@ -7,7 +7,7 @@ import { Inter, Lora } from "next/font/google";
 import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { HomeNav } from "@/components/home/home-nav";
+import { HomeHeader } from "@/components/home/home-header";
 import { CopyEmailButton } from "@/components/sections/copy-email-button";
 import { NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
 import { BLOGS } from "@/data/blogs";
@@ -31,8 +31,6 @@ const sans = "font-[family-name:var(--font-inter),system-ui,sans-serif]";
 const container = "mx-auto w-full max-w-[800px] px-6 phone:px-4";
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 const newTab = { target: "_blank", rel: "noopener noreferrer" } as const;
-// The header's GitHub link reuses the socials entry, so the URL lives in one place.
-const githubUrl = home.socials.find((social) => social.type === "github")!.href;
 
 const SOCIAL_ICONS: Record<SocialType, React.ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" }>> = {
   email: Mail,
@@ -143,17 +141,8 @@ export default function Home() {
         "home-page flex min-h-screen flex-col bg-[var(--bg)] text-[18px] leading-[1.65] text-[var(--text)] phone:text-[17px]"
       )}
     >
-      {/* Header */}
-      <header className="border-t-[3px] border-b border-t-[var(--topbar)] border-b-[var(--border)]">
-        <div className={cn(container, "flex h-16 items-center gap-6 phone:h-auto phone:flex-wrap")}>
-          <h1 className="text-[26px] font-medium leading-none phone:flex phone:h-16 phone:items-center">
-            <Link href="/" className="text-[var(--text)] no-underline">
-              {home.name}
-            </Link>
-          </h1>
-          <HomeNav githubUrl={githubUrl} searchIndex={searchIndex} />
-        </div>
-      </header>
+      {/* Header: the site-wide menu bar (also used on every inner page). */}
+      <HomeHeader searchIndex={searchIndex} />
 
       <main className={cn(container, "flex-1")}>
         {/* About: the bio wraps around the circular photo, then runs full width under it. */}

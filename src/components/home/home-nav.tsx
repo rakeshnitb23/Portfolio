@@ -13,7 +13,7 @@ import { loadSearchIndex } from "@/lib/site-search";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { label: "Projects", href: "/projects" },
+  { label: "Projects", href: "/side-projects" },
   { label: "Blog", href: "/blogs" },
   { label: "Personal Writings", href: "/writing" },
 ];
