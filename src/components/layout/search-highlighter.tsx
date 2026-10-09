@@ -10,6 +10,7 @@ const HIGHLIGHT_NAME = "search-results";
 const HIGHLIGHT_STYLES = `
 ::highlight(${HIGHLIGHT_NAME}) { background-color: rgb(255 235 59 / 0.6); }
 .dark ::highlight(${HIGHLIGHT_NAME}) { background-color: rgb(250 204 21 / 0.3); }
+.theme-sepia ::highlight(${HIGHLIGHT_NAME}) { background-color: rgb(217 119 6 / 0.3); }
 `;
 
 // Highlights the words of a search (?h=...) wherever they appear in the page's

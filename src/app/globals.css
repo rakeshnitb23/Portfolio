@@ -4,6 +4,9 @@
 
 /* `dark:` utilities follow the site's theme toggle (the .dark class on <html>), not the OS setting. */
 @custom-variant dark (&:where(.dark, .dark *));
+/* `sepia-theme:` utilities apply in the warm Sepia reading theme (the .theme-sepia class on <html>).
+   The class is not plain "sepia": that is Tailwind's sepia() filter utility, which would tint the page. */
+@custom-variant sepia-theme (&:where(.theme-sepia, .theme-sepia *));
 /* Homepage breakpoints: `phone:` is 640px wide and below, `tiny:` is below 360px. */
 @custom-variant phone (@media (max-width: 640px));
 @custom-variant tiny (@media (max-width: 359.98px));
@@ -168,6 +171,47 @@
 }
 
 /*
+ * Sepia theme: a warm, slightly yellow "paper" canvas with dark-brown text for
+ * readers who find pure white tiring. Links keep a (muted) blue so they stay
+ * recognisable; primary buttons are deep brown with paper-coloured text.
+ */
+.theme-sepia {
+  color-scheme: light;
+
+  --background: #f6eedb;
+  --foreground: #3b2f22;
+  --card: #fbf5e6;
+  --card-foreground: #3b2f22;
+  --popover: #fbf5e6;
+  --popover-foreground: #3b2f22;
+  --primary: #2c5ea8;
+  --primary-foreground: #fbf5e6;
+  --secondary: #efe5cf;
+  --secondary-foreground: #3b2f22;
+  --muted: #efe5cf;
+  --muted-foreground: #74644f;
+  --accent: #2c5ea8;
+  --accent-foreground: #fbf5e6;
+  --border: #e3d7bd;
+  --input: #e3d7bd;
+  --ring: #2c5ea8;
+  --sidebar: #f6eedb;
+  --sidebar-foreground: #3b2f22;
+  --sidebar-primary: #2c5ea8;
+  --sidebar-primary-foreground: #fbf5e6;
+  --sidebar-accent: #efe5cf;
+  --sidebar-accent-foreground: #3b2f22;
+  --sidebar-border: #e3d7bd;
+  --sidebar-ring: #2c5ea8;
+
+  --md-primary: #3b2f22;
+  --md-primary-fg: #fbf5e6;
+  --topbar: #5c4a35;
+  --md-accent: #2c5ea8;
+  --md-code-bg: #efe5cf;
+}
+
+/*
  * Inner pages (app/(site)/layout.tsx) in the homepage's style: Inter for
  * interface text (header, menus, buttons, labels), Lora for reading text, and
  * the homepage's softer corners. Scoped to .site-theme so the homepage, which
@@ -268,9 +312,10 @@
   }
 }
 /*
- * Homepage design tokens. Scoped to the homepage wrapper rather than :root,
- * because :root already holds the shadcn theme (--border, --background) the
- * rest of the site uses. The homepage is light-only, so .dark never touches these.
+ * Homepage design tokens (also used by the shared menu bar on every page).
+ * Scoped to .home-page rather than :root, because :root already holds the
+ * shadcn theme (--border, --background) the rest of the site uses. The reading
+ * theme (light / sepia / dark) swaps them via .theme-sepia/.dark .home-page below.
  */
 .home-page {
   --bg: #fdfdfd;
@@ -281,14 +326,64 @@
   --link-hover: #173a8a;
   --border: #e6e6e6;
   --topbar: #2b2b2b;
+  --border-hover: #bdbdbd;
+  /* Primary buttons are filled with --text; --on-text is the label colour on them. */
+  --on-text: #ffffff;
+  --text-hover: #000000;
+  /* Portrait placeholder circle and menu hover backgrounds. */
+  --placeholder-bg: #efefef;
   /* Theme tokens read by shared components placed here (the newsletter form),
-     pinned to light so a visitor's dark-mode choice can't wash them out. */
+     set explicitly so the homepage controls its own look in every theme. */
   --foreground: #1a1a1a;
   --background: #ffffff;
   --muted-foreground: #6b6b6b;
   --input: #e6e6e6;
   --ring: #2456c7;
   color-scheme: light;
+}
+
+/* Sepia: the same warm paper palette as the inner pages. */
+.theme-sepia .home-page {
+  --bg: #f6eedb;
+  --surface: #fbf5e6;
+  --text: #3b2f22;
+  --muted: #74644f;
+  --link: #2c5ea8;
+  --link-hover: #1d4380;
+  --border: #e3d7bd;
+  --topbar: #5c4a35;
+  --border-hover: #c9b48f;
+  --on-text: #fbf5e6;
+  --text-hover: #241c13;
+  --placeholder-bg: #ebe0c6;
+  --foreground: #3b2f22;
+  --background: #fbf5e6;
+  --muted-foreground: #74644f;
+  --input: #e3d7bd;
+  --ring: #2c5ea8;
+  color-scheme: light;
+}
+
+/* Dark: the same charcoal palette as the inner pages. */
+.dark .home-page {
+  --bg: #141414;
+  --surface: #1b1b1b;
+  --text: #e8e8e8;
+  --muted: #a0a0a0;
+  --link: #8fadff;
+  --link-hover: #b5c8ff;
+  --border: #2c2c2c;
+  --topbar: #5a5a5a;
+  --border-hover: #4a4a4a;
+  --on-text: #141414;
+  --text-hover: #ffffff;
+  --placeholder-bg: #262626;
+  --foreground: #e8e8e8;
+  --background: #1b1b1b;
+  --muted-foreground: #a0a0a0;
+  --input: #2c2c2c;
+  --ring: #8fadff;
+  color-scheme: dark;
 }
 
 .home-page :is(a, button):focus-visible {

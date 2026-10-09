@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HomeNav } from "@/components/home/home-nav";
+import { ThemeSwitcher } from "@/components/home/theme-switcher";
 import { home } from "@/data/home";
 import type { SearchItem } from "@/lib/search-index";
 import { cn } from "@/lib/utils";
@@ -39,6 +40,7 @@ export function HomeHeader({
           </Link>
         </Name>
         <HomeNav githubUrl={githubUrl} searchIndex={searchIndex} />
+        <ThemeSwitcher />
         {children}
       </div>
     </header>

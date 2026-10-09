@@ -35,7 +35,7 @@ export function PhoneMenu() {
         // -ml-3 sits it closer to Search than the bar's gap, like a pair.
         className={cn(
           sans,
-          "-ml-3 hidden h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition-colors hover:border-[#BDBDBD] hover:text-[var(--text)] phone:inline-flex"
+          "-ml-3 hidden h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition-colors hover:border-[var(--border-hover)] hover:text-[var(--text)] phone:inline-flex"
         )}
       >
         {open ? <X className="size-4" aria-hidden="true" /> : <Menu className="size-4" aria-hidden="true" />}

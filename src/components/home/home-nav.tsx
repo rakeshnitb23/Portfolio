@@ -95,7 +95,7 @@ export function HomeNav({ githubUrl, searchIndex }: { githubUrl: string; searchI
         onFocus={() => loadSearchIndex(searchIndex)}
         className={cn(
           sans,
-          "inline-flex h-9 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-[15px] font-medium text-[var(--muted)] transition-colors hover:border-[#BDBDBD] hover:text-[var(--text)]",
+          "inline-flex h-9 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-[15px] font-medium text-[var(--muted)] transition-colors hover:border-[var(--border-hover)] hover:text-[var(--text)]",
           "phone:ml-auto phone:w-9 phone:justify-center phone:px-0"
         )}
       >
