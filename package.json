@@ -9,7 +9,8 @@
     "generate:llms": "node scripts/generate-llms-txt.mjs",
     "start": "next start",
     "lint": "eslint",
-    "verify": "node scripts/verify-crawlable.mjs"
+    "verify": "node scripts/verify-crawlable.mjs",
+    "resume:image": "qlmanage -t -s 2400 -o public/resume public/resume/resume.pdf && mv public/resume/resume.pdf.png public/resume/resume.png"
   },
   "dependencies": {
     "@neon/config": "^1.8.4",

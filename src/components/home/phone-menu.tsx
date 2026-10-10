@@ -11,8 +11,8 @@ const sans = "font-[family-name:var(--font-inter),system-ui,sans-serif]";
 
 /**
  * Phones only, on inner pages: a ☰ button at the end of the menu bar that
- * opens the full list of pages, so pages that aren't in the bar (User Manual,
- * Books, Resume) stay reachable on small screens.
+ * opens the full list of pages, so pages that aren't in the bar (User Manual
+ * and Books) stay reachable on small screens.
  */
 export function PhoneMenu() {
   const pathname = usePathname();

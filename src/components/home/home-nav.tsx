@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { label: "Projects", href: "/side-projects" },
   { label: "Blog", href: "/blogs" },
   { label: "Personal Writings", href: "/writing" },
+  { label: "Resume", href: "/resume" },
 ];
 
 const sans = "font-[family-name:var(--font-inter),system-ui,sans-serif]";
