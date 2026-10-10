@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { label: "Projects", href: "/side-projects" },
   { label: "Blog", href: "/blogs" },
   { label: "Personal Writings", href: "/writing" },
+  { label: "Resume", href: "/resume" },
 ];
 
 const sans = "font-[family-name:var(--font-inter),system-ui,sans-serif]";
@@ -57,7 +58,7 @@ export function HomeNav({ githubUrl, searchIndex }: { githubUrl: string; searchI
         aria-label="Main"
         className={cn(
           sans,
-          "ml-auto flex items-center gap-6 text-[15px] font-medium",
+          "ml-auto flex items-center gap-5 text-[15px] font-medium",
           "phone:order-last phone:ml-0 phone:w-full phone:flex-wrap phone:gap-x-3 phone:gap-y-2 phone:pb-3"
         )}
       >
