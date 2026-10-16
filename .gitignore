@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+CLAUDE.local.md
+graphify-out/
 
 # debug
 npm-debug.log*

@@ -202,8 +202,11 @@ export default function Home() {
           <section id="blog" aria-labelledby="blog-heading" className="mt-14">
             {/* The newsletter form opens on its own line under this row (see NewsletterSubscribe). */}
             <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-3">
-              <h2 id="blog-heading" className={cn(sectionHeading, "mr-auto")}>
+              <h2 id="blog-heading" className={cn(sectionHeading, "mr-auto flex items-center gap-2")}>
                 Technical Blogs
+                <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-[var(--muted)]">
+                  Latest
+                </span>
               </h2>
               <NewsletterSubscribe
                 className={headingButton}
@@ -224,7 +227,7 @@ export default function Home() {
                     {...(isExternal(post.href) ? newTab : {})}
                     className="group flex min-h-12 items-baseline justify-between gap-6 py-3.5 phone:flex-col phone:gap-1"
                   >
-                    <span className="line-clamp-2 text-[var(--link)] group-hover:text-[var(--link-hover)] group-hover:underline">
+                    <span className="line-clamp-2 text-[17px] text-[var(--link)] group-hover:text-[var(--link-hover)] group-hover:underline">
                       {post.title}
                     </span>
                     <time
