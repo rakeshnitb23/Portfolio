@@ -35,8 +35,8 @@ export const BLOGS: BlogPost[] = [
     tags: ["ai-agent", "security", "rag", "prompt-injection", "software-engineering"],
     summary:
       "A verified login doesn't stop an agent from leaking another customer's data — the leak happens after login, when a customer ID gets typed into the prompt and the model fills a tool parameter with it. A system prompt saying 'only show this customer's orders' is a request, not a permission check; the fix belongs in code, not the prompt.",
-    href: "https://lnkd.in/p/gcfFHjza",
-    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/gcfFHjza" }],
+    href: "https://www.linkedin.com/pulse/your-ai-agent-just-showed-customer-orders-b-rakesh-singh--bhmfc/",
+    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-ai-agent-just-showed-customer-orders-b-rakesh-singh--bhmfc/" }],
   },
   {
     title: "Your AI Agent Just Charged the Customer Twice. Here Is Why.",
@@ -45,8 +45,8 @@ export const BLOGS: BlogPost[] = [
     tags: ["ai-agent", "idempotency", "retries", "rag", "software-engineering"],
     summary:
       "Duplicate actions in AI agents usually come from retries, not bad code — the HTTP client, the orchestrator, the model's own re-attempt, and a resumed run after a crash can each multiply the same action. A content hash and stable chunk IDs stopped a RAG indexer from double-writing; seven rules for preventing duplicates follow.",
-    href: "https://lnkd.in/p/g9TbqfKh",
-    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/g9TbqfKh" }],
+    href: "https://www.linkedin.com/pulse/your-ai-agent-just-charged-customer-twice-here-why-rakesh-singh--sipbc/",
+    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-ai-agent-just-charged-customer-twice-here-why-rakesh-singh--sipbc/" }],
   },
   {
     title: "You Probably Have a Context Problem, Not an Agent-Count Problem",
@@ -55,8 +55,8 @@ export const BLOGS: BlogPost[] = [
     tags: ["rag", "ai-agent", "context-engineering", "multi-agent", "software-engineering"],
     summary:
       "Before adding more agents to a RAG system, check whether the evidence for a failed answer was even in the model's context — if not, a second agent can't fix it, because the model needed the missing evidence, not collaborators. Multi-agent systems can burn roughly 15x the tokens of a single chat.",
-    href: "https://lnkd.in/p/gBS9qE38",
-    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/gBS9qE38" }],
+    href: "https://www.linkedin.com/pulse/you-probably-have-context-problem-agent-count-rakesh-singh--hvhyc/",
+    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/you-probably-have-context-problem-agent-count-rakesh-singh--hvhyc/" }],
   },
   {
     title: "How I Use Redis to Cache an Agentic System: Three Caches, and When a Hit Is Wrong",
@@ -65,8 +65,8 @@ export const BLOGS: BlogPost[] = [
     tags: ["redis", "caching", "ai-agent", "rag", "software-engineering"],
     summary:
       "Two users in the same workspace asking the same question minutes apart shouldn't mean paying full LLM cost twice — three Redis caches fix the repeated-work problem, but the harder part is knowing when a cached answer is the wrong one to return.",
-    href: "https://lnkd.in/p/gJVmQp4r",
-    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/gJVmQp4r" }],
+    href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/",
+    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/" }],
   },
   // Build guides: the Hashnode editions, written as step-by-step how-tos.
   {
