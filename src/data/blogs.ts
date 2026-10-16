@@ -29,60 +29,44 @@ export interface BlogPost {
 export const BLOGS: BlogPost[] = [
   // 2026
   {
-    title: "Rate Limit an LLM Agent by Tokens, Not Requests",
-    date: "2026-10-03",
+    title: "Your AI Agent Just Showed Customer A's Orders to Customer B",
+    date: "2026-10-10",
     category: "AI Systems",
-    tags: ["ai-agent", "redis", "llm", "rate-limiting", "software-engineering"],
+    tags: ["ai-agent", "security", "rag", "prompt-injection", "software-engineering"],
     summary:
-      "Counting requests can't control LLM spend: one request may be a one-line question or an agent run making a dozen model calls. Limit by tokens instead — estimate, reserve atomically in a shared Redis counter, then reconcile with actual usage. Also covers token buckets vs. window quotas and per-run agent budgets.",
-    href: "https://medium.com/@rakeshnitb23/rate-limit-an-llm-agent-by-tokens-not-requests-9f515c2b16e7",
-    sources: [
-      { name: "Medium", href: "https://medium.com/@rakeshnitb23/rate-limit-an-llm-agent-by-tokens-not-requests-9f515c2b16e7" },
-      { name: "DEV", href: "https://dev.to/rakesh_kumar_04012c337851/a-request-limit-cannot-cap-your-llm-bill-reserve-tokens-in-redis-3719" },
-      { name: "LinkedIn", href: "https://www.linkedin.com/posts/rakeshnitb23_redis-ratelimiting-aiagents-ugcPost-7512063784803295232-fYcV/" },
-    ],
+      "A verified login doesn't stop an agent from leaking another customer's data — the leak happens after login, when a customer ID gets typed into the prompt and the model fills a tool parameter with it. A system prompt saying 'only show this customer's orders' is a request, not a permission check; the fix belongs in code, not the prompt.",
+    href: "https://lnkd.in/p/gcfFHjza",
+    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/gcfFHjza" }],
   },
   {
-    title: "When a Redis Cache Hit Is the Wrong Answer",
-    date: "2026-10-03",
+    title: "Your AI Agent Just Charged the Customer Twice. Here Is Why.",
+    date: "2026-10-09",
     category: "AI Systems",
-    tags: ["llm", "caching", "redis", "ai-agent", "software-engineering"],
+    tags: ["ai-agent", "idempotency", "retries", "rag", "software-engineering"],
     summary:
-      "Cache-aside breaks in front of an LLM agent: a question has no fixed key, rebuilding an answer means paying the model again, and answers depend on document version and permissions. Three Redis caches — exact match, semantic, and tool results — and why a semantic hit for timer T3410 must never answer T3411.",
-    href: "https://medium.com/@rakeshnitb23/when-a-redis-cache-hit-is-the-wrong-answer-bb43e44c8b58",
-    sources: [
-      { name: "Medium", href: "https://medium.com/@rakeshnitb23/when-a-redis-cache-hit-is-the-wrong-answer-bb43e44c8b58" },
-      { name: "DEV", href: "https://dev.to/rakesh_kumar_04012c337851/my-agent-paid-twice-for-the-same-question-the-fix-was-a-redis-key-3hcl" },
-      { name: "LinkedIn", href: "https://www.linkedin.com/posts/rakeshnitb23_redis-aiengineering-aiagents-ugcPost-7512055590614036480-D8eZ/" },
-    ],
+      "Duplicate actions in AI agents usually come from retries, not bad code — the HTTP client, the orchestrator, the model's own re-attempt, and a resumed run after a crash can each multiply the same action. A content hash and stable chunk IDs stopped a RAG indexer from double-writing; seven rules for preventing duplicates follow.",
+    href: "https://lnkd.in/p/g9TbqfKh",
+    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/g9TbqfKh" }],
   },
   {
-    title: "Multi-Tenant RAG Leaks Through the Search, Not the Login",
-    date: "2026-10-01",
+    title: "You Probably Have a Context Problem, Not an Agent-Count Problem",
+    date: "2026-10-08",
     category: "AI Systems",
-    tags: ["llm", "postgresql", "multitenancy", "security", "rag"],
+    tags: ["rag", "ai-agent", "context-engineering", "multi-agent", "software-engineering"],
     summary:
-      "In a shared RAG pipeline the login is the easy part; leaks happen in the search. The rule: a client may select a workspace but never assert one. Four checkpoints — entry, retrieval, prompt, and proof — keep the workspace inside every SQL and vector query, backed by a 30+ attack suite that passes only when nothing leaks.",
-    href: "https://medium.com/@rakeshnitb23/multi-tenant-rag-leaks-through-the-search-not-the-login-a24566eea45d",
-    sources: [
-      { name: "Medium", href: "https://medium.com/@rakeshnitb23/multi-tenant-rag-leaks-through-the-search-not-the-login-a24566eea45d" },
-      { name: "DEV", href: "https://dev.to/rakesh_kumar_04012c337851/first-person-failure-plus-an-ordered-n-the-4-checkpoints-in-pipeline-order-53f2" },
-      { name: "LinkedIn", href: "https://www.linkedin.com/posts/rakeshnitb23_my-rag-pipelines-first-design-trusted-one-ugcPost-7511372564858884096-kkFL/" },
-    ],
+      "Before adding more agents to a RAG system, check whether the evidence for a failed answer was even in the model's context — if not, a second agent can't fix it, because the model needed the missing evidence, not collaborators. Multi-agent systems can burn roughly 15x the tokens of a single chat.",
+    href: "https://lnkd.in/p/gBS9qE38",
+    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/gBS9qE38" }],
   },
   {
-    title: "My RAG API Never Signs Tokens or Sees Passwords",
-    date: "2026-09-30",
+    title: "How I Use Redis to Cache an Agentic System: Three Caches, and When a Hit Is Wrong",
+    date: "2026-10-07",
     category: "AI Systems",
-    tags: ["api-security", "llm", "authentication", "rag", "software-architecture"],
+    tags: ["redis", "caching", "ai-agent", "rag", "software-engineering"],
     summary:
-      "If an attacker stole everything inside your API, who could they become? With an identity provider issuing tokens and the API only verifying them, the answer is no one. Four questions for RAG auth — including two attackers most designs forget: the model and the documents — and why every failure should close the door.",
-    href: "https://medium.com/@rakeshnitb23/my-rag-api-never-signs-tokens-or-sees-passwords-24d1996fd504",
-    sources: [
-      { name: "Medium", href: "https://medium.com/@rakeshnitb23/my-rag-api-never-signs-tokens-or-sees-passwords-24d1996fd504" },
-      { name: "DEV", href: "https://dev.to/rakesh_kumar_04012c337851/my-rag-api-never-signs-tokens-or-sees-passwords-1p4e" },
-      { name: "LinkedIn", href: "https://www.linkedin.com/posts/rakeshnitb23_steal-my-rag-apis-config-and-database-and-ugcPost-7511365807994515457-btD8/" },
-    ],
+      "Two users in the same workspace asking the same question minutes apart shouldn't mean paying full LLM cost twice — three Redis caches fix the repeated-work problem, but the harder part is knowing when a cached answer is the wrong one to return.",
+    href: "https://lnkd.in/p/gJVmQp4r",
+    sources: [{ name: "LinkedIn", href: "https://lnkd.in/p/gJVmQp4r" }],
   },
   // Build guides: the Hashnode editions, written as step-by-step how-tos.
   {

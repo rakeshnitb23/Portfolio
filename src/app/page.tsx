@@ -224,7 +224,7 @@ export default function Home() {
                     {...(isExternal(post.href) ? newTab : {})}
                     className="group flex min-h-12 items-baseline justify-between gap-6 py-3.5 phone:flex-col phone:gap-1"
                   >
-                    <span className="line-clamp-2 text-[var(--link)] group-hover:text-[var(--link-hover)] group-hover:underline">
+                    <span className="line-clamp-2 text-[17px] text-[var(--link)] group-hover:text-[var(--link-hover)] group-hover:underline">
                       {post.title}
                     </span>
                     <time
