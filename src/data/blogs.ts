@@ -59,12 +59,12 @@ export const BLOGS: BlogPost[] = [
     sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/you-probably-have-context-problem-agent-count-rakesh-singh--hvhyc/" }],
   },
   {
-    title: "How I Use Redis to Cache an Agentic System: Three Caches, and When a Hit Is Wrong",
+    title: "Rate Limiting an Agentic System with Redis: Count Tokens, Not Requests",
     date: "2026-10-07",
     category: "AI Systems",
-    tags: ["redis", "caching", "ai-agent", "rag", "software-engineering"],
+    tags: ["redis", "rate-limiting", "ai-agent", "llm", "software-engineering"],
     summary:
-      "Two users in the same workspace asking the same question minutes apart shouldn't mean paying full LLM cost twice — three Redis caches fix the repeated-work problem, but the harder part is knowing when a cached answer is the wrong one to return.",
+      "Request-count limits don't track cost: a one-line question and a multi-step agent run both count as one request. Two Redis counters — tokens per minute for capacity, cost per day for budget — with estimate, reserve, reconcile, plus per-run agent budgets so retries and sub-agents draw from the same cap.",
     href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/",
     sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/" }],
   },
