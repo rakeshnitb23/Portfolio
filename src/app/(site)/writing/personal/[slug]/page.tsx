@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPersonalPosts, getPersonalPost, getPersonalSlugs } from "@/lib/content";
 import { MdxContent } from "@/components/mdx-content";
-import { absoluteUrl } from "@/lib/site";
+import { JsonLd, breadcrumbList } from "@/components/json-ld";
+import { OG_IMAGE, absoluteUrl, personId } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -29,7 +30,14 @@ export async function generateMetadata({
       title: frontmatter.title,
       description: frontmatter.summary,
       type: "article",
+      images: [OG_IMAGE],
       url: absoluteUrl(`/writing/personal/${slug}`),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: frontmatter.title,
+      description: frontmatter.summary,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -58,9 +66,35 @@ export default async function PersonalPostPage({
 
   const { frontmatter, body } = getPersonalPost(slug);
   const otherPosts = getAllPersonalPosts().filter((p) => p.slug !== slug);
+  const url = absoluteUrl(`/writing/personal/${slug}`);
+  // Placeholders are noindex, so they get no Article schema.
+  const isWritten = !frontmatter.placeholder && !!frontmatter.date;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: frontmatter.title,
+    description: frontmatter.summary,
+    url,
+    datePublished: frontmatter.date,
+    dateModified: frontmatter.date,
+    author: { "@id": personId() },
+  };
 
   return (
     <article className="max-w-none py-10">
+      {isWritten && (
+        <>
+          <JsonLd data={jsonLd} />
+          <JsonLd
+            data={breadcrumbList([
+              { name: "Home", url: absoluteUrl("/") },
+              { name: "Writing", url: absoluteUrl("/writing") },
+              { name: frontmatter.title, url },
+            ])}
+          />
+        </>
+      )}
       <nav aria-label="Breadcrumb" className="mb-8 font-mono text-xs text-muted-foreground">
         <Link href="/writing" className="hover:text-primary underline underline-offset-4">
           Writing

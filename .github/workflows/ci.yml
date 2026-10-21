@@ -29,3 +29,6 @@ jobs:
       - run: npm run lint
       # Also type-checks the project.
       - run: npm run build
+      # Serves the build and checks every route is crawlable without JS, with
+      # canonical tags on the production domain.
+      - run: npm run verify

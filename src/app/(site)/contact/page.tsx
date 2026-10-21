@@ -3,7 +3,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import Contact from "@/components/sections/contact";
 import { CopyEmailButton } from "@/components/sections/copy-email-button";
-import { PERSON } from "@/lib/site";
+import { PERSON, pageMetadata } from "@/lib/site";
 
 // The homepage's "Directly DM" buttons: a near-black primary and neutral outlines.
 const dmBase =
@@ -11,12 +11,12 @@ const dmBase =
 const dmPrimary = `${dmBase} cursor-pointer border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90`;
 const dmButton = `${dmBase} border-border bg-card text-foreground`;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/contact",
   title: "Contact",
   description:
     "Get in touch with Rakesh Singh, an AI Backend Engineer at Genpact open to selective remote opportunities.",
-  alternates: { canonical: "/contact" },
-};
+});
 
 export default function ContactPage() {
   return (

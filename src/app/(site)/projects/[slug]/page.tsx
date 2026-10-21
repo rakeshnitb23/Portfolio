@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getAllProjects, getProject, getProjectSlugs } from "@/lib/content";
 import { MdxContent } from "@/components/mdx-content";
 import { JsonLd, breadcrumbList } from "@/components/json-ld";
-import { absoluteUrl, personId } from "@/lib/site";
+import { OG_IMAGE, absoluteUrl, personId } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -29,12 +29,14 @@ export async function generateMetadata({
       title: frontmatter.title,
       description: frontmatter.summary,
       type: "article",
+      images: [OG_IMAGE],
       url: absoluteUrl(`/projects/${slug}`),
     },
     twitter: {
       card: "summary_large_image",
       title: frontmatter.title,
       description: frontmatter.summary,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -58,20 +60,11 @@ export default async function ProjectDetailPage({
     description: frontmatter.summary,
     url,
     dateCreated: frontmatter.date,
+    datePublished: frontmatter.date,
     programmingLanguage: frontmatter.stack,
     codeRepository: frontmatter.repo,
     author: { "@id": personId() },
     creator: { "@id": personId() },
-  };
-
-  const creativeWorkJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: frontmatter.title,
-    description: frontmatter.summary,
-    url,
-    author: { "@id": personId() },
-    datePublished: frontmatter.date,
   };
 
   const otherProjects = getAllProjects().filter((p) => p.slug !== slug);
@@ -79,7 +72,6 @@ export default async function ProjectDetailPage({
   return (
     <article className="max-w-none py-10">
       <JsonLd data={jsonLd} />
-      <JsonLd data={creativeWorkJsonLd} />
       <JsonLd
         data={breadcrumbList([
           { name: "Home", url: absoluteUrl("/") },

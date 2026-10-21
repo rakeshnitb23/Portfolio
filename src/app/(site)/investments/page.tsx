@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/investments",
   title: "Investments",
   description: "Angel investor and scout for Andreessen Horowitz.",
-  alternates: { canonical: "/investments" },
-};
+});
 
 interface Investment {
   name: string;

@@ -8,7 +8,7 @@ import matter from "gray-matter";
 const ROOT = process.cwd();
 const CONTENT_ROOT = path.join(ROOT, "content");
 const PUBLIC_ROOT = path.join(ROOT, "public");
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rakeshsingh.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.lazymonk.si";
 
 function readCollection(dir) {
   const full = path.join(CONTENT_ROOT, dir);
@@ -50,7 +50,11 @@ ${section("Projects", projects, "/projects")}
 ${section("Writing", writing, "/writing")}
 ## About
 
-- [About](${SITE_URL}/about): Full bio, experience, and skills.
+- [About](${SITE_URL}/about): Full bio, experience with numbers, skills, and education.
+- [Resume](${SITE_URL}/resume): One-page resume, with a PDF download.
+- [Blogs](${SITE_URL}/blogs): Long-form posts on retrieval, caching, and rate limiting for LLM systems.
+- [Side projects](${SITE_URL}/side-projects): Things built in the open, with links to code.
+- [Contact](${SITE_URL}/contact): How to get in touch.
 `;
 
 const fullParts = [

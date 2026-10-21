@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import Image from "next/image";
 import { Download, ExternalLink } from "lucide-react";
 
@@ -15,12 +16,12 @@ const buttonBase =
 const primaryButton = `${buttonBase} border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90`;
 const outlineButton = `${buttonBase} border-border bg-card text-foreground hover:bg-muted`;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/resume",
   title: "Resume",
   description:
     "Rakesh Singh is an AI Backend Engineer at Genpact, building grounded retrieval systems and hybrid search after four years of Java/Spring Boot backend work for Shutterfly USA.",
-  alternates: { canonical: "/resume" },
-};
+});
 
 export default function ResumePage() {
   return (

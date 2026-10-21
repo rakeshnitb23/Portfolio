@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/books",
   title: "Books",
   description: "Books that have shaped my thinking on philosophy, business, and life.",
-  alternates: { canonical: "/books" },
-};
+});
 
 interface Book {
   title: string;

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/user-manual",
   title: "User Manual",
   description:
     "How to work with me effectively. I'm learning to delegate more so I can focus on high-leverage work.",
-  alternates: { canonical: "/user-manual" },
-};
+});
 
 export default function UserManualPage() {
   return (

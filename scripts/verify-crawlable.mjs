@@ -4,6 +4,9 @@
 // string (from content frontmatter, or a defined expectation for non-content pages)
 // appears in the response body. Exits non-zero on any failure.
 //
+// Every HTML page must also put its canonical tag on the production domain, and
+// no response may mention the old placeholder domain.
+//
 // Usage: npm run build && npm run verify   (verify spawns and tears down its own server)
 
 import { spawn } from "node:child_process";
@@ -15,6 +18,9 @@ const ROOT = process.cwd();
 const PORT = process.env.VERIFY_PORT || "4173";
 const BASE_URL = `http://localhost:${PORT}`;
 const MAX_WAIT_MS = 60_000;
+// Must match the fallback in src/lib/site.ts.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.lazymonk.si";
+const STALE_DOMAINS = ["rakeshsingh.dev"];
 
 function readCollection(dir) {
   const full = path.join(ROOT, "content", dir);
@@ -48,7 +54,9 @@ function buildChecks() {
   const checks = [];
 
   checks.push({ path: "/", expect: "Rakesh Singh" });
-  checks.push({ path: "/about", expect: "Bachelor of Technology" });
+  checks.push({ path: "/about", expect: "B.Tech in Computer Science" });
+  checks.push({ path: "/resume", expect: "Download PDF" });
+  checks.push({ path: "/blogs", expect: "Blogs" });
   checks.push({ path: "/projects", expect: "production-minded systems" });
   checks.push({ path: "/writing", expect: "retrieval, reliability" });
   checks.push({ path: "/contact", expect: "Rakesh" });
@@ -65,10 +73,18 @@ function buildChecks() {
       expect: p.frontmatter.summary,
     });
   }
+  for (const p of readCollection("personal")) {
+    if (p.frontmatter.placeholder || !p.frontmatter.date) continue;
+    checks.push({
+      path: `/writing/personal/${p.slug}`,
+      expect: p.frontmatter.title,
+    });
+  }
 
   checks.push({ path: "/robots.txt", expect: "GPTBot" });
   checks.push({ path: "/sitemap.xml", expect: "<urlset" });
   checks.push({ path: "/llms.txt", expect: "Rakesh Singh" });
+  checks.push({ path: "/opengraph-image", expect: "PNG" });
 
   return checks;
 }
@@ -83,6 +99,16 @@ async function runChecks() {
       const body = await res.text();
       if (!res.ok) {
         failures.push(`${routePath}: HTTP ${res.status}`);
+        continue;
+      }
+      const stale = STALE_DOMAINS.find((d) => body.includes(d));
+      if (stale) {
+        failures.push(`${routePath}: mentions the old domain ${stale}`);
+        continue;
+      }
+      const canonical = body.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+      if (body.includes("<html") && !canonical?.startsWith(SITE_URL)) {
+        failures.push(`${routePath}: canonical ${canonical ?? "(none)"} is not on ${SITE_URL}`);
         continue;
       }
       if (!body.includes(expect)) {
