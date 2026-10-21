@@ -9,7 +9,6 @@ import { NAV_LINKS } from "@/lib/nav";
 import { PERSON } from "@/lib/site";
 import {
   FOOTER_COLUMNS,
-  FOOTER_NOTE,
   FOOTER_TAGLINE,
   SOCIAL_LINKS,
   type FooterLink,
@@ -92,7 +91,7 @@ export function SiteFooter() {
       <div className="border-t border-border">
         <div className="mx-auto w-full max-w-[61rem] px-4 pt-12 pb-8">
           {/* Navigation columns */}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3">
             {FOOTER_COLUMNS.map((column) => (
               <div key={column.title}>
                 <h4 className="mb-3 text-[15px] font-semibold text-muted-foreground">
@@ -109,13 +108,8 @@ export function SiteFooter() {
             ))}
           </div>
 
-          {/* Small print */}
-          <div className="mt-12 border-t border-border pt-6">
-            <p className="text-xs leading-relaxed text-muted-foreground">{FOOTER_NOTE}</p>
-          </div>
-
           {/* Copyright and social handles */}
-          <div className="mt-6 flex flex-col gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-12 flex flex-col gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
               &copy; {new Date().getFullYear()} {PERSON.name}. {FOOTER_TAGLINE}
             </p>

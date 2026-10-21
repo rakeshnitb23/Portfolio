@@ -286,7 +286,8 @@ export default function Home() {
                 LinkedIn
               </a>
               <a href={home.xDm} {...newTab} className={outlineButton}>
-                <FaXTwitter className="size-4" aria-hidden="true" />X
+                <FaXTwitter className="size-4" aria-hidden="true" />
+                x.com
               </a>
             </div>
           </div>

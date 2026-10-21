@@ -2,28 +2,32 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { BookOpen, Check, Moon, Sun } from "lucide-react";
+import { Check, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const sans = "font-[family-name:var(--font-inter),system-ui,sans-serif]";
 
 const THEMES = [
   { id: "light", label: "Light", Icon: Sun },
-  { id: "sepia", label: "Sepia", Icon: BookOpen },
   { id: "dark", label: "Dark", Icon: Moon },
 ] as const;
 
 /**
- * Reading theme picker in the menu bar: Light, Sepia (warm paper) or Dark.
+ * Reading theme picker in the menu bar: Light or Dark.
  * The choice is site-wide and remembered (next-themes, localStorage). The
- * button shows the current theme's icon; CSS picks it (see the sepia-theme:
- * and dark: variants), so server and client markup always match.
+ * button shows the current theme's icon; CSS picks it (see the dark: variant),
+ * so server and client markup always match.
  */
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = React.useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+
+  // Visitors who picked the retired Sepia theme go back to Light.
+  React.useEffect(() => {
+    if (theme === "sepia") setTheme("light");
+  }, [theme, setTheme]);
 
   // Close on a click outside, or on Escape (returning focus to the button).
   React.useEffect(() => {
@@ -58,8 +62,7 @@ export function ThemeSwitcher() {
         onClick={() => setOpen((v) => !v)}
         className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition-colors hover:border-[var(--border-hover)] hover:text-[var(--text)]"
       >
-        <Sun className="size-4 dark:hidden sepia-theme:hidden" aria-hidden="true" />
-        <BookOpen className="hidden size-4 sepia-theme:block" aria-hidden="true" />
+        <Sun className="size-4 dark:hidden" aria-hidden="true" />
         <Moon className="hidden size-4 dark:block" aria-hidden="true" />
       </button>
 

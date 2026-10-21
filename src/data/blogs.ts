@@ -36,7 +36,11 @@ export const BLOGS: BlogPost[] = [
     summary:
       "A verified login doesn't stop an agent from leaking another customer's data — the leak happens after login, when a customer ID gets typed into the prompt and the model fills a tool parameter with it. A system prompt saying 'only show this customer's orders' is a request, not a permission check; the fix belongs in code, not the prompt.",
     href: "https://www.linkedin.com/pulse/your-ai-agent-just-showed-customer-orders-b-rakesh-singh--bhmfc/",
-    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-ai-agent-just-showed-customer-orders-b-rakesh-singh--bhmfc/" }],
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-ai-agent-just-showed-customer-orders-b-rakesh-singh--bhmfc/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/your-ai-agents-access-control-has-a-success-rate-e1ce664874d4" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/your-system-prompt-is-not-access-control-keep-user-ids-in-state-1e03" },
+    ],
   },
   {
     title: "Your AI Agent Just Charged the Customer Twice. Here Is Why.",
@@ -46,7 +50,11 @@ export const BLOGS: BlogPost[] = [
     summary:
       "Duplicate actions in AI agents usually come from retries, not bad code — the HTTP client, the orchestrator, the model's own re-attempt, and a resumed run after a crash can each multiply the same action. A content hash and stable chunk IDs stopped a RAG indexer from double-writing; seven rules for preventing duplicates follow.",
     href: "https://www.linkedin.com/pulse/your-ai-agent-just-charged-customer-twice-here-why-rakesh-singh--sipbc/",
-    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-ai-agent-just-charged-customer-twice-here-why-rakesh-singh--sipbc/" }],
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-ai-agent-just-charged-customer-twice-here-why-rakesh-singh--sipbc/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/your-agent-isnt-flaky-it-has-four-retry-layers-8688df946884" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/your-ai-agent-sent-that-email-twice-heres-the-idempotency-fix-3hli" },
+    ],
   },
   {
     title: "You Probably Have a Context Problem, Not an Agent-Count Problem",
@@ -56,7 +64,11 @@ export const BLOGS: BlogPost[] = [
     summary:
       "Before adding more agents to a RAG system, check whether the evidence for a failed answer was even in the model's context — if not, a second agent can't fix it, because the model needed the missing evidence, not collaborators. Multi-agent systems can burn roughly 15x the tokens of a single chat.",
     href: "https://www.linkedin.com/pulse/you-probably-have-context-problem-agent-count-rakesh-singh--hvhyc/",
-    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/you-probably-have-context-problem-agent-count-rakesh-singh--hvhyc/" }],
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/you-probably-have-context-problem-agent-count-rakesh-singh--hvhyc/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/its-probably-a-context-problem-not-an-agent-count-problem-572316d4901e" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/my-rag-system-didnt-need-more-agents-it-never-saw-the-evidence-59n1" },
+    ],
   },
   {
     title: "Rate Limiting an Agentic System with Redis: Count Tokens, Not Requests",
@@ -66,9 +78,88 @@ export const BLOGS: BlogPost[] = [
     summary:
       "Request-count limits don't track cost: a one-line question and a multi-step agent run both count as one request. Two Redis counters — tokens per minute for capacity, cost per day for budget — with estimate, reserve, reconcile, plus per-run agent budgets so retries and sub-agents draw from the same cap.",
     href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/",
-    sources: [{ name: "LinkedIn", href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/" }],
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/rate-limiting-agentic-system-redis-count-tokens-requests-singh--iuzwc/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/rate-limit-an-llm-agent-by-tokens-not-requests-9f515c2b16e7" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/a-request-limit-cannot-cap-your-llm-bill-reserve-tokens-in-redis-3719" },
+    ],
+  },
+  {
+    title: "When a Redis Cache Hit Is the Wrong Answer",
+    date: "2026-10-03",
+    category: "AI Systems",
+    tags: ["redis", "caching", "ai-agent", "llm", "software-engineering"],
+    summary:
+      "Three caches in front of an LLM agent, what goes in each key, and the five cases where a saved answer must not be returned.",
+    href: "https://www.linkedin.com/pulse/how-i-use-redis-cache-agentic-system-three-caches-when-rakesh-singh--bt2yc/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/how-i-use-redis-cache-agentic-system-three-caches-when-rakesh-singh--bt2yc/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/when-a-redis-cache-hit-is-the-wrong-answer-bb43e44c8b58" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/my-agent-paid-twice-for-the-same-question-the-fix-was-a-redis-key-3hcl" },
+    ],
   },
   // Build guides: the Hashnode editions, written as step-by-step how-tos.
+  {
+    title: "Authorise AI agent tool calls from the JWT, not the prompt",
+    date: "2026-10-14",
+    category: "Build Guides",
+    tags: ["ai-agent", "security", "jwt", "authorisation"],
+    kind: "guide",
+    summary:
+      "The JWT was valid and the model still picked the customer ID. Freeze identity into run context so a fooled model can’t reach the wrong data.",
+    steps: [
+      "Verify the JWT once and freeze identity into run context",
+      "Read the identity inside the tool, never from tool arguments",
+      "Scope the query in the data layer and fail closed",
+      "Treat retrieved text as data, not instructions",
+      "Audit every tool call, then attack it",
+    ],
+    href: "https://grounded-engineering.hashnode.dev/authorise-ai-agent-tool-calls-from-the-jwt-not-the-prompt",
+    sources: [
+      { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/authorise-ai-agent-tool-calls-from-the-jwt-not-the-prompt" },
+    ],
+  },
+  {
+    title: "Idempotent tool calls: stop your AI agent from charging twice",
+    date: "2026-10-10",
+    category: "Build Guides",
+    tags: ["ai-agent", "idempotency", "retries", "llm"],
+    kind: "guide",
+    summary:
+      "Retries come from four layers and can multiply into many runs of one action. Seven rules make a dangerous tool call happen exactly once.",
+    steps: [
+      "Sort every tool into three groups",
+      "Let one layer own retries",
+      "Give every dangerous write an idempotency key",
+      "Record the key and the result",
+      "Return the first result as a success",
+      "After a timeout, look before you retry",
+      "Put a gate on what cannot be undone",
+    ],
+    href: "https://grounded-engineering.hashnode.dev/idempotent-tool-calls-stop-your-ai-agent-from-charging-twice",
+    sources: [
+      { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/idempotent-tool-calls-stop-your-ai-agent-from-charging-twice" },
+    ],
+  },
+  {
+    title: "Single agent vs multi-agent: check the context before you split",
+    date: "2026-10-08",
+    category: "Build Guides",
+    tags: ["ai-agent", "multi-agent", "context-engineering", "rag"],
+    kind: "guide",
+    summary:
+      "A second agent buys a context window, not intelligence. Check whether the evidence reached the model before you add agents.",
+    steps: [
+      "Pull your failed runs",
+      "Check whether the evidence arrived",
+      "Give every failure a label",
+      "Pick the cheapest shape that works",
+    ],
+    href: "https://grounded-engineering.hashnode.dev/single-agent-vs-multi-agent-check-the-context-before-you-split",
+    sources: [
+      { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/single-agent-vs-multi-agent-check-the-context-before-you-split" },
+    ],
+  },
   {
     title: "Rate limit LLM tokens with Redis when the cost arrives after the call",
     date: "2026-10-03",
