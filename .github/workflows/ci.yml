@@ -17,6 +17,8 @@ jobs:
   build:
     name: Lint and build
     runs-on: ubuntu-latest
+    # Fail a hung step in minutes rather than GitHub's 6-hour default.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -29,3 +31,6 @@ jobs:
       - run: npm run lint
       # Also type-checks the project.
       - run: npm run build
+      # Serves the build and checks every route is crawlable without JS, with
+      # canonical tags on the production domain.
+      - run: npm run verify

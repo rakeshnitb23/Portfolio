@@ -1,14 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { SIDE_PROJECTS, type SideProject } from "@/data/side-projects";
 import { slugify } from "@/lib/site-search";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/side-projects",
   title: "Projects",
   description:
     "Backend and AI systems built in the open by Rakesh Singh, including GroundedDocs and the Kafka Order System.",
-  alternates: { canonical: "/side-projects" },
-};
+});
 
 function ProjectTitle({ project }: { project: SideProject }) {
   const className = "text-foreground hover:text-primary transition-colors";

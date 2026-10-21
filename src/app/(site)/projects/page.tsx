@@ -1,14 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { ArrowUpRight } from "lucide-react";
 import { getAllProjects } from "@/lib/content";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/projects",
   title: "Projects",
   description:
     "Backend and AI systems built by Rakesh Singh, including GroundedDocs (grounded retrieval Q&A) and the Kafka Order System (event-driven microservices).",
-  alternates: { canonical: "/projects" },
-};
+});
 
 export default function ProjectsPage() {
   const projects = getAllProjects();

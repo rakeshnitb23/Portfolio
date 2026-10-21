@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getAllWritingPosts, getWritingPost, getWritingSlugs } from "@/lib/content";
 import { MdxContent } from "@/components/mdx-content";
 import { JsonLd, breadcrumbList } from "@/components/json-ld";
-import { absoluteUrl, personId } from "@/lib/site";
+import { OG_IMAGE, absoluteUrl, personId } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -29,12 +29,14 @@ export async function generateMetadata({
       title: frontmatter.title,
       description: frontmatter.summary,
       type: "article",
+      images: [OG_IMAGE],
       url: absoluteUrl(`/writing/${slug}`),
     },
     twitter: {
       card: "summary_large_image",
       title: frontmatter.title,
       description: frontmatter.summary,
+      images: [OG_IMAGE.url],
     },
   };
 }

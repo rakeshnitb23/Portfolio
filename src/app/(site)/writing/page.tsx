@@ -2,16 +2,16 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { getAllPersonalPosts } from "@/lib/content";
-import { PERSON } from "@/lib/site";
+import { PERSON, pageMetadata } from "@/lib/site";
 import { NewsletterCard, NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
 import { BLOGS } from "@/data/blogs";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/writing",
   title: "Writing",
   description:
     "Notes on retrieval, reliability, and backend systems from Rakesh Singh — citations, abstention, uptime, and idempotency.",
-  alternates: { canonical: "/writing" },
-};
+});
 
 const SELECTED_NOTES = [
   {

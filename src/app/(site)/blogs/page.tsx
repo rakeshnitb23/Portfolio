@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { BlogArchive } from "@/components/sections/blog-archive";
 import { BLOGS } from "@/data/blogs";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/blogs",
   title: "Blogs",
   description:
     "Long-form essays from Rakesh Singh on distributed systems, backend engineering, databases, and AI systems.",
-  alternates: { canonical: "/blogs" },
-};
+});
 
 export default function BlogsPage() {
   return (

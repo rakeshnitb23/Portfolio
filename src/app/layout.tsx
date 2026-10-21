@@ -3,7 +3,7 @@ import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { JsonLd } from "@/components/json-ld";
-import { PERSON, SITE_URL, personId } from "@/lib/site";
+import { PERSON, SITE_URL, absoluteUrl, personId } from "@/lib/site";
 import { DOMAINS } from "@/data/technical-expertise";
 
 const roboto = Roboto({
@@ -32,14 +32,7 @@ export const metadata: Metadata = {
       "AI Backend Engineer at Genpact. Grounded document Q&A, hybrid retrieval, and Java/Spring systems for high-throughput workloads.",
     url: SITE_URL,
     siteName: "Rakesh Singh Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Rakesh Singh — AI Backend Engineer",
-      },
-    ],
+    // The preview image is app/opengraph-image.tsx, which Next adds to every page.
     locale: "en_US",
     type: "website",
   },
@@ -48,7 +41,6 @@ export const metadata: Metadata = {
     title: "Rakesh Singh — AI Backend Engineer",
     description:
       "AI Backend Engineer at Genpact. Grounded document Q&A, hybrid retrieval, and Java/Spring systems for high-throughput workloads.",
-    images: ["/og-image.png"],
   },
   alternates: {
     canonical: SITE_URL,
@@ -65,18 +57,22 @@ const personJsonLd = {
   "@id": personId(),
   name: PERSON.name,
   url: SITE_URL,
+  image: absoluteUrl(PERSON.image),
+  description:
+    "AI Backend Engineer at Genpact building grounded retrieval systems (hybrid search, citation validation, calibrated abstention), after four years of Java/Spring Boot backend work for Shutterfly USA.",
   email: `mailto:${PERSON.email}`,
   jobTitle: PERSON.jobTitle,
   worksFor: {
     "@type": "Organization",
     name: "Genpact",
+    url: "https://www.genpact.com",
   },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Bangalore",
     addressCountry: "IN",
   },
-  sameAs: [PERSON.github, PERSON.linkedin],
+  sameAs: [PERSON.github, PERSON.linkedin, PERSON.x, PERSON.hashnode],
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: PERSON.alumniOf,
