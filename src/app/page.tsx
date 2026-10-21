@@ -158,9 +158,17 @@ export default function Home() {
 
         {/* Projects */}
         <section id="projects" aria-labelledby="projects-heading" className="mt-14">
-          <h2 id="projects-heading" className={cn(sectionHeading, "mb-4")}>
-            Projects
-          </h2>
+          <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-3">
+            <h2 id="projects-heading" className={cn(sectionHeading, "mr-auto")}>
+              Projects
+            </h2>
+            <Link
+              href="/side-projects"
+              className={cn(sans, "text-[15px] font-medium text-[var(--link)] hover:text-[var(--link-hover)] hover:underline")}
+            >
+              All projects →
+            </Link>
+          </div>
           <div className="grid grid-cols-2 gap-5 phone:grid-cols-1 phone:gap-4">
             {home.projects.map((project) => (
               <article
