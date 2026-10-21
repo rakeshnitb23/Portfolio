@@ -17,6 +17,8 @@ jobs:
   build:
     name: Lint and build
     runs-on: ubuntu-latest
+    # Fail a hung step in minutes rather than GitHub's 6-hour default.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 

@@ -130,10 +130,14 @@ async function runChecks() {
 
 async function main() {
   console.log(`[verify-crawlable] starting \`next start\` on port ${PORT}...`);
-  const server = spawn("npx", ["next", "start", "-p", PORT], {
+  // Run Next directly (not via npx) in its own process group, so cleanup can stop
+  // the server and everything it forks. On Linux, killing npx alone left the
+  // server running with our pipes open, and the script never exited.
+  const server = spawn(path.join(ROOT, "node_modules", ".bin", "next"), ["start", "-p", PORT], {
     cwd: ROOT,
     stdio: ["ignore", "pipe", "pipe"],
     env: { ...process.env },
+    detached: true,
   });
 
   let serverOutput = "";
@@ -141,7 +145,11 @@ async function main() {
   server.stderr.on("data", (d) => (serverOutput += d.toString()));
 
   const cleanup = () => {
-    server.kill("SIGTERM");
+    try {
+      process.kill(-server.pid, "SIGTERM");
+    } catch {
+      // already gone
+    }
   };
 
   process.on("exit", cleanup);
@@ -168,6 +176,8 @@ async function main() {
     process.exitCode = 1;
   } finally {
     cleanup();
+    // Don't wait on the server's pipes to close; exit with the result now.
+    process.exit(process.exitCode);
   }
 }
 
