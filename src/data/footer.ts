@@ -1,5 +1,6 @@
 import type { IconType } from "react-icons";
-import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 import { PERSON } from "@/lib/site";
 
@@ -37,20 +38,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "Projects", hint: "Open-source", href: "/side-projects" },
       { label: "Blogs", hint: "Essays", href: "/blogs" },
       { label: "Writing", hint: "Notes", href: "/writing" },
-      { label: "Videos", hint: "Walkthroughs" },
-      { label: "Papershelf", hint: "Research" },
       { label: "Books", hint: "Reads", href: "/books" },
-      { label: "Talks & Appearances" },
-      { label: "RSS Feed", variant: "rss" },
-    ],
-  },
-  {
-    title: "Masterclasses",
-    links: [
-      { label: "Placeholder Course 1" },
-      { label: "Placeholder Course 2" },
-      { label: "Placeholder Course 3" },
-      { label: "View all courses →", variant: "cta" },
     ],
   },
   {
@@ -58,9 +46,6 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "GroundedDocs", href: "https://github.com/rakeshnitb23/groundeddocs" },
       { label: "Kafka Order System", href: "https://github.com/rakeshnitb23/kafka-order-system" },
-      { label: "Placeholder Project 1" },
-      { label: "Placeholder Project 2" },
-      { label: "Placeholder Project 3" },
     ],
   },
   {
@@ -68,22 +53,14 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "About Rakesh", href: "/resume" },
       { label: "Contact & Inquiries", href: "/contact" },
-      { label: "Terms & Conditions" },
-      { label: "Privacy Policy" },
-      { label: "Refund Policy" },
     ],
   },
 ];
 
-/** Small print above the copyright line (business name, address, tax ID). */
-export const FOOTER_NOTE =
-  "Placeholder — registered business name, address, and tax ID go here.";
-
 export const FOOTER_TAGLINE = "Built with Next.js.";
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { label: "YouTube", icon: FaYoutube },
-  { label: "Twitter", icon: FaTwitter, href: PERSON.x },
+  { label: "x.com", icon: FaXTwitter, href: PERSON.x },
   { label: "LinkedIn", icon: FaLinkedin, href: PERSON.linkedin },
   { label: "GitHub", icon: FaGithub, href: PERSON.github },
   { label: "Email", icon: FaEnvelope, href: `mailto:${PERSON.email}` },
