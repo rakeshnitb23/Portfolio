@@ -175,6 +175,20 @@ export default function Home() {
                 key={project.title}
                 className="relative flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 transition duration-150 ease-in-out hover:-translate-y-0.5 hover:border-[var(--border-hover)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
+                {(project.role || project.kind) && (
+                  <div className={cn(sans, "mb-2 flex flex-wrap gap-1.5")}>
+                    {project.role && (
+                      <span className="rounded-full border border-[var(--link)] px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-[var(--link)]">
+                        {project.role}
+                      </span>
+                    )}
+                    {project.kind && (
+                      <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-[var(--muted)]">
+                        {project.kind}
+                      </span>
+                    )}
+                  </div>
+                )}
                 <h3 className="text-[19px] font-semibold leading-snug">
                   {/* Stretched link: its ::after covers the card, so the whole card opens the project. */}
                   <a
