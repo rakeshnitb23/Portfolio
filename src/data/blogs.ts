@@ -29,6 +29,20 @@ export interface BlogPost {
 export const BLOGS: BlogPost[] = [
   // 2026
   {
+    title: "Shipping AI Agents to Production: Eval Gates, Smoke Evals, and What to Do on a Bad Day",
+    date: "2026-10-24",
+    category: "AI Systems",
+    tags: ["ai-agent", "evals", "deployment", "llm", "software-engineering"],
+    summary:
+      "One added prompt line — 'if a tool call fails, retry once' — passed the offline eval at 96%, then refunded 212 customers twice within 38 minutes, because the mocked refund tool answered in 50 ms and the real payments API timed out. The eval gate tests the version; a smoke eval tests the environment.",
+    href: "https://www.linkedin.com/pulse/shipping-ai-agents-production-eval-gates-smoke-evals-what-singh--8isuc/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/shipping-ai-agents-production-eval-gates-smoke-evals-what-singh--8isuc/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/our-eval-gate-passed-212-customers-got-refunded-twice-c38317379fca" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/our-ai-agent-passed-its-eval-then-it-refunded-212-customers-twice-2ija" },
+    ],
+  },
+  {
     title: "Your AI Agent Just Showed Customer A's Orders to Customer B",
     date: "2026-10-10",
     category: "AI Systems",
@@ -99,6 +113,25 @@ export const BLOGS: BlogPost[] = [
     ],
   },
   // Build guides: the Hashnode editions, written as step-by-step how-tos.
+  {
+    title: "Eval gate passed, production broke: add a smoke eval to agent deploys",
+    date: "2026-10-26",
+    category: "Build Guides",
+    tags: ["ai-agent", "evals", "deployment", "idempotency"],
+    kind: "guide",
+    summary:
+      "An eval gate checks whether the version is good; a smoke eval checks whether the environment works right now. A 20-case, 3-minute check against real dependencies stops a bad rollout at 5% traffic.",
+    steps: [
+      "Write the gate down before the results come in",
+      "Take retries out of the prompt",
+      "Write the smoke eval",
+      "Run it after every rollout step",
+    ],
+    href: "https://grounded-engineering.hashnode.dev/eval-gate-passed-production-broke-add-a-smoke-eval-to-agent-deploys",
+    sources: [
+      { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/eval-gate-passed-production-broke-add-a-smoke-eval-to-agent-deploys" },
+    ],
+  },
   {
     title: "Authorise AI agent tool calls from the JWT, not the prompt",
     date: "2026-10-14",
