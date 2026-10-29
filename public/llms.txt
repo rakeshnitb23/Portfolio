@@ -7,17 +7,11 @@ Rakesh Singh is an AI Backend Engineer at Genpact (Bangalore, India), building g
 - [GroundedDocs](https://www.lazymonk.si/projects/groundeddocs): Private document Q&A that answers only with a faithful citation from the user's files — and abstains when it can't.
 - [Kafka Order System](https://www.lazymonk.si/projects/kafka-order-system): Order and notification microservices on Kafka — Avro + Schema Registry, idempotent writes, retries, a dead-letter queue, and Prometheus-backed observability.
 
-## Writing
-
-- [Abstention Is the Default Path](https://www.lazymonk.si/writing/abstention-is-the-default-path): A system that always answers is a system that sometimes lies with confidence. Calibrated abstention is treated as a first-class output, not a fallback for when retrieval fails.
-- [Citations Get Checked, Not Trusted](https://www.lazymonk.si/writing/citations-get-checked-not-trusted): A citation is only as good as the validation behind it. GroundedDocs returns structured JSON with citation IDs, and every ID is checked against the retrieved chunk set before an answer is allowed to ship.
-- [Uptime Is a Personality](https://www.lazymonk.si/writing/uptime-is-a-personality): Resilience4j across 15+ microservices took system uptime to 99.9% while processing 2 million daily transactions. Reliability at that scale isn't a single fix — it's consistency applied everywhere.
-- [Idempotency at the Schema](https://www.lazymonk.si/writing/idempotency-at-the-schema): Idempotency that lives only in application logic breaks the moment someone bypasses it. Content-hash based ingest and Kafka dead-letter queues push the guarantee down to the schema and the messaging layer.
-
 ## About
 
 - [About](https://www.lazymonk.si/about): Full bio, experience with numbers, skills, and education.
 - [Resume](https://www.lazymonk.si/resume): One-page resume, with a PDF download.
+- [Personal writings](https://www.lazymonk.si/personal-writing): Personal posts, grouped by the skills I'm learning.
 - [Blogs](https://www.lazymonk.si/blogs): Long-form posts on retrieval, caching, and rate limiting for LLM systems.
 - [Side projects](https://www.lazymonk.si/side-projects): Things built in the open, with links to code.
 - [Contact](https://www.lazymonk.si/contact): How to get in touch.

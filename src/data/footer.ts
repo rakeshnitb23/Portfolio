@@ -37,7 +37,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "Projects", hint: "Open-source", href: "/side-projects" },
       { label: "Blogs", hint: "Essays", href: "/blogs" },
-      { label: "Writing", hint: "Notes", href: "/writing" },
+      { label: "Personal Writings", hint: "Skills", href: "/personal-writing" },
       { label: "Books", hint: "Reads", href: "/books" },
     ],
   },

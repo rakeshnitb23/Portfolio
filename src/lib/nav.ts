@@ -11,13 +11,13 @@ export const NAV_LINKS: NavLink[] = [
   { name: "User Manual", href: "/user-manual" },
   { name: "Books", href: "/books" },
   { name: "Resume", href: "/resume" },
-  { name: "Personal Writings", href: "/writing" },
+  { name: "Personal Writings", href: "/personal-writing" },
 ];
 
 // Top-level tabs shown in the header bar.
 export const TOP_NAV_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
-  { name: "Personal Writings", href: "/writing" },
+  { name: "Personal Writings", href: "/personal-writing" },
 ];
 
 // Home section's sub-pages, shown in the left sidebar.

@@ -1,4 +1,4 @@
-import { getAllPersonalPosts, getAllProjects, getAllWritingPosts } from "@/lib/content";
+import { getAllPersonalPosts, getAllProjects } from "@/lib/content";
 
 export interface SearchItem {
   title: string;
@@ -21,7 +21,7 @@ export function buildSearchIndex(): SearchItem[] {
     { title: "Books", summary: "Books I've read and recommend", href: "/books", group: "Pages" },
     { title: "Resume", summary: "Experience, education, and skills", href: "/resume", group: "Pages" },
     { title: "Projects", summary: "Backend and AI systems, end to end", href: "/projects", group: "Pages" },
-    { title: "Writing", summary: "Notes on retrieval, reliability, and backend systems", href: "/writing", group: "Pages" },
+    { title: "Personal Writings", summary: "Personal posts on the skills I'm learning", href: "/personal-writing", group: "Pages" },
     { title: "Contact", summary: "Get in touch", href: "/contact", group: "Pages" },
   ];
 
@@ -33,23 +33,15 @@ export function buildSearchIndex(): SearchItem[] {
     tags: p.frontmatter.stack,
   }));
 
-  const writing: SearchItem[] = getAllWritingPosts().map((p) => ({
-    title: p.frontmatter.title,
-    summary: p.frontmatter.summary,
-    href: `/writing/${p.slug}`,
-    group: "Writing",
-    tags: p.frontmatter.tags,
-  }));
-
   // Written personal posts only; placeholders stay out of search.
   const personal: SearchItem[] = getAllPersonalPosts()
     .filter((p) => !p.frontmatter.placeholder)
     .map((p) => ({
       title: p.frontmatter.title,
       summary: p.frontmatter.summary,
-      href: `/writing/personal/${p.slug}`,
+      href: `/personal-writing/${p.slug}`,
       group: "Personal writing",
     }));
 
-  return [...pages, ...projects, ...writing, ...personal];
+  return [...pages, ...projects, ...personal];
 }

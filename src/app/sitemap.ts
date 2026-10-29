@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllPersonalPosts, getAllProjects, getAllWritingPosts } from "@/lib/content";
+import { getAllPersonalPosts, getAllProjects } from "@/lib/content";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/blogs`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/side-projects`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/projects`, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_URL}/writing`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/personal-writing`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.5 },
   ];
 
@@ -24,22 +24,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const writingRoutes: MetadataRoute.Sitemap = getAllWritingPosts().map((p) => ({
-    url: `${SITE_URL}/writing/${p.slug}`,
-    lastModified: p.frontmatter.date,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
-
   // Placeholders are noindex, so only written posts are listed.
   const personalRoutes: MetadataRoute.Sitemap = getAllPersonalPosts()
     .filter((p) => !p.frontmatter.placeholder && p.frontmatter.date)
     .map((p) => ({
-      url: `${SITE_URL}/writing/personal/${p.slug}`,
+      url: `${SITE_URL}/personal-writing/${p.slug}`,
       lastModified: p.frontmatter.date,
       changeFrequency: "monthly",
       priority: 0.6,
     }));
 
-  return [...staticRoutes, ...projectRoutes, ...writingRoutes, ...personalRoutes];
+  return [...staticRoutes, ...projectRoutes, ...personalRoutes];
 }

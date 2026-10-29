@@ -5,6 +5,7 @@ import { getAllPersonalPosts, getPersonalPost, getPersonalSlugs } from "@/lib/co
 import { MdxContent } from "@/components/mdx-content";
 import { JsonLd, breadcrumbList } from "@/components/json-ld";
 import { OG_IMAGE, absoluteUrl, personId } from "@/lib/site";
+import { slugify } from "@/lib/site-search";
 
 export const dynamic = "force-static";
 
@@ -23,7 +24,7 @@ export async function generateMetadata({
   return {
     title: frontmatter.title,
     description: frontmatter.summary,
-    alternates: { canonical: `/writing/personal/${slug}` },
+    alternates: { canonical: `/personal-writing/${slug}` },
     // Placeholders aren't real posts yet, so keep them out of search engines.
     ...(frontmatter.placeholder ? { robots: { index: false } } : {}),
     openGraph: {
@@ -31,7 +32,7 @@ export async function generateMetadata({
       description: frontmatter.summary,
       type: "article",
       images: [OG_IMAGE],
-      url: absoluteUrl(`/writing/personal/${slug}`),
+      url: absoluteUrl(`/personal-writing/${slug}`),
     },
     twitter: {
       card: "summary_large_image",
@@ -66,7 +67,7 @@ export default async function PersonalPostPage({
 
   const { frontmatter, body } = getPersonalPost(slug);
   const otherPosts = getAllPersonalPosts().filter((p) => p.slug !== slug);
-  const url = absoluteUrl(`/writing/personal/${slug}`);
+  const url = absoluteUrl(`/personal-writing/${slug}`);
   // Placeholders are noindex, so they get no Article schema.
   const isWritten = !frontmatter.placeholder && !!frontmatter.date;
 
@@ -89,22 +90,15 @@ export default async function PersonalPostPage({
           <JsonLd
             data={breadcrumbList([
               { name: "Home", url: absoluteUrl("/") },
-              { name: "Writing", url: absoluteUrl("/writing") },
+              { name: "Personal Writings", url: absoluteUrl("/personal-writing") },
               { name: frontmatter.title, url },
             ])}
           />
         </>
       )}
       <nav aria-label="Breadcrumb" className="mb-8 font-mono text-xs text-muted-foreground">
-        <Link href="/writing" className="hover:text-primary underline underline-offset-4">
-          Writing
-        </Link>
-        <span className="mx-2">/</span>
-        <Link
-          href="/writing#personal-writing"
-          className="hover:text-primary underline underline-offset-4"
-        >
-          Personal writing
+        <Link href="/personal-writing" className="hover:text-primary underline underline-offset-4">
+          Personal Writings
         </Link>
         <span className="mx-2">/</span>
         <span>{frontmatter.title}</span>
@@ -113,6 +107,17 @@ export default async function PersonalPostPage({
       <header className="mb-10">
         <p className="mb-3 font-mono text-xs uppercase tracking-wider text-primary">
           Personal writing
+          {frontmatter.skill && (
+            <>
+              {" · "}
+              <Link
+                href={`/personal-writing?skill=${slugify(frontmatter.skill)}`}
+                className="hover:underline"
+              >
+                {frontmatter.skill}
+              </Link>
+            </>
+          )}
         </p>
         <h1 className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-4">
           {frontmatter.title}
@@ -142,7 +147,7 @@ export default async function PersonalPostPage({
             {otherPosts.map((p) => (
               <Link
                 key={p.slug}
-                href={`/writing/personal/${p.slug}`}
+                href={`/personal-writing/${p.slug}`}
                 className="block text-lg text-foreground hover:text-primary transition-colors"
               >
                 {p.frontmatter.title} →
@@ -151,10 +156,10 @@ export default async function PersonalPostPage({
           </>
         )}
         <Link
-          href="/writing#personal-writing"
+          href="/personal-writing"
           className="mt-6 inline-block font-mono text-sm text-primary hover:underline"
         >
-          ← Back to Writing
+          ← Back to Personal Writings
         </Link>
       </footer>
     </article>
