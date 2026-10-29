@@ -67,24 +67,24 @@
  */
 :root {
   --radius: 0.25rem;
-  --background: #fdfdfd;
-  --foreground: #1a1a1a;
-  --card: #ffffff;
+  --background: #f7f4ed;
+  --foreground: #0a0a0a;
+  --card: #fffdf8;
   --card-foreground: #1a1a1a;
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
-  --primary: #2456c7;
-  --primary-foreground: #ffffff;
+  --primary: #0a0a0a;
+  --primary-foreground: #f7f4ed;
   --secondary: #f5f5f5;
   --secondary-foreground: #1a1a1a;
-  --muted: #f5f5f5;
-  --muted-foreground: #6b6b6b;
-  --accent: #2456c7;
+  --muted: #efeae0;
+  --muted-foreground: #6a6660;
+  --accent: #123934;
   --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #e6e6e6;
-  --input: #e6e6e6;
-  --ring: #2456c7;
+  --border: #e4dfd3;
+  --input: #e4dfd3;
+  --ring: #123934;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -107,16 +107,16 @@
   /* Site chrome. --md-primary is the strong action colour (primary buttons),
      near-black like the homepage's buttons; --md-primary-fg is text on it.
      --topbar is the dark line along the top of the header. */
-  --md-primary: #1a1a1a;
-  --md-primary-fg: #ffffff;
-  --topbar: #2b2b2b;
-  --md-accent: #2456c7;
-  --md-fg: rgba(0, 0, 0, 0.87);
-  --md-fg-light: rgba(0, 0, 0, 0.54);
-  --md-fg-lighter: rgba(0, 0, 0, 0.32);
-  --md-fg-lightest: rgba(0, 0, 0, 0.07);
-  --md-code-bg: #f5f5f5;
-  --md-footer-bg: #000000de;
+  --md-primary: #0a0a0a;
+  --md-primary-fg: #f7f4ed;
+  --topbar: #123934;
+  --md-accent: #123934;
+  --md-fg: rgba(10, 10, 10, 0.87);
+  --md-fg-light: rgba(10, 10, 10, 0.54);
+  --md-fg-lighter: rgba(10, 10, 10, 0.32);
+  --md-fg-lightest: rgba(10, 10, 10, 0.07);
+  --md-code-bg: #efeae0;
+  --md-footer-bg: #0a0a0a;
 }
 
 /*
@@ -128,24 +128,24 @@
 .dark {
   color-scheme: dark;
 
-  --background: #141414;
-  --foreground: #e8e8e8;
-  --card: #1b1b1b;
+  --background: #0f1c1a;
+  --foreground: #f1ede3;
+  --card: #152623;
   --card-foreground: #e8e8e8;
   --popover: #1b1b1b;
   --popover-foreground: #e8e8e8;
-  --primary: #8fadff;
-  --primary-foreground: #101010;
+  --primary: #e9e2d0;
+  --primary-foreground: #0f1c1a;
   --secondary: #1f1f1f;
   --secondary-foreground: #e8e8e8;
-  --muted: #1f1f1f;
-  --muted-foreground: #a0a0a0;
-  --accent: #8fadff;
+  --muted: #182b28;
+  --muted-foreground: #a8a396;
+  --accent: #9fd3c4;
   --accent-foreground: #101010;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: #2c2c2c;
-  --input: #2c2c2c;
-  --ring: #8fadff;
+  --border: #263d39;
+  --input: #263d39;
+  --ring: #9fd3c4;
   --sidebar: #141414;
   --sidebar-foreground: #e8e8e8;
   --sidebar-primary: #8fadff;
@@ -155,16 +155,16 @@
   --sidebar-border: #2c2c2c;
   --sidebar-ring: #8fadff;
 
-  --md-primary: #ececec;
-  --md-primary-fg: #141414;
-  --topbar: #5a5a5a;
-  --md-accent: #8fadff;
-  --md-fg: rgba(255, 255, 255, 0.87);
-  --md-fg-light: rgba(255, 255, 255, 0.6);
-  --md-fg-lighter: rgba(255, 255, 255, 0.38);
-  --md-fg-lightest: rgba(255, 255, 255, 0.07);
-  --md-code-bg: #1f1f1f;
-  --md-footer-bg: #0f0f0f;
+  --md-primary: #e9e2d0;
+  --md-primary-fg: #0f1c1a;
+  --topbar: #0a1412;
+  --md-accent: #9fd3c4;
+  --md-fg: rgba(241, 237, 227, 0.87);
+  --md-fg-light: rgba(241, 237, 227, 0.6);
+  --md-fg-lighter: rgba(241, 237, 227, 0.38);
+  --md-fg-lightest: rgba(241, 237, 227, 0.07);
+  --md-code-bg: #182b28;
+  --md-footer-bg: #0a1412;
 }
 
 /*
@@ -274,53 +274,73 @@
  * theme (light / dark) swaps them via .dark .home-page below.
  */
 .home-page {
-  --bg: #fdfdfd;
-  --surface: #ffffff;
-  --text: #1a1a1a;
-  --muted: #6b6b6b;
-  --link: #2456c7;
-  --link-hover: #173a8a;
-  --border: #e6e6e6;
-  --topbar: #2b2b2b;
-  --border-hover: #bdbdbd;
+  --bg: #f7f4ed;
+  --surface: #fffdf8;
+  --text: #0a0a0a;
+  --muted: #6a6660;
+  --link: #123934;
+  --link-hover: #1c4f49;
+  --border: #e4dfd3;
+  --topbar: #123934;
+  --border-hover: #b9b2a4;
   /* Primary buttons are filled with --text; --on-text is the label colour on them. */
-  --on-text: #ffffff;
+  --on-text: #f7f4ed;
   --text-hover: #000000;
   /* Portrait placeholder circle and menu hover backgrounds. */
-  --placeholder-bg: #efefef;
+  --placeholder-bg: #ebe6da;
   /* Theme tokens read by shared components placed here (the newsletter form),
      set explicitly so the homepage controls its own look in every theme. */
-  --foreground: #1a1a1a;
-  --background: #ffffff;
-  --muted-foreground: #6b6b6b;
-  --input: #e6e6e6;
-  --ring: #2456c7;
+  --foreground: #0a0a0a;
+  --background: #fffdf8;
+  --muted-foreground: #6a6660;
+  --input: #e4dfd3;
+  --ring: #123934;
   color-scheme: light;
 }
 
-/* Dark: the same charcoal palette as the inner pages. */
+/* Dark: the same deep-green palette as the inner pages. */
 .dark .home-page {
-  --bg: #141414;
-  --surface: #1b1b1b;
-  --text: #e8e8e8;
-  --muted: #a0a0a0;
-  --link: #8fadff;
-  --link-hover: #b5c8ff;
-  --border: #2c2c2c;
-  --topbar: #5a5a5a;
-  --border-hover: #4a4a4a;
-  --on-text: #141414;
+  --bg: #0f1c1a;
+  --surface: #152623;
+  --text: #f1ede3;
+  --muted: #a8a396;
+  --link: #9fd3c4;
+  --link-hover: #c6e8dd;
+  --border: #263d39;
+  --topbar: #0a1412;
+  --border-hover: #3a5752;
+  --on-text: #0f1c1a;
   --text-hover: #ffffff;
-  --placeholder-bg: #262626;
-  --foreground: #e8e8e8;
-  --background: #1b1b1b;
-  --muted-foreground: #a0a0a0;
-  --input: #2c2c2c;
-  --ring: #8fadff;
+  --placeholder-bg: #1a2e2a;
+  --foreground: #f1ede3;
+  --background: #152623;
+  --muted-foreground: #a8a396;
+  --input: #263d39;
+  --ring: #9fd3c4;
   color-scheme: dark;
 }
 
 .home-page :is(a, button):focus-visible {
   outline: 2px solid var(--link);
   outline-offset: 2px;
+}
+
+/*
+ * Paper grain over the whole site (the Palindrome texture): a fixed SVG noise
+ * layer that ignores pointer events, so it never blocks clicks.
+ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.dark body::after {
+  opacity: 0.12;
+  mix-blend-mode: screen;
 }
