@@ -9,6 +9,10 @@ export interface HomeProject {
   /** Internal project page (/projects/slug) or an external URL. */
   href: string;
   github: string;
+  /** My role on the project (e.g. "Owner"), shown as a pill above the title. */
+  role?: string;
+  /** What the project is (e.g. "Open-source library"), shown next to the role. */
+  kind?: string;
 }
 
 export interface HomeSocial {
@@ -46,18 +50,22 @@ export const home: HomeContent = {
   ],
   projects: [
     {
-      title: "GroundedDocs",
+      title: "toolism",
       summary:
-        "Private document Q&A that answers only with a faithful citation from the user's files — and abstains when it can't.",
-      href: "/projects/groundeddocs",
-      github: "https://github.com/rakeshnitb23/groundeddocs",
+        "Open-source Python library that measures and cuts the token cost of LLM tool and MCP schemas, with equivalence checking and a CI gate.",
+      href: "https://github.com/rakeshnitb23/toolism",
+      github: "https://github.com/rakeshnitb23/toolism",
+      role: "Owner",
+      kind: "Open-source library",
     },
     {
-      title: "Kafka Order System",
+      title: "Opfence",
       summary:
-        "Order and notification microservices on Kafka — Avro + Schema Registry, idempotent writes, retries and a dead-letter queue.",
-      href: "/projects/kafka-order-system",
-      github: "https://github.com/rakeshnitb23/kafka-order-system",
+        "Open catalog of the operations an AI agent must never run without asking, and a Go tool that enforces it on every request.",
+      href: "https://github.com/rakeshnitb23/opfence",
+      github: "https://github.com/rakeshnitb23/opfence",
+      role: "Maintainer",
+      kind: "Open-source library",
     },
   ],
   email: PERSON.email,
