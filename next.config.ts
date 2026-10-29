@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // /writing moved to /personal-writing; the old technical notes at /writing/<slug> were removed.
+  async redirects() {
+    return [
+      { source: "/writing", destination: "/personal-writing", permanent: true },
+      { source: "/writing/personal/:slug", destination: "/personal-writing/:slug", permanent: true },
+      { source: "/writing/:slug", destination: "/blogs", permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [
       {

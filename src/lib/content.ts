@@ -15,21 +15,16 @@ export interface ProjectFrontmatter {
   demo?: string;
 }
 
-export interface WritingFrontmatter {
-  title: string;
-  summary: string;
-  date: string;
-  tags: string[];
-}
-
 export interface PersonalFrontmatter {
   title: string;
-  /** Two or three lines shown under the title on /writing. */
+  /** Two or three lines shown under the title on /personal-writing. */
   summary: string;
   /** Publish date (YYYY-MM-DD). Placeholders leave it out. */
   date?: string;
   /** A post not yet written: listed and linked, shown with a "Placeholder" label. */
   placeholder?: boolean;
+  /** The skill this post is about; posts are filtered by it on /personal-writing. */
+  skill?: string;
 }
 
 export interface ContentEntry<T> {
@@ -58,27 +53,13 @@ export function getProjectSlugs(): string[] {
   return readDir("projects");
 }
 
-export function getWritingSlugs(): string[] {
-  return readDir("writing");
-}
-
 export function getProject(slug: string): ContentEntry<ProjectFrontmatter> {
   return readEntry<ProjectFrontmatter>("projects", slug);
-}
-
-export function getWritingPost(slug: string): ContentEntry<WritingFrontmatter> {
-  return readEntry<WritingFrontmatter>("writing", slug);
 }
 
 export function getAllProjects(): ContentEntry<ProjectFrontmatter>[] {
   return getProjectSlugs()
     .map((slug) => getProject(slug))
-    .sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1));
-}
-
-export function getAllWritingPosts(): ContentEntry<WritingFrontmatter>[] {
-  return getWritingSlugs()
-    .map((slug) => getWritingPost(slug))
     .sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1));
 }
 

@@ -42,7 +42,7 @@ export const home: HomeContent = {
   bio: [
     "I'm an AI Backend Engineer at Genpact in Bangalore. I build grounded retrieval systems: question-answering over private documents that cites its sources and says \"I don't know\" when the evidence isn't there.",
     "Before that, I spent four years building Java and Spring Boot backends for Shutterfly's production systems in the US market. That work taught me to care about idempotency, retries and what happens when a message arrives twice.",
-    "These days I write about [retrieval, caching and rate limiting for LLM systems](/blogs), and keep longer [notes on reliability](/writing). I studied at NIT Bhopal. If you're hiring or want to compare notes on RAG in production, [get in touch](/contact).",
+    "These days I write about [retrieval, caching and rate limiting for LLM systems](/blogs), and keep [personal writing](/personal-writing) on the skills I'm learning. I studied at NIT Bhopal. If you're hiring or want to compare notes on RAG in production, [get in touch](/contact).",
   ],
   projects: [
     {

@@ -58,7 +58,7 @@ function buildChecks() {
   checks.push({ path: "/resume", expect: "Download PDF" });
   checks.push({ path: "/blogs", expect: "Blogs" });
   checks.push({ path: "/projects", expect: "production-minded systems" });
-  checks.push({ path: "/writing", expect: "retrieval, reliability" });
+  checks.push({ path: "/personal-writing", expect: "skills I’m learning" });
   checks.push({ path: "/contact", expect: "Rakesh" });
 
   for (const p of readCollection("projects")) {
@@ -67,16 +67,10 @@ function buildChecks() {
       expect: p.frontmatter.summary,
     });
   }
-  for (const p of readCollection("writing")) {
-    checks.push({
-      path: `/writing/${p.slug}`,
-      expect: p.frontmatter.summary,
-    });
-  }
   for (const p of readCollection("personal")) {
     if (p.frontmatter.placeholder || !p.frontmatter.date) continue;
     checks.push({
-      path: `/writing/personal/${p.slug}`,
+      path: `/personal-writing/${p.slug}`,
       expect: p.frontmatter.title,
     });
   }

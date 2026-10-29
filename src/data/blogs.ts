@@ -23,9 +23,9 @@ export interface BlogPost {
   href?: string;
 }
 
-// Placeholder entries for /blogs. When a post is ready, overwrite one entry's
-// title, date, category, and tags and add its href. Year groups, counts, and
-// filter pills are all derived from this list, so nothing else needs editing.
+// Posts on /blogs. To add one, add an entry with its title, date, category,
+// tags, and href. Year groups, counts, and filter pills are all derived from
+// this list, so nothing else needs editing.
 export const BLOGS: BlogPost[] = [
   // 2026
   {
@@ -274,22 +274,4 @@ export const BLOGS: BlogPost[] = [
       { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/secure-a-rag-api-without-minting-tokens-or-storing-passwords" },
     ],
   },
-
-  // 2025
-  { title: "Placeholder Post 09", date: "2025-12-09", category: "Databases", tags: ["databases", "indexing"] },
-  { title: "Placeholder Post 10", date: "2025-11-04", category: "Career Growth", tags: ["career-growth"] },
-  { title: "Placeholder Post 11", date: "2025-10-01", category: "Distributed Systems", tags: ["distributed-systems", "kafka"] },
-  { title: "Placeholder Post 12", date: "2025-08-26", category: "AI Systems", tags: ["ai-systems", "rag"] },
-  { title: "Placeholder Post 13", date: "2025-07-15", category: "Backend Engineering", tags: ["backend", "spring-boot"] },
-  { title: "Placeholder Post 14", date: "2025-05-27", category: "Databases", tags: ["databases", "postgres"] },
-  { title: "Placeholder Post 15", date: "2025-04-08", category: "Career Growth", tags: ["career-growth"] },
-  { title: "Placeholder Post 16", date: "2025-02-18", category: "Distributed Systems", tags: ["distributed-systems", "consistency"] },
-
-  // 2024
-  { title: "Placeholder Post 17", date: "2024-12-03", category: "AI Systems", tags: ["ai-systems", "llm"] },
-  { title: "Placeholder Post 18", date: "2024-10-15", category: "Backend Engineering", tags: ["backend", "microservices"] },
-  { title: "Placeholder Post 19", date: "2024-08-06", category: "Databases", tags: ["databases", "indexing"] },
-  { title: "Placeholder Post 20", date: "2024-06-11", category: "Career Growth", tags: ["career-growth"] },
-  { title: "Placeholder Post 21", date: "2024-04-02", category: "Distributed Systems", tags: ["distributed-systems", "kafka"] },
-  { title: "Placeholder Post 22", date: "2024-01-23", category: "AI Systems", tags: ["ai-systems", "rag"] },
 ];

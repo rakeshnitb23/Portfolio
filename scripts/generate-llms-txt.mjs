@@ -26,7 +26,6 @@ function readCollection(dir) {
 }
 
 const projects = readCollection("projects");
-const writing = readCollection("writing");
 
 const aboutSummary =
   "Rakesh Singh is an AI Backend Engineer at Genpact (Bangalore, India), building grounded retrieval systems with citation validation and calibrated abstention. He previously spent four years as a Backend Java Developer on Genpact's Shutterfly (USA) account, working on high-throughput Spring Boot microservices. He holds a B.Tech in Computer Science and Engineering from NIT Bhopal.";
@@ -47,11 +46,11 @@ const llmsTxt = `# Rakesh Singh
 ${aboutSummary}
 
 ${section("Projects", projects, "/projects")}
-${section("Writing", writing, "/writing")}
 ## About
 
 - [About](${SITE_URL}/about): Full bio, experience with numbers, skills, and education.
 - [Resume](${SITE_URL}/resume): One-page resume, with a PDF download.
+- [Personal writings](${SITE_URL}/personal-writing): Personal posts, grouped by the skills I'm learning.
 - [Blogs](${SITE_URL}/blogs): Long-form posts on retrieval, caching, and rate limiting for LLM systems.
 - [Side projects](${SITE_URL}/side-projects): Things built in the open, with links to code.
 - [Contact](${SITE_URL}/contact): How to get in touch.
@@ -63,9 +62,6 @@ const fullParts = [
   ...projects.map(
     (p) => `# Project: ${p.frontmatter.title}\n\n${p.body.trim()}\n`
   ),
-  ...writing.map(
-    (p) => `# ${p.frontmatter.title}\n\n${p.body.trim()}\n`
-  ),
 ];
 
 fs.mkdirSync(PUBLIC_ROOT, { recursive: true });
@@ -76,5 +72,5 @@ fs.writeFileSync(
 );
 
 console.log(
-  `[generate-llms-txt] wrote public/llms.txt and public/llms-full.txt (${projects.length} projects, ${writing.length} writing posts)`
+  `[generate-llms-txt] wrote public/llms.txt and public/llms-full.txt (${projects.length} projects)`
 );
