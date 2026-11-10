@@ -29,6 +29,20 @@ export interface BlogPost {
 export const BLOGS: BlogPost[] = [
   // 2026
   {
+    title: "The Second Refund: Designing Agent Tools That Are Safe to Retry",
+    date: "2026-11-10",
+    category: "AI Systems",
+    tags: ["ai-agent", "idempotency", "retries", "llm", "software-engineering"],
+    summary:
+      "Part 2 of Shipping AI Agents to Production. Three weeks after the first double refund, it happened again — the idempotency key was there, but it was built from the tool call ID, so a new retry meant a new key and a second refund. Same intent, same key, one refund.",
+    href: "https://www.linkedin.com/pulse/second-refund-designing-agent-tools-safe-retry-rakesh-singh--uw5jf/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/second-refund-designing-agent-tools-safe-retry-rakesh-singh--uw5jf/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/the-second-refund-designing-agent-tools-that-are-safe-to-retry-9f9ce384f297" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/my-ai-agent-refunded-customers-twice-the-idempotency-key-was-there-12le" },
+    ],
+  },
+  {
     title: "Shipping AI Agents to Production: Eval Gates, Smoke Evals, and What to Do on a Bad Day",
     date: "2026-10-24",
     category: "AI Systems",
@@ -113,6 +127,26 @@ export const BLOGS: BlogPost[] = [
     ],
   },
   // Build guides: the Hashnode editions, written as step-by-step how-tos.
+  {
+    title: "Make agent tools safe to retry: one idempotency key per business intent",
+    date: "2026-11-10",
+    category: "Build Guides",
+    tags: ["ai-agent", "idempotency", "retries", "llm"],
+    kind: "guide",
+    summary:
+      "For a side-effecting tool, an error means \"outcome unknown\", not \"failed\". Tie the idempotency key to the business intent, not the tool call or the attempt, and wrap risky tools so they record, lock, call and verify before acting again.",
+    steps: [
+      "Classify every tool",
+      "One key per business intent",
+      "Wrap every side-effecting tool",
+      "Tell the model what happened",
+      "Test the failure shapes on purpose",
+    ],
+    href: "https://grounded-engineering.hashnode.dev/says-what-the-reader-will-do-plus-the-limit",
+    sources: [
+      { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/says-what-the-reader-will-do-plus-the-limit" },
+    ],
+  },
   {
     title: "Eval gate passed, production broke: add a smoke eval to agent deploys",
     date: "2026-10-26",
