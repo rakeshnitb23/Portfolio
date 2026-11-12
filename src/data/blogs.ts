@@ -29,6 +29,20 @@ export interface BlogPost {
 export const BLOGS: BlogPost[] = [
   // 2026
   {
+    title: "Where the 400 Cases Come From: Building the Eval Set Behind Your Gate",
+    date: "2026-11-12",
+    category: "AI Systems",
+    tags: ["ai-agent", "evals", "testing", "llm", "software-engineering"],
+    summary:
+      "An agent passed its 400-case eval gate at 97% for 11 releases while auto-approving 37 refunds above the $200 human-approval limit — a config typo had raised it to $250, and 61 cases had been recorded from the agent's own outputs, so the boundary cases expected the bug. Expected answers must come from the policy, not the agent.",
+    href: "https://www.linkedin.com/pulse/where-400-cases-come-from-building-eval-set-behind-your-rakesh-singh--tstuf/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/where-400-cases-come-from-building-eval-set-behind-your-rakesh-singh--tstuf/" },
+      { name: "Medium", href: "https://medium.com/@rakeshnitb23/our-eval-set-agreed-with-the-bug-e231ad91cbf1" },
+      { name: "dev.to", href: "https://dev.to/rakesh_kumar_04012c337851/our-eval-gate-passed-at-97-the-agent-had-written-its-own-answers-6kb" },
+    ],
+  },
+  {
     title: "The Second Refund: Designing Agent Tools That Are Safe to Retry",
     date: "2026-11-10",
     category: "AI Systems",
@@ -127,6 +141,27 @@ export const BLOGS: BlogPost[] = [
     ],
   },
   // Build guides: the Hashnode editions, written as step-by-step how-tos.
+  {
+    title: "How to Build an AI Agent Eval Set That Doesn't Share Your Bugs",
+    date: "2026-11-12",
+    category: "Build Guides",
+    tags: ["ai-agent", "evals", "testing", "llm"],
+    kind: "guide",
+    summary:
+      "Eval sets fail by being too lenient, not too small. Build cases from five labelled sources, write expected answers from policy rather than agent output, grade with rules first and a calibrated judge second, and run every case more than once.",
+    steps: [
+      "Build the set from five sources",
+      "Write each case from the source of truth",
+      "Grade with rules first, a judge second, humans to calibrate",
+      "Keep the eval independent of the agent",
+      "Run every case more than once",
+      "Keep the set alive",
+    ],
+    href: "https://grounded-engineering.hashnode.dev/how-to-build-an-ai-agent-eval-set-that-doesn-t-share-your-bugs",
+    sources: [
+      { name: "Hashnode", href: "https://grounded-engineering.hashnode.dev/how-to-build-an-ai-agent-eval-set-that-doesn-t-share-your-bugs" },
+    ],
+  },
   {
     title: "Make agent tools safe to retry: one idempotency key per business intent",
     date: "2026-11-10",
