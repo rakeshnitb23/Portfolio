@@ -149,7 +149,7 @@ export default function Home() {
         {/* About: the bio wraps around the circular photo, then runs full width under it. */}
         <section aria-label="About" className="flow-root pt-14">
           <Portrait />
-          <div className="space-y-4">
+          <div className="space-y-4 text-[16px] leading-[1.7] phone:text-[15px]">
             {home.bio.map((paragraph, i) => (
               <BioParagraph key={i} text={paragraph} />
             ))}
