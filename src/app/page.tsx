@@ -205,14 +205,26 @@ export default function Home() {
                   <span aria-hidden="true" className="font-medium text-[var(--link)]">
                     View project →
                   </span>
-                  <a
-                    href={project.github}
-                    {...newTab}
-                    className="relative z-10 inline-flex items-center gap-1.5 text-[var(--muted)] hover:text-[var(--text)] hover:underline"
-                  >
-                    <FaGithub className="size-4" aria-hidden="true" />
-                    GitHub
-                  </a>
+                  <div className="flex items-center gap-4">
+                    {project.linkedin && (
+                      <a
+                        href={project.linkedin}
+                        {...newTab}
+                        className="relative z-10 inline-flex items-center gap-1.5 text-[var(--muted)] hover:text-[var(--text)] hover:underline"
+                      >
+                        <FaLinkedin className="size-4" aria-hidden="true" />
+                        LinkedIn
+                      </a>
+                    )}
+                    <a
+                      href={project.github}
+                      {...newTab}
+                      className="relative z-10 inline-flex items-center gap-1.5 text-[var(--muted)] hover:text-[var(--text)] hover:underline"
+                    >
+                      <FaGithub className="size-4" aria-hidden="true" />
+                      GitHub
+                    </a>
+                  </div>
                 </div>
               </article>
             ))}

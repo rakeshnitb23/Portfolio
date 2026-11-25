@@ -29,6 +29,37 @@ export interface BlogPost {
 export const BLOGS: BlogPost[] = [
   // 2026
   {
+    title: "LLM-as-a-Judge, Part 2: Your LLM Judge Was 94% Right in Testing. In Production, 6 in 10 Flags Are False Alarms.",
+    date: "2026-11-21",
+    category: "AI Systems",
+    tags: ["llm-as-a-judge", "evals", "ai-agent", "llm", "software-engineering"],
+    href: "https://www.linkedin.com/pulse/your-llm-judge-94-right-testing-production-6-10-flags-rakesh-singh--oq13f/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/your-llm-judge-94-right-testing-production-6-10-flags-rakesh-singh--oq13f/" },
+    ],
+  },
+  {
+    title: "LLM-as-a-Judge, Part 1: Both Judges Agreed With Humans 92% of the Time. Only One Was Useful.",
+    date: "2026-11-20",
+    category: "AI Systems",
+    tags: ["llm-as-a-judge", "evals", "ai-agent", "llm", "software-engineering"],
+    href: "https://www.linkedin.com/pulse/llm-as-a-judge-part-1-both-judges-agreed-humans-92-time-rakesh-singh--4eptf/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/llm-as-a-judge-part-1-both-judges-agreed-humans-92-time-rakesh-singh--4eptf/" },
+    ],
+  },
+  {
+    title: "Our LLM Judge Agreed With Humans 92% of the Time. It Still Missed 15 of 23 Bad Conversations.",
+    date: "2026-11-19",
+    category: "AI Systems",
+    tags: ["llm-as-a-judge", "evals", "ai-agent", "llm", "software-engineering"],
+    summary: "LLM-as-a-judge in production: what it can grade, what it can't, and why you still need people.",
+    href: "https://www.linkedin.com/pulse/our-llm-judge-agreed-humans-92-time-still-missed-15-23-rakesh-singh--ugiwf/",
+    sources: [
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/our-llm-judge-agreed-humans-92-time-still-missed-15-23-rakesh-singh--ugiwf/" },
+    ],
+  },
+  {
     title: "Where the 400 Cases Come From: Building the Eval Set Behind Your Gate",
     date: "2026-11-12",
     category: "AI Systems",
