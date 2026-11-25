@@ -9,6 +9,8 @@ export interface HomeProject {
   /** Internal project page (/projects/slug) or an external URL. */
   href: string;
   github: string;
+  /** A LinkedIn post about the project, shown as a link next to GitHub. */
+  linkedin?: string;
   /** My role on the project (e.g. "Owner"), shown as a pill above the title. */
   role?: string;
   /** What the project is (e.g. "Open-source library"), shown next to the role. */
@@ -55,6 +57,7 @@ export const home: HomeContent = {
         "Open-source Python library that measures and cuts the token cost of LLM tool and MCP schemas, with equivalence checking and a CI gate.",
       href: "https://github.com/rakeshnitb23/toolism",
       github: "https://github.com/rakeshnitb23/toolism",
+      linkedin: "https://www.linkedin.com/feed/update/urn:li:activity:7529582208936808448/",
       role: "Owner",
       kind: "Open-source library",
     },
